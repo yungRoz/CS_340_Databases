@@ -1,0 +1,139 @@
+document.addEventListener('DOMContentLoaded', bindButton);
+
+function bindButton() {
+  document.querySelector("#newWorkOut").addEventListener('submit', function(event) {
+    event.preventDefault();
+  });
+  document.getElementById('submitWorkout').addEventListener('click', function(event) {
+    var name = document.getElementById('name').value;
+    if (name == "") {
+      alert("Name Cannot Be Empty");
+      return;
+    }
+    var reps = document.getElementById('reps').value;
+    var weight = document.getElementById('weight').value;
+    var lbsCheck = document.getElementById('lbs');
+    var kgCheck = document.getElementById('kg');
+    var unit;
+    if (lbsCheck.checked) {
+      unit = 1;
+    } else if (kgCheck.checked) {
+      unit = 0;
+    }
+    var date = document.getElementById('date').value;
+
+    var bigLongParam = "?name=" + name + "&reps=" + reps + "&weight=" + weight + "&date=" + date + "&lbs=" + unit;
+    console.log(bigLongParam);
+    var req = new XMLHttpRequest();
+    req.open("GET", "/insert" + bigLongParam, true);
+    req.addEventListener('load', function() {
+      if (req.status >= 200 && req.status < 400) {
+        var response = JSON.parse(req.responseText);
+        var row = document.createElement("tr");
+        var id = response.id
+        for (var variableName in response) {
+          if (variableName == 'id');
+          else if (variableName == 'lbs') {
+            var cell = document.createElement("td");
+            cell.id = variableName;
+            if (response[variableName]) {
+              cell.textContent = "lbs";
+            } else cell.textContent = "kg";
+            row.appendChild(cell);
+          } else {
+            var cell = document.createElement("td");
+            cell.id = variableName;
+            cell.textContent = response[variableName];
+            row.appendChild(cell);
+          }
+        }
+
+        var updateCell = newUpdateCell(id);
+        row.appendChild(updateCell);
+
+        var deleteCell = newDeleteCell(id);
+        row.appendChild(deleteCell);
+        var table = document.getElementById('exerciseTable');
+        table.appendChild(row);
+      } else {
+        console.log('ERROR' + req.statusText);
+      }
+    });
+    req.send("/insert" + bigLongParam);
+    event.preventDefault();
+
+  });
+}
+
+function newUpdateCell(id) {
+  var updateCell = document.createElement("td");
+
+  var updateUrl = document.createElement('a');
+  updateUrl.setAttribute('href', '/update?id=' + id);
+
+
+  var updateButton = document.createElement('input');
+  updateButton.setAttribute('type', 'button');
+  updateButton.setAttribute('value', 'Update');
+
+  updateUrl.appendChild(updateButton);
+  updateCell.appendChild(updateUrl);
+
+  return updateCell;
+}
+
+function newDeleteCell(id) {
+  var deleteCell = document.createElement("td");
+  var deleteButton = document.createElement('input');
+  deleteButton.setAttribute('type', 'button');
+  deleteButton.setAttribute('name', 'delete');
+  deleteButton.setAttribute('value', 'Delete');
+  deleteButton.setAttribute('onClick', 'deleteRow(' + id + ')');
+
+  var deleteHidden = document.createElement('input');
+  deleteHidden.setAttribute('type', 'hidden');
+  deleteHidden.setAttribute('id', 'd0449210' + id);
+  deleteCell.appendChild(deleteButton);
+  deleteCell.appendChild(deleteHidden);
+
+  return deleteCell;
+}
+
+
+
+function deleteRow(id) {
+
+  var req = new XMLHttpRequest();
+
+  req.open("GET", "/delete?id=" + id, true);
+
+  req.addEventListener("load", function() {
+    if (req.status >= 200 && req.status < 400) {
+      console.log('delete processed');
+    } else {
+      console.log('there was an error');
+    }
+  });
+
+  req.send("delete/?id=" + id);
+  event.preventDefault();
+
+  var dtring = "d0449210" + id;
+  var table = document.getElementById('exerciseTable');
+  var n = table.rows.length;
+  var rowNum;
+
+  for (var i = 1; i < n; i++) {
+    var row = table.rows[i];
+    var allCells = row.getElementsByTagName("td");
+    var dCell = allCells[allCells.length - 1];
+    if (dCell.children[1].id === "d0449210" + id) {
+      rowNum = i;
+    }
+  }
+
+
+  table.deleteRow(rowNum);
+
+}
+/**/

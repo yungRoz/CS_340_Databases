@@ -1,0 +1,36 @@
+<form action="/sendupdate">
+	<h2> UPDATE your Workout </h2>
+
+	<label>Workout Name</label>
+	<br/>
+	<input type="text" name="name" id="name" value="{{results.name}}" />
+	<br/>
+	<br/>
+
+	<label>Reps</label>
+	<br/>
+	<input type="number" name="reps" id="reps" value="{{results.reps}}" />
+	<br/>
+	<br/>
+
+	<label>Weight</label>
+	<br/>
+	<input type="number" name="weight" id="weight" value="{{results.weight}}" />
+	<br/>
+	<br/>
+
+	<label>Date</label>
+	<br/>
+	<input type="date" name="date" id="date" value="{{results.date}}" />
+	<br/>
+	<br/>
+	<input type="hidden" name="id" id="id" value= {{results.id}}>
+	{{#if results.lbs}}
+		<label>Currently LBS is Checked</label>
+	{{else}}
+		<label>Currently KG is Checked</label>
+	{{/if}}
+	<input type="radio" name="lbs" id="lbs" value="true" />lbs</label>
+	<input type="radio" name="lbs" id="lbs" value="false" />kg</label>
+	<input type="submit" id="submitUpdate" />
+</form>

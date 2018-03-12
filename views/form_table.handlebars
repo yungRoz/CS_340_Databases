@@ -1,0 +1,65 @@
+<form id="newWorkOut" align="center">
+  <fieldset>
+    <h2> Enter A Workout </h2>
+
+    <label>Workout Name</label>
+    <br/>
+    <input type="text" name="name" id="name" />
+    <br/>
+    <br/>
+
+    <label>Reps</label>
+    <br/>
+    <input type="number" name="reps" id="reps" />
+    <br/>
+    <br/>
+
+    <label>Weight</label>
+    <br/>
+    <input type="number" name="weight" id="weight" />
+    <br/>
+    <br/>
+
+    <label>Date</label>
+    <br/>
+    <input type="date" name="date" id="date" />
+    <br/>
+    <br/>
+    <input type="radio" name="lbs" id="lbs" value="true" />lbs</label>
+    <input type="radio" name="lbs" id="kg" value="false" />kg</label>
+    <input type="submit" id="submitWorkout" />
+  </fieldset>
+</form>
+
+<br />
+<br />
+
+<table id="exerciseTable" align="center">
+  <tr class="header">
+    <th>Workout Name</th>
+    <th>Reps</th>
+    <th>Weight</th>
+    <th>Date</th>
+    <th>Units</th>
+    <th>Update</th>
+    <th>Delete</th>
+  </tr>
+  {{#if results}}
+    {{#each results}}
+      <tr class="row">
+        <td>{{this.name}}</td>
+        <td>{{this.reps}}</td>
+        <td>{{this.weight}}</td>
+        <td>{{this.date}}</td>
+        {{#if this.lbs}}
+          <td>lbs</td>
+        {{else}}
+          <td>kg</td>
+        {{/if}}
+        <td> <a href="/update?id={{this.id}}"><input type="button" value="Update"></a> </td>
+        <td> <input type="button" name="delete" value="Delete" onClick="deleteRow({{this.id}})"><input type="hidden" id="d0449210{{this.id}}"></td>
+      </tr>
+    {{/each}}
+  {{/if}}
+
+</table>
