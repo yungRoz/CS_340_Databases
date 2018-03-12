@@ -28,12 +28,12 @@ CREATE TABLE `reviews` (
   `given_by_id` int NOT NULL,
   `belongs_to_id` int NOT NULL,
   PRIMARY KEY(`given_by_id`, `belongs_to_id`),
-  KEY `given_by_id` (`given_by_id`)
-  KEY `belongs_to_id` (`belongs_to_id`)
-  CONSTRAINT `reviews_ibfk_1` FOREIGN KEY(`given_by_id`) REFERENCES
-   `person`(`id`)
-   CONSTRAINT `reviews_ibfk_2` FOREIGN KEY(`belongs_to_id`) REFERENCES
-    `person`(`id`)
+  KEY `given_by_id` (`given_by_id`),
+  KEY `belongs_to_id` (`belongs_to_id`),
+  CONSTRAINT `reviews_ibfk_1` FOREIGN KEY (`given_by_id`)
+  REFERENCES `person`(`id`),
+  CONSTRAINT `reviews_ibfk_2` FOREIGN KEY (`belongs_to_id`)
+  REFERENCES `person`(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -54,22 +54,22 @@ CREATE TABLE `has` (
   `per_id` int NOT NULL,
   `mod_id` int NOT NULL,
   PRIMARY KEY(`per_id`, `mod_id`),
-  KEY `per_id` (`per_id`)
-  KEY `mod_id` (`mod_id`)
+  KEY `per_id` (`per_id`),
+  KEY `mod_id` (`mod_id`),
   CONSTRAINT `has_ibfk_1` FOREIGN KEY(`per_id`) REFERENCES
-   `person`(`id`)
+   `person`(`id`),
    CONSTRAINT `has_ibfk_2` FOREIGN KEY(`mod_id`) REFERENCES
-    `modules`(`id`)
+    `module`(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `belongs_to` (
   `per_id` int NOT NULL,
   `co_id` int NOT NULL,
   PRIMARY KEY(`per_id`, `co_id`),
-  KEY `per_id` (`per_id`)
-  KEY `co_id` (`co_id`)
+  KEY `per_id` (`per_id`),
+  KEY `co_id` (`co_id`),
   CONSTRAINT `belongs_to_ibfk_1` FOREIGN KEY(`per_id`) REFERENCES
-   `person`(`id`)
+   `person`(`id`),
    CONSTRAINT `belongs_to_ibfk_2` FOREIGN KEY(`co_id`) REFERENCES
     `company`(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -78,10 +78,10 @@ CREATE TABLE `has_higher_status` (
   `hi_per_id` int NOT NULL,
   `lo_per_id` int NOT NULL,
   PRIMARY KEY(`hi_per_id`, `lo_per_id`),
-  KEY `hi_per_id` (`hi_per_id`)
-  KEY `lo_per_id` (`lo_per_id`)
+  KEY `hi_per_id` (`hi_per_id`),
+  KEY `lo_per_id` (`lo_per_id`),
   CONSTRAINT `has_higher_status_ibfk_1` FOREIGN KEY(`hi_per_id`) REFERENCES
-   `person`(`id`)
+   `person`(`id`),
    CONSTRAINT `has_higher_status_ibfk_2` FOREIGN KEY(`lo_per_id`) REFERENCES
     `person`(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
