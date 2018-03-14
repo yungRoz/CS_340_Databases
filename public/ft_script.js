@@ -19,23 +19,13 @@ function bindAddPersonButton() {
     var bigLongParam = "?name=" + name + "&email=" + email; // + "&weight=" + weight + "&date=" + date + "&lbs=" + unit;
     console.log(bigLongParam);
     var req = new XMLHttpRequest();
+    var id;
     req.open("GET", "/insertToperson" + bigLongParam, true);
     req.addEventListener('load', function() {
       if (req.status >= 200 && req.status < 400) {
         var response = JSON.parse(req.responseText);
         var row = document.createElement("tr");
-        var id = response.id;
-        var req2 = new XMLHttpRequest();
-        req2.open("GET", "/createCompanies" + "?id=" + id, true);
-        req2.addEventListener("load", function() {
-          if (req.status >= 200 && req.status < 400) {
-            console.log('companies created');
-          } else {
-            console.log('there was an error creating companies');
-          }
-        });
-        req2.send("/createCompanies" + "?id=" + id);
-        event.preventDefault();
+        id = response.id;
         for (var variableName in response) {
           if (variableName == 'id');
           else {
@@ -49,6 +39,8 @@ function bindAddPersonButton() {
         row.appendChild(updateCell);
         var deleteCell = newDeleteCell(id);
         row.appendChild(deleteCell);
+        var vsaCell = newViewSiteAsCell(id);
+        row.appendChild(vsaCell);
         var table = document.getElementById('personTable');
         table.appendChild(row);
       } else {
@@ -56,6 +48,17 @@ function bindAddPersonButton() {
       }
     });
     req.send("/insertToPerson" + bigLongParam);
+    event.preventDefault();
+    var req2 = new XMLHttpRequest();
+    req2.open("GET", "/createCompanies" + "?id=" + id, true);
+    req2.addEventListener("load", function() {
+      if (req.status >= 200 && req.status < 400) {
+        console.log('companies created');
+      } else {
+        console.log('there was an error creating companies');
+      }
+    });
+    req2.send("/createCompanies" + "?id=" + id);
     event.preventDefault();
   });
 
