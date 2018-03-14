@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', bindAddPersonButton);
-document.addEventListener('DOMContentLoadedHP', bindHomePageButton);
+//document.addEventListener('DOMContentLoadedHP', bindHomePageButton);
 function bindAddPersonButton() {
   document.querySelector("#addPerson").addEventListener('submit', function(event) {
     event.preventDefault();
@@ -59,12 +59,6 @@ function bindAddPersonButton() {
     event.preventDefault();
   });
 
-}
-
-function bindHomePageButton(){
-  document.querySelector("#giveReview").addEventListener('submit', function(event) {
-    event.preventDefault();
-  });
   document.querySelector("#addToCompany").addEventListener('submit', function(event) {
     event.preventDefault();
   });
@@ -123,10 +117,12 @@ function bindHomePageButton(){
         console.log('ERROR' + req.statusText);
       }
     });
-    req.send("/insertToReviews" + bigLongParam);
+    req.send("/insertToCompany" + bigLongParam);
     event.preventDefault();
   });
+
 }
+
 
 function newUpdateCell(id) {
   var updateCell = document.createElement("td");
