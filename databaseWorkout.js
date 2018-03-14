@@ -414,15 +414,15 @@ app.get('/homepage', function(req, res, next) {
       return;
     }
 
-    for (var i in rows) {
+    for (var i in rows){
+      var info = {
         'belongs_star_rating': rows[i].star_rating,
         'belongs_classifier_term': rows[i].classifer_term,
         'belongs_given_by_id': rows[i].given_by_id,
         'belongs_belongs_to_id': rows[i].belongs_to_id
       };
       params.push(info);
-    };
-    res.render('home_page', context);
+    }
   });
 
   // get reviews they've received
@@ -440,11 +440,12 @@ app.get('/homepage', function(req, res, next) {
         'belongs_belongs_to_id': rows[i].belongs_to_id
       };
       params.push(info);
-    };
-
+    }
+    context.results=params;
     res.render('home_page', context);
   });
 });
+
 app.get('/sendupdate', function(req, res, next) {
   var context = {};
 
