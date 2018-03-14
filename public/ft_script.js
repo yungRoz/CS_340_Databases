@@ -131,11 +131,11 @@ function deleteRow(id) {
     }
   });
 
-  req.send("delete/?id=" + id);
+  req.send("/delete?id=" + id);
   event.preventDefault();
 
   var dtring = "d0449210" + id;
-  var table = document.getElementById('exerciseTable');
+  var table = document.getElementById('personTable');
   var n = table.rows.length;
   var rowNum;
 
