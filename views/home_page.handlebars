@@ -1,0 +1,136 @@
+<form id="giveReview" align="left">
+  <fieldset>
+    <h2> Give a review! </h2>
+
+    <label>Who is this review for?</label>
+    <br/>
+    <input type="text" name="name" id="name" />
+    <br/>
+    <br/>
+    <select>
+      <optgroup label="Swedish Cars">
+        <option value="volvo">Volvo</option>
+        <option value="saab">Saab</option>
+      </optgroup>
+      <optgroup label="German Cars">
+        <option value="mercedes">Mercedes</option>
+        <option value="audi">Audi</option>
+      </optgroup>
+    </select>
+
+    <label>email</label>
+    <br/>
+    <input type="text" name="email" id="email" />
+    <br/>
+    <br/>
+
+    <input type="radio" name="lbs" id="lbs" value="true" />lbs</label>
+    <input type="radio" name="lbs" id="kg" value="false" />kg</label>
+    <input type="submit" id="reviewPerson" />
+  </fieldset>
+</form>
+
+<form id="addToCompany" align="left">
+  <fieldset>
+    <h2> Add someone to your company! </h2>
+    <br/>
+    <label>Which company do you want to add them to?</label>
+    <br/>
+    <select name="company" id="addCompany">
+      {{#if results}}
+        {{#each results}}
+          <option value={{this.co_id}}> {{this.co_name}}</option>
+        {{/each}}
+      {{/if}}
+    </select>
+    <br />
+    <label>Who do you want to add?</label>
+    <br/>
+    <select name="person" id="addPerson">
+    {{#if results}}
+      {{#each results}}
+        <option value={{this.notu_id}}> {{this.notu_name}}</option>
+      {{/each}}
+    {{/if}}
+    </select>
+    <input type="submit" id="addPersonToCompany" />
+  </fieldset>
+</form>
+
+
+{{#if results}}
+  {{#each results}}
+
+    {{if this.co_friend}}
+    <table name="friends" id="{{this.co_id}}" align="center">
+      <caption> {{this.co_friend}} </caption>
+      <tr class="header">
+        <th>Name</th>
+        <th>Email</th>
+        <th>Star Rating</th>
+        <th>Top Classifer</th>
+        <th>Delete</th>
+      </tr>
+      {{#if this.member_friend}}}
+          <tr class="row">
+            <td>{{this.name}}</td>
+            <td>{{this.email}}</td>
+            <td>{{this.avg_rating}}</td>
+            <td>{{this.top_classifier}}</td>
+            <td> <a href="/update?id={{this.id}}"><input type="button" value="Update"></a> </td>
+            <td> <input type="button" name="delete" value="Delete" onClick="deleteRow({{this.id}})"><input type="hidden" id="d0449210{{this.id}}"></td>
+            <td> <a href="/homepage?id={{this.id}}"><input type="button" value="{{this.name}}"></a></td>
+          </tr>
+      {{/if}}
+      </table>
+    {{/if}}
+
+    {{if this.co_family}}
+    <table name="family" id="{{this.co_id}}" align="center">
+      <caption> {{this.co_family}} </caption>
+      <tr class="header">
+        <th>Name</th>
+        <th>Email</th>
+        <th>Star Rating</th>
+        <th>Top Classifer</th>
+        <th>Delete</th>
+      </tr>
+      {{#if this.member_family}}}
+          <tr class="row">
+            <td>{{this.name}}</td>
+            <td>{{this.email}}</td>
+            <td>{{this.avg_rating}}</td>
+            <td>{{this.top_classifier}}</td>
+            <td> <a href="/update?id={{this.id}}"><input type="button" value="Update"></a> </td>
+            <td> <input type="button" name="delete" value="Delete" onClick="deleteRow({{this.id}})"><input type="hidden" id="d0449210{{this.id}}"></td>
+            <td> <a href="/homepage?id={{this.id}}"><input type="button" value="{{this.name}}"></a></td>
+          </tr>
+      {{/if}}
+      </table>
+    {{/if}}
+    {{if this.co_work}}
+    <table name="work" id="{{this.co_id}}" align="center">
+      <caption> {{this.co_work}} </caption>
+      <tr class="header">
+        <th>Name</th>
+        <th>Email</th>
+        <th>Star Rating</th>
+        <th>Top Classifer</th>
+        <th>Delete</th>
+      </tr>
+      {{#if this.member_work}}}
+          <tr class="row">
+            <td>{{this.name}}</td>
+            <td>{{this.email}}</td>
+            <td>{{this.avg_rating}}</td>
+            <td>{{this.top_classifier}}</td>
+            <td> <a href="/update?id={{this.id}}"><input type="button" value="Update"></a> </td>
+            <td> <input type="button" name="delete" value="Delete" onClick="deleteRow({{this.id}})"><input type="hidden" id="d0449210{{this.id}}"></td>
+            <td> <a href="/homepage?id={{this.id}}"><input type="button" value="{{this.name}}"></a></td>
+          </tr>
+      {{/if}}
+      </table>
+    {{/if}}
+
+  {{/each}}
+{{/if}}

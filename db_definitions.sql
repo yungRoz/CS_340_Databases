@@ -85,3 +85,34 @@ CREATE TABLE `has_higher_status` (
    CONSTRAINT `has_higher_status_ibfk_2` FOREIGN KEY(`lo_per_id`) REFERENCES
     `person`(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+---- Get EVERYONE in the users companies, name and company name
+SELECT everyone_else.name AS `name`, everyone_else.id AS `id`
+FROM (SELECT p.name, p.id, bt.co_id FROM person p
+      INNER JOIN belongs_to bt ON bt.per_id = p.per_id
+      WHERE p.id!=?
+    ) AS everyone_else
+LEFT JOIN (SELECT c.id AS cid, c.name AS co_name FROM company c
+	INNER JOIN belongs_to bt ON bt.co_id = c.id
+	INNER JOIN person p ON p.id = bt.per_id
+	WHERE p.id =? and c.id =?
+	GROUP BY c.id) AS user
+ON everyone_else.co_id = user.cid;
+
+-- Get EVERYONE but the user
+SELECT `name`, `id`
+FROM person
+WHERE person.id !=?;
+
+
+-- All user companies except World
+SELECT DISTINCT c.name AS `name`, c.id AS `id`
+FROM company
+INNER JOIN belongs_to bt ON bt.co_id = c.id
+INNER JOIN person p ON p.id = bt.per_id
+where p.id=? AND c.name !='World'
+
+-- Get all users friends belonging to a given company
+SELECT  everyone.name AS `name`, everyone.id AS `id`
