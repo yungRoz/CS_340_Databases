@@ -19,13 +19,14 @@ function bindAddPersonButton() {
     var bigLongParam = "?name=" + name + "&email=" + email; // + "&weight=" + weight + "&date=" + date + "&lbs=" + unit;
     console.log(bigLongParam);
     var req = new XMLHttpRequest();
-    
+
     req.open("GET", "/insertToperson" + bigLongParam, true);
     req.addEventListener('load', function() {
       if (req.status >= 200 && req.status < 400) {
         var response = JSON.parse(req.responseText);
         var row = document.createElement("tr");
         id = response.id;
+        console.log(id);
         for (var variableName in response) {
           if (variableName == 'id');
           else {
@@ -47,7 +48,7 @@ function bindAddPersonButton() {
         console.log('ERROR' + req.statusText);
       }
     });
-    req.send("/insertToPerson" + bigLongParam);
+    /*req.send("/insertToPerson" + bigLongParam);
     event.preventDefault();
     var req2 = new XMLHttpRequest();
     req2.open("GET", "/createCompanies" + "?id=" + id, true);
@@ -59,7 +60,7 @@ function bindAddPersonButton() {
       }
     });
     req2.send("/createCompanies" + "?id=" + id);
-    event.preventDefault();
+    event.preventDefault();*/
   });
 
 }
