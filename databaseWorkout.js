@@ -158,6 +158,9 @@ app.get('/insertToCompany', function(req, res, next) {
     }
 
     if ( result.length > 0) {
+      res.send(JSON.stringify([new String('false')]));
+    }
+    else {
       pool.query("INSERT INTO `belongs_to` (`per_id`, `co_id`) VALUES (?,?)", [req.query.per_id, req.query.co_id], function(err, result) {
         if (err) {
           next(err);
@@ -171,9 +174,6 @@ app.get('/insertToCompany', function(req, res, next) {
         }
         res.send(JSON.stringify(result[0]));
       });
-    }
-    else {
-      res.send(JSON.stringify([new String('false')]));
     }
   });
 });
