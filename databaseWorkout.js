@@ -14,12 +14,7 @@ var handlebars = require('express-handlebars').create({
   defaultLayout: 'main'
 });
 var bodyParser = require("body-parser");
-handlebars.registerHelper('ifCond', function(v1, v2, options) {
-  if(v1 === v2) {
-    return options.fn(this);
-  }
-  return options.inverse(this);
-});
+
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 app.set('port', 62521);
