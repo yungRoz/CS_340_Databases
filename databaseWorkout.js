@@ -2,10 +2,10 @@ var express = require('express');
 var mysql = require('mysql');
 var pool = mysql.createPool({
   connectionLimit: 10,
-  host: 'oniddb.cws.oregonstate.edu',
-  user: 'garzar-db',
-  password: '7IjvZPO9c7wPhPV8',
-  database: 'garzar-db',
+  host: 'classmysql.engr.oregonstate.edu',
+  user: 'cs340_garzar',
+  password: '2561',
+  database: 'cs340_garzar',
   dateStrings: true
 });
 
