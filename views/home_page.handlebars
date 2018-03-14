@@ -39,7 +39,9 @@
     <select name="company" id="addCompany">
       {{#if results}}
         {{#each results}}
+          {{#if this.co_id}}
           <option value={{this.co_id}}> {{this.co_name}}</option>
+          {{/if}}
         {{/each}}
       {{/if}}
     </select>
@@ -49,7 +51,9 @@
     <select name="person" id="addPerson">
     {{#if results}}
       {{#each results}}
+        {{#if this.notu_id}}
         <option value={{this.notu_id}}> {{this.notu_name}}</option>
+        {{/if}}
       {{/each}}
     {{/if}}
     </select>

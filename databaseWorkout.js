@@ -372,9 +372,9 @@ app.get('/homepage', function(req, res, next) {
                           "user.co_name AS `co_name`, everyone_else.avg_rating AS `avg_rating`, " +
                           "everyone_else.top_classifier AS `top_classifier` " +
                           "FROM (SELECT p.name, p.id, p.avg_rating, p.top_classifier, bt.co_id FROM person p " +
-                          "INNER JOIN belongs_to bt ON bt.per_id = p.per_id " +
+                          "INNER JOIN belongs_to bt ON bt.per_id = p.id " +
                           "WHERE p.id!=? ) AS everyone_else " +
-                    "LEFT JOIN (SELECT c.id AS cid, c.name AS co_name FROM company c " +
+                    "INNER JOIN (SELECT c.id AS cid, c.name AS co_name FROM company c " +
                     	"INNER JOIN belongs_to bt ON bt.co_id = c.id " +
                     	"INNER JOIN person p ON p.id = bt.per_id " +
                     	"WHERE p.id =? and c.id =? " +
