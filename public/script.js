@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoadedAP', bindAddPersonButton);
+document.addEventListener('DOMContentLoaded', bindAddPersonButton);
 document.addEventListener('DOMContentLoadedHP', bindHomePageButton);
 function bindAddPersonButton() {
   document.querySelector("#addPerson").addEventListener('submit', function(event) {
