@@ -117,7 +117,7 @@ app.get('/insertToPerson', function(req, res, next) {
         next(err);
         return;
       }
-      pool.query("INSERT INTO `belongs_to` (`per_id`, `co_id`) VALUES(?,?)", [person_id, result.insertId], function(err, result){
+      pool.query("INSERT INTO `belongs_to` (`per_id`, `co_id`) VALUES(?,?)", [person_id, result[0]], function(err, result){
         if (err) {
           next(err);
           return;
