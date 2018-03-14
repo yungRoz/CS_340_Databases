@@ -48,7 +48,7 @@ function bindAddPersonButton() {
         console.log('ERROR' + req.statusText);
       }
     });
-    /*req.send("/insertToPerson" + bigLongParam);
+    req.send("/insertToPerson" + bigLongParam);
     event.preventDefault();
     var req2 = new XMLHttpRequest();
     req2.open("GET", "/createCompanies" + "?id=" + id, true);
@@ -60,7 +60,7 @@ function bindAddPersonButton() {
       }
     });
     req2.send("/createCompanies" + "?id=" + id);
-    event.preventDefault();*/
+    event.preventDefault();
   });
 
 }

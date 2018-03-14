@@ -80,55 +80,6 @@ app.get('/insertToPerson', function(req, res, next) {
       }
       res.send(JSON.stringify(result[0]));
     });
-
-    pool.query("INSERT INTO `company` (`name`) VALUES (?)", ['Family'], function(err, resp) {
-      if (err) {
-        next(err);
-        return;
-      }
-      pool.query("INSERT INTO `belongs_to` (`per_id`, `co_id`) VALUES(?,?)", [result.insertId, resp.insertId], function(err, result){
-        if (err) {
-          next(err);
-          return;
-        }
-      });
-    });
-    pool.query("INSERT INTO `company` (`name`) VALUES (?)", ['Friends'], function(err, resp) {
-      if (err) {
-        next(err);
-        return;
-      }
-      pool.query("INSERT INTO `belongs_to` (`per_id`, `co_id`) VALUES(?,?)", [result.insertId, resp.insertId], function(err, result){
-        if (err) {
-          next(err);
-          return;
-        }
-      });
-    });
-    pool.query("INSERT INTO `company` (`name`) VALUES (?)", ['Work'], function(err, resp) {
-      if (err) {
-        next(err);
-        return;
-      }
-      pool.query("INSERT INTO `belongs_to` (`per_id`, `co_id`) VALUES(?,?)", [result.insertId, resp.insertId], function(err, result){
-        if (err) {
-          next(err);
-          return;
-        }
-      });
-    });
-    pool.query("SELECT `id` FROM `company` WHERE name='World'", function(err, resp) {
-      if (err) {
-        next(err);
-        return;
-      }
-      pool.query("INSERT INTO `belongs_to` (`per_id`, `co_id`) VALUES(?,?)", [result.insertId, resp.insertId], function(err, result){
-        if (err) {
-          next(err);
-          return;
-        }
-      });
-    });
   });
 });
 
