@@ -108,11 +108,7 @@ WHERE person.id !=?;
 
 
 -- All user companies except World
-SELECT DISTINCT c.name AS `name`, c.id AS `id`
-FROM company
-INNER JOIN belongs_to bt ON bt.co_id = c.id
-INNER JOIN person p ON p.id = bt.per_id
-where p.id=? AND c.name !='World'
+
 
 -- Get all users friends belonging to a given company
 SELECT  everyone.name AS `name`, everyone.id AS `id`
