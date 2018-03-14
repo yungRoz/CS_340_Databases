@@ -328,7 +328,7 @@ app.get('/homepage', function(req, res, next) {
         };
         params.push(companyInfo);
       }
-      else if(rows[i]name=="Family"){
+      else if(rows[i].name=="Family"){
         var companyInfo ={
           'co_family': rows[i].name,
           'co_id': rows[i].id,
