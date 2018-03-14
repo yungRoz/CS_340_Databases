@@ -299,7 +299,7 @@ app.get('/homepage', function(req, res, next) {
 
   //get company ids of user
   var companyIdString = "SELECT DISTINCT c.name AS `name`, c.id AS `id` " +
-              "FROM company INNER JOIN belongs_to bt ON bt.co_id = c.id " +
+              "FROM company c INNER JOIN belongs_to bt ON bt.co_id = c.id " +
               "INNER JOIN person p ON p.id = bt.per_id " +
               "where p.id=? AND c.name !='World' ";
   pool.query(companyIdString, [req.query.id], function(err, rows, fields){
