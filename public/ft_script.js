@@ -59,68 +59,6 @@ function bindAddPersonButton() {
     event.preventDefault();
   });
 
-  document.querySelector("#addToCompany").addEventListener('submit', function(event) {
-    event.preventDefault();
-  });
-
-  document.getElementById('addPersonToCompany').addEventListener('click', function(event) {
-    var addPersonId = document.getElementById('addPerson').value;
-    if (addPersonId == "") {
-      alert("Name Cannot Be Empty");
-      return;
-    }
-    var addCompanyId= document.getElementById('addCompany').value;
-    if (email == "") {
-      alert("Email Cannot Be Empty");
-      return;
-    }
-    var param = "?per_id=" + addPersonId + "&co_id=" + addCompanyId; // + "&weight=" + weight + "&date=" + date + "&lbs=" + unit;
-    console.log(param);
-    var req = new XMLHttpRequest();
-    req.open("GET", "/insertToCompany" + param, true);
-    req.addEventListener('load', function() {
-      if (req.status >= 200 && req.status < 400) {
-        var response = JSON.parse(req.responseText);
-        if (response[0] == "false"){
-          alert("Duplicate value not added");
-          return;
-        }
-        var row = document.createElement("tr");
-        var id = response.id;
-
-        for (var variableName in response) {
-          if (variableName == 'id');
-          /*else if (variableName == 'lbs') {
-            var cell = document.createElement("td");
-            cell.id = variableName;
-            if (response[variableName]) {
-              cell.textContent = "lbs";
-            } else cell.textContent = "kg";
-            row.appendChild(cell);
-          }*/
-          else {
-            var cell = document.createElement("td");
-            cell.id = variableName;
-            cell.textContent = response[variableName];
-            row.appendChild(cell);
-          }
-        }
-        var updateCell = newUpdateCell(id);
-        row.appendChild(updateCell);
-        var deleteCell = newDeleteCell(id);
-        row.appendChild(deleteCell);
-        var vsaCell = newViewSiteAsCell(id);
-        row.appendChild(vsaCell);
-        var table = document.getElementById(addCompanyId);
-        table.appendChild(row);
-      } else {
-        console.log('ERROR' + req.statusText);
-      }
-    });
-    req.send("/insertToCompany" + bigLongParam);
-    event.preventDefault();
-  });
-
 }
 
 

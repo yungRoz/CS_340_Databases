@@ -312,21 +312,21 @@ app.get('/homepage', function(req, res, next) {
       if(rows[i].name == "Friends"){
         var companyInfo ={
           'co_friend': rows[i].name,
-          'co_id': rows[i].id,
+          'co_friend_id': rows[i].id,
         };
         params.push(companyInfo);
       }
       else if(rows[i].name=="Work"){
         var companyInfo ={
           'co_work': rows[i].name,
-          'co_id': rows[i].id,
+          'co_work_id': rows[i].id,
         };
         params.push(companyInfo);
       }
       else if(rows[i].name=="Family"){
         var companyInfo ={
           'co_family': rows[i].name,
-          'co_id': rows[i].id,
+          'co_fam_id': rows[i].id,
         };
         params.push(companyInfo);
       }
