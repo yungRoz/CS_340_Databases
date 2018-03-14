@@ -151,7 +151,7 @@ app.get('/insertToCompany', function(req, res, next) {
   var insertString = "IF (NOT EXISTS ( SELECT * FROM `belongs_to` WHERE `per_id`=? AND `col_id`=?)) "+
                         "BEGIN INSERT INTO `belongs_to`(`per_id`, `co_id`) VALUES (?,?) "+
                         "END";
-  pool.query("SELECT * FROM `belongs_to` WHERE `per_id`=? AND `col_id`=?", [req.query.per_id, req.query.co_id], function(err, result) {
+  pool.query("SELECT * FROM `belongs_to` WHERE `per_id`=? AND `co_id`=?", [req.query.per_id, req.query.co_id], function(err, result) {
     if (err) {
       next(err);
       return;
