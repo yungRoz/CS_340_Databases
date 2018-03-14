@@ -59,7 +59,7 @@ function bindAddPersonButton() {
         console.log('ERROR' + req.statusText);
       }
     });
-    req.send("/insertToCompany" + bigLongParam);
+    req.send("/insertToCompany" + param);
     event.preventDefault();
   });
 }

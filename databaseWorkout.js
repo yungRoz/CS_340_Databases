@@ -352,31 +352,28 @@ app.get('/homepage', function(req, res, next) {
         for (var i in rows) {
           if(rows[i].co_name == "Friends"){
             var member_info = {
-              'member_name': rows[i].name,
-              'member_id': rows[i].id,
-              'member_rating': rows[i].avg_rating,
-              'member_term': rows[i].top_classifier,
-              'member_friend':rows[i].co_name
+              'fr_name': rows[i].name,
+              'fr_id': rows[i].id,
+              'fr_rating': rows[i].avg_rating,
+              'fr_term': rows[i].top_classifier,
             };
             params.push(member_info);
           }
           else if(rows[i].co_name == "Work"){
             var member_info = {
-              'member_name': rows[i].name,
-              'member_id': rows[i].id,
-              'member_rating': rows[i].avg_rating,
-              'member_term': rows[i].top_classifier,
-              'member_work':rows[i].co_name
+              'w_name': rows[i].name,
+              'w_id': rows[i].id,
+              'w_rating': rows[i].avg_rating,
+              'w_term': rows[i].top_classifier,
             };
             params.push(member_info);
           }
           else if(rows[i].co_name == "Family"){
             var member_info = {
-              'member_name': rows[i].name,
-              'member_id': rows[i].id,
-              'member_rating': rows[i].avg_rating,
-              'member_term': rows[i].top_classifier,
-              'member_family':rows[i].co_name
+              'fa_name': rows[i].name,
+              'fa_id': rows[i].id,
+              'fa_rating': rows[i].avg_rating,
+              'fa_term': rows[i].top_classifier,
             };
             params.push(member_info);
           }
