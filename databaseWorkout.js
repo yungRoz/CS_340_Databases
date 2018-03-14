@@ -126,7 +126,7 @@ app.get('/createCompanies', function(req, res, next) {
     });
   });
 
-  String worldQuery = "INSERT INTO `belongs_to` (`per_id`, `co_id`) " +
+  var worldQuery = "INSERT INTO `belongs_to` (`per_id`, `co_id`) " +
   "SELECT id, " + req.query.id + "FROM `company` WHERE name='World';";
   pool.query(worldQuery, function(err, result) {
     if (err) {
@@ -172,7 +172,7 @@ app.get('/insertToPerson', function(req, res, next) {
 });
 
 app.get('/insertToCompany', function(req, res, next) {
-  String insertString = "IF (NOT EXISTS ( SELECT * FROM `belongs_to` WHERE `per_id`=? AND `col_id`=?)) "+
+  var insertString = "IF (NOT EXISTS ( SELECT * FROM `belongs_to` WHERE `per_id`=? AND `col_id`=?)) "+
                         "BEGIN INSERT INTO `belongs_to`(`per_id`, `co_id`) VALUES (?,?) "+
                         "END";
   pool.query(insertString, [req.query.per_id, req.query.co_id, req.query.per_id, req.query.co_id], function(err, result) {
