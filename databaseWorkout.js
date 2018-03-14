@@ -112,19 +112,12 @@ app.get('/insertToPerson', function(req, res, next) {
       });
     });
 
-    pool.query("SELECT `id` FROM `company` WHERE name='World'", function(err, result) {
+    pool.query("INSERT INTO `belongs_to` (`per_id`, `co_id`) VALUES(?,?)", [person_id, '8'], function(err, result){
       if (err) {
         next(err);
         return;
       }
-      pool.query("INSERT INTO `belongs_to` (`per_id`, `co_id`) VALUES(?,?)", [person_id, result.id], function(err, result){
-        if (err) {
-          next(err);
-          return;
-        }
-      });
     });
-
     pool.query("SELECT * FROM `person` WHERE id=?", [person_id], function(err, result) {
       if (err) {
         next(err);
