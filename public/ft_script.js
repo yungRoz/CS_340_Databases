@@ -24,7 +24,7 @@ function bindAddPersonButton() {
         var response = JSON.parse(req.responseText);
         var row = document.createElement("tr");
         var id = response.id;
-        console.log(id);
+
         for (var variableName in response) {
           if (variableName == 'id');
           else {

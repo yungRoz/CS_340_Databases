@@ -74,7 +74,7 @@ app.get('/insertToPerson', function(req, res, next) {
     }
     var person_id = result.insertId;
 
-    pool.query("INSERT INTO `company` (`name`) VALUES (?)", ['Family'], function(err, result) {
+    pool.query("INSERT INTO `company` (`name`) VALUES ('Family')",  function(err, result) {
       if (err) {
         next(err);
         return;
@@ -117,7 +117,7 @@ app.get('/insertToPerson', function(req, res, next) {
         next(err);
         return;
       }
-      pool.query("INSERT INTO `belongs_to` (`per_id`, `co_id`) VALUES(?,?)", [person_id, result.id], function(err, result){
+      pool.query("INSERT INTO `belongs_to` (`per_id`, `co_id`) VALUES(?,?)", [person_id, result.insertId], function(err, result){
         if (err) {
           next(err);
           return;
