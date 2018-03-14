@@ -18,13 +18,12 @@ function bindAddPersonButton() {
     var bigLongParam = "?name=" + name + "&email=" + email; // + "&weight=" + weight + "&date=" + date + "&lbs=" + unit;
     console.log(bigLongParam);
     var req = new XMLHttpRequest();
-    var id = 0;
     req.open("GET", "/insertToperson" + bigLongParam, true);
     req.addEventListener('load', function() {
       if (req.status >= 200 && req.status < 400) {
         var response = JSON.parse(req.responseText);
         var row = document.createElement("tr");
-        id = response.id;
+        var id = response.id;
         console.log(id);
         for (var variableName in response) {
           if (variableName == 'id');
@@ -49,8 +48,8 @@ function bindAddPersonButton() {
     });
     req.send("/insertToPerson" + bigLongParam);
     event.preventDefault();
-    var req2 = new XMLHttpRequest();
-    console.log("/createCompanies?id="+id); 
+    /*var req2 = new XMLHttpRequest();
+    console.log("/createCompanies?id="+id);
     req2.open("GET", "/createCompanies" + "?id=" + id, true);
     req2.addEventListener("load", function() {
       if (req.status >= 200 && req.status < 400) {
@@ -60,7 +59,7 @@ function bindAddPersonButton() {
       }
     });
     req2.send("/createCompanies" + "?id=" + id);
-    event.preventDefault();
+    event.preventDefault();*/
   });
 
 }

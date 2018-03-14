@@ -72,8 +72,60 @@ app.get('/insertToPerson', function(req, res, next) {
       next(err);
       return;
     }
+    var person_id = result.insertId;
 
-    pool.query("SELECT * FROM `person` WHERE id=?", [result.insertId], function(err, result) {
+    pool.query("INSERT INTO `company` (`name`) VALUES (?)", ['Family'], function(err, result) {
+      if (err) {
+        next(err);
+        return;
+      }
+      pool.query("INSERT INTO `belongs_to` (`per_id`, `co_id`) VALUES(?,?)", [person_id, result.insertId], function(err, result){
+        if (err) {
+          console.log(person_id);
+          next(err);
+          return;
+        }
+      });
+    });
+    pool.query("INSERT INTO `company` (`name`) VALUES (?)", ['Friends'], function(err, result) {
+      if (err) {
+        next(err);
+        return;
+      }
+      pool.query("INSERT INTO `belongs_to` (`per_id`, `co_id`) VALUES(?,?)", [person_id, result.insertId], function(err, result){
+        if (err) {
+          next(err);
+          return;
+        }
+      });
+    });
+    pool.query("INSERT INTO `company` (`name`) VALUES (?)", ['Work'], function(err, result) {
+      if (err) {
+        next(err);
+        return;
+      }
+      pool.query("INSERT INTO `belongs_to` (`per_id`, `co_id`) VALUES(?,?)", [person_id, result.insertId], function(err, result){
+        if (err) {
+          next(err);
+          return;
+        }
+      });
+    });
+
+    pool.query("SELECT `id` FROM `company` WHERE name='World'", function(err, result) {
+      if (err) {
+        next(err);
+        return;
+      }
+      pool.query("INSERT INTO `belongs_to` (`per_id`, `co_id`) VALUES(?,?)", [person_id, result.id], function(err, result){
+        if (err) {
+          next(err);
+          return;
+        }
+      });
+    });
+
+    pool.query("SELECT * FROM `person` WHERE id=?", [person_id], function(err, result) {
       if (err) {
         next(err);
         return;
@@ -152,22 +204,6 @@ app.get('/insertToReviews', function(req, res, next) {
   });
 });
 
-app.get('/insertToPerson', function(req, res, next) {
-  pool.query("INSERT INTO `person` (`name`, `email`) VALUES (?, ?)", [req.query.name, req.query.email], function(err, result) {
-    if (err) {
-      next(err);
-      return;
-    }
-
-    pool.query("SELECT * FROM `person` WHERE id=?", [result.insertId], function(err, result) {
-      if (err) {
-        next(err);
-        return;
-      }
-      res.send(JSON.stringify(result[0]));
-    });
-  });
-});
 
 app.get('/insertToCompany', function(req, res, next) {
   var insertString = "IF (NOT EXISTS ( SELECT * FROM `belongs_to` WHERE `per_id`=? AND `col_id`=?)) "+
