@@ -309,7 +309,7 @@ app.get('/homepage', function(req, res, next) {
     }
 
     for (var i in rows) {
-      if(rows[i].name == "Friends"){
+      /*if(rows[i].name == "Friends"){
         var companyInfo ={
           'co_friend': rows[i].name,
           'co_friend_id': rows[i].id,
@@ -329,8 +329,13 @@ app.get('/homepage', function(req, res, next) {
           'co_fam_id': rows[i].id,
         };
         params.push(companyInfo);
-      }
+      }*/
 
+      var  companyInfo={
+        'co_name': rows[i].name,
+        'co_id': rows[i].id
+      }
+      params.push(companyInfo);
       var peopleString = "SELECT everyone_else.name AS `name`, everyone_else.id AS `id`, " +
                           "user.co_name AS `co_name`, everyone_else.avg_rating AS `avg_rating`, " +
                           "everyone_else.top_classifier AS `top_classifier` " +
@@ -355,7 +360,7 @@ app.get('/homepage', function(req, res, next) {
               'fr_name': rows[i].name,
               'fr_id': rows[i].id,
               'fr_rating': rows[i].avg_rating,
-              'fr_term': rows[i].top_classifier,
+              'fr_term': rows[i].top_classifier
             };
             params.push(member_info);
           }
@@ -364,7 +369,7 @@ app.get('/homepage', function(req, res, next) {
               'w_name': rows[i].name,
               'w_id': rows[i].id,
               'w_rating': rows[i].avg_rating,
-              'w_term': rows[i].top_classifier,
+              'w_term': rows[i].top_classifier
             };
             params.push(member_info);
           }
@@ -373,7 +378,7 @@ app.get('/homepage', function(req, res, next) {
               'fa_name': rows[i].name,
               'fa_id': rows[i].id,
               'fa_rating': rows[i].avg_rating,
-              'fa_term': rows[i].top_classifier,
+              'fa_term': rows[i].top_classifier
             };
             params.push(member_info);
           }
