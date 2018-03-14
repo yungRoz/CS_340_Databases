@@ -36,7 +36,7 @@ function bindAddPersonButton() {
         var response = JSON.parse(req.responseText);
         var row = document.createElement("tr");
         var id = response.id;
-        var req2 = new XMLHttpRequest();
+        /*var req2 = new XMLHttpRequest();
         req2.open("GET", "/createCompanies" + "?id=" + id, true);
         req2.addEventListener("load", function() {
           if (req.status >= 200 && req.status < 400) {
@@ -46,7 +46,7 @@ function bindAddPersonButton() {
           }
         });
         req2.send("/createCompanies" + "?id=" + id);
-        event.preventDefault();
+        event.preventDefault();*/
         for (var variableName in response) {
           if (variableName == 'id');
           /*else if (variableName == 'lbs') {
