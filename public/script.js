@@ -16,17 +16,6 @@ function bindAddPersonButton() {
       alert("Email Cannot Be Empty");
       return;
     }
-    /*var weight = document.getElementById('weight').value;
-    var lbsCheck = document.getElementById('lbs');
-    var kgCheck = document.getElementById('kg');
-    var unit;
-    if (lbsCheck.checked) {
-      unit = 1;
-    } else if (kgCheck.checked) {
-      unit = 0;
-    }
-    var date = document.getElementById('date').value;*/
-
     var bigLongParam = "?name=" + name + "&email=" + email; // + "&weight=" + weight + "&date=" + date + "&lbs=" + unit;
     console.log(bigLongParam);
     var req = new XMLHttpRequest();
@@ -36,7 +25,7 @@ function bindAddPersonButton() {
         var response = JSON.parse(req.responseText);
         var row = document.createElement("tr");
         var id = response.id;
-        /*var req2 = new XMLHttpRequest();
+        var req2 = new XMLHttpRequest();
         req2.open("GET", "/createCompanies" + "?id=" + id, true);
         req2.addEventListener("load", function() {
           if (req.status >= 200 && req.status < 400) {
@@ -46,17 +35,9 @@ function bindAddPersonButton() {
           }
         });
         req2.send("/createCompanies" + "?id=" + id);
-        event.preventDefault();*/
+        event.preventDefault();
         for (var variableName in response) {
           if (variableName == 'id');
-          /*else if (variableName == 'lbs') {
-            var cell = document.createElement("td");
-            cell.id = variableName;
-            if (response[variableName]) {
-              cell.textContent = "lbs";
-            } else cell.textContent = "kg";
-            row.appendChild(cell);
-          }*/
           else {
             var cell = document.createElement("td");
             cell.id = variableName;
@@ -134,6 +115,8 @@ function bindHomePageButton(){
         row.appendChild(updateCell);
         var deleteCell = newDeleteCell(id);
         row.appendChild(deleteCell);
+        var vsaCell = newViewSiteAsCell(id);
+        row.appendChild(vsaCell);
         var table = document.getElementById(addCompanyId);
         table.appendChild(row);
       } else {
