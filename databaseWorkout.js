@@ -89,7 +89,7 @@ app.get('/createCompanies', function(req, res, next) {
       next(err);
       return;
     }
-    pool.query("INSERT INTO `belongs_to` (`per_id`, `co_id`) VALUES(?)", [req.query.id, result.insertId], function(err, result){
+    pool.query("INSERT INTO `belongs_to` (`per_id`, `co_id`) VALUES(?,?)", [req.query.id, result.insertId], function(err, result){
       if (err) {
         next(err);
         return;
@@ -101,7 +101,7 @@ app.get('/createCompanies', function(req, res, next) {
       next(err);
       return;
     }
-    pool.query("INSERT INTO `belongs_to` (`per_id`, `co_id`) VALUES(?)", [req.query.id, result.insertId], function(err, result){
+    pool.query("INSERT INTO `belongs_to` (`per_id`, `co_id`) VALUES(?,?)", [req.query.id, result.insertId], function(err, result){
       if (err) {
         next(err);
         return;
@@ -113,21 +113,24 @@ app.get('/createCompanies', function(req, res, next) {
       next(err);
       return;
     }
-    pool.query("INSERT INTO `belongs_to` (`per_id`, `co_id`) VALUES(?)", [req.query.id, result.insertId], function(err, result){
+    pool.query("INSERT INTO `belongs_to` (`per_id`, `co_id`) VALUES(?,?)", [req.query.id, result.insertId], function(err, result){
       if (err) {
         next(err);
         return;
       }
     });
   });
-
-  var worldQuery = "INSERT INTO `belongs_to` (`per_id`, `co_id`) " +
-  "SELECT id, " + req.query.id + "FROM `company` WHERE name='World';";
-  pool.query(worldQuery, function(err, result) {
+  pool.query("SELECT `id` FROM `company` WHERE name='World'", function(err, result) {
     if (err) {
       next(err);
       return;
     }
+    pool.query("INSERT INTO `belongs_to` (`per_id`, `co_id`) VALUES(?,?)", [req.query.id, result.id], function(err, result){
+      if (err) {
+        next(err);
+        return;
+      }
+    });
   });
 });
 
