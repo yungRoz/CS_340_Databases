@@ -12,10 +12,7 @@ function bindAddPersonButton() {
       return;
     }
     var addCompanyId= document.getElementById('addCompany').value;
-    if (email == "") {
-      alert("Email Cannot Be Empty");
-      return;
-    }
+
     var param = "?per_id=" + addPersonId + "&co_id=" + addCompanyId; // + "&weight=" + weight + "&date=" + date + "&lbs=" + unit;
     //sconsole.log(param);
     var req = new XMLHttpRequest();
