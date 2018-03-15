@@ -30,12 +30,13 @@ function bindAddPersonButton() {
         var row = document.createElement("tr");
         var id = response.id;
         var cId = response.cid;
-        var tableId = response.co_name;
+        //var tableId = response.co_name;
+        console.log(response.co_name);
         for (var variableName in response) {
           if (variableName == 'id');
           else if(variableName == 'cid');
           else if(variableName == 'co_name'){
-            tableId = response[variableName];
+            var tableId = response[variableName];
             console.log(tableId);
           }
           else {
