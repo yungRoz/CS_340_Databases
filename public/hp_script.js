@@ -134,7 +134,7 @@ function deleteCoRow(perId, coId, tableId) {
     var row = table.rows[i];
     var allCells = row.getElementsByTagName("td");
     var dCell = allCells[allCells.length - 1];
-    if (dCell.children[1].id === per_id) {
+    if (dCell.children[1].id === perId) {
       rowNum = i;
     }
   }
