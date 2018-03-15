@@ -167,7 +167,15 @@ app.get('/insertToCompany', function(req, res, next) {
           return;
         }
       });
-      pool.query("SELECT * FROM `person` WHERE id=?", [req.query.per_id], function(err, result) {
+
+      var poiCoString = "SELECT everyone_else.name AS `name`, everyone_else.id AS `id`, " +
+                          "user.co_name AS `co_name`, user.cid AS `cid`, everyone_else.avg_rating AS `avg_rating`, " +
+                          "everyone_else.top_classifier AS `top_classifier` " +
+                          "FROM (SELECT p.name, p.id, p.avg_rating, p.top_classifier, bt.co_id AS `co_id`, c.name AS `co_name` FROM person p " +
+                          "INNER JOIN belongs_to bt ON bt.per_id = p.id " +
+                          "INNER JOIN company c ON c.id = bt.co_id"
+                          "WHERE p.id=? AND c.id=? ) AS poi; ";
+      pool.query(poiCoString, [req.query.per_id, req.query.co_id], function(err, result) {
         if (err) {
           next(err);
           return;
@@ -224,6 +232,17 @@ app.get('/delete', function(req, res, next) {
       next(err);
       return;
     }
+  });
+});
+
+app.get('/deleteFromCompany', function(req, res, next) {
+  var context = {};
+  pool.query("DELETE FROM `belongs_to` WHERE per_id=? AND co_id=?", [req.query.per_id, req.query.co_id], function(err, result) {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.render('home_page', context);
   });
 });
 
@@ -296,35 +315,13 @@ app.get('/homepage', function(req, res, next) {
     }
 
     for (var i in rows) {
-      /*if(rows[i].name == "Friends"){
-        var companyInfo ={
-          'co_friend': rows[i].name,
-          'co_friend_id': rows[i].id,
-        };
-        params.push(companyInfo);
-      }
-      else if(rows[i].name=="Work"){
-        var companyInfo ={
-          'co_work': rows[i].name,
-          'co_work_id': rows[i].id,
-        };
-        params.push(companyInfo);
-      }
-      else if(rows[i].name=="Family"){
-        var companyInfo ={
-          'co_family': rows[i].name,
-          'co_fam_id': rows[i].id,
-        };
-        params.push(companyInfo);
-      }*/
-
       var  companyInfo={
         'co_name': rows[i].name,
         'co_id': rows[i].id
       }
       params.push(companyInfo);
       var peopleString = "SELECT everyone_else.name AS `name`, everyone_else.id AS `id`, " +
-                          "user.co_name AS `co_name`, everyone_else.avg_rating AS `avg_rating`, " +
+                          "user.co_name AS `co_name`, user.cid AS `cid`, everyone_else.avg_rating AS `avg_rating`, " +
                           "everyone_else.top_classifier AS `top_classifier` " +
                           "FROM (SELECT p.name, p.id, p.avg_rating, p.top_classifier, bt.co_id FROM person p " +
                           "INNER JOIN belongs_to bt ON bt.per_id = p.id " +
@@ -334,7 +331,7 @@ app.get('/homepage', function(req, res, next) {
                     	"INNER JOIN person p ON p.id = bt.per_id " +
                     	"WHERE p.id =? and c.id =? " +
                     	"GROUP BY c.id) AS user " +
-                    "ON everyone_else.co_id = user.cid; "
+                    "ON everyone_else.co_id = user.cid; ";
       pool.query(peopleString, [req.query.id, req.query.id, rows[i].id], function(err, rows, fields){
         if (err) {
           next(err);
@@ -346,27 +343,30 @@ app.get('/homepage', function(req, res, next) {
             console.log(rows[i].name);
             var member_info = {
               'fr_name': rows[i].name,
-              'fr_id': rows[i].id,
+              'fr_per_id': rows[i].id,
               'fr_rating': rows[i].avg_rating,
-              'fr_term': rows[i].top_classifier
+              'fr_term': rows[i].top_classifier,
+              'fr_co_id': rows[i].cid
             };
             params.push(member_info);
           }
           else if(rows[i].co_name == "Work"){
             var member_info = {
               'w_name': rows[i].name,
-              'w_id': rows[i].id,
+              'w_per_id': rows[i].id,
               'w_rating': rows[i].avg_rating,
-              'w_term': rows[i].top_classifier
+              'w_term': rows[i].top_classifier,
+              'w_co_id': rows[i].cid
             };
             params.push(member_info);
           }
           else if(rows[i].co_name == "Family"){
             var member_info = {
               'fa_name': rows[i].name,
-              'fa_id': rows[i].id,
+              'fa_per_id': rows[i].id,
               'fa_rating': rows[i].avg_rating,
-              'fa_term': rows[i].top_classifier
+              'fa_term': rows[i].top_classifier,
+              'fa_co_id' : rows[i].cid
             };
             params.push(member_info);
           }

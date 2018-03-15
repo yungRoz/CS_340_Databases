@@ -29,17 +29,12 @@ function bindAddPersonButton() {
         }
         var row = document.createElement("tr");
         var id = response.id;
-
+        var cid = response.cid;
+        var table_id = response.co_name;
         for (var variableName in response) {
           if (variableName == 'id');
-          /*else if (variableName == 'lbs') {
-            var cell = document.createElement("td");
-            cell.id = variableName;
-            if (response[variableName]) {
-              cell.textContent = "lbs";
-            } else cell.textContent = "kg";
-            row.appendChild(cell);
-          }*/
+          else if(variableName == 'cid');
+          else if(variableName == 'co_name');
           else {
             var cell = document.createElement("td");
             cell.id = variableName;
@@ -47,13 +42,9 @@ function bindAddPersonButton() {
             row.appendChild(cell);
           }
         }
-        var updateCell = newUpdateCell(id);
-        row.appendChild(updateCell);
-        var deleteCell = newDeleteCell(id);
-        row.appendChild(deleteCell);
-        var vsaCell = newViewSiteAsCell(id);
-        row.appendChild(vsaCell);
-        var table = document.getElementById(addCompanyId);
+        var deleteRelationshipCell = newDeleteRelationshipCell(id, cid, table_id);
+        row.appendChild(deleteRelationshipCell);
+        var table = document.getElementById(table_id);
         table.appendChild(row);
       } else {
         console.log('ERROR' + req.statusText);
@@ -81,17 +72,17 @@ function newUpdateCell(id) {
   return updateCell;
 }
 
-function newDeleteCell(id) {
-  var deleteCell = document.createElement("td");
+function newDeleteRelationshipCell(id,cid, table_id) {
+  var deleteRelationshipCell = document.createElement("td");
   var deleteButton = document.createElement('input');
   deleteButton.setAttribute('type', 'button');
   deleteButton.setAttribute('name', 'delete');
   deleteButton.setAttribute('value', 'Delete');
-  deleteButton.setAttribute('onClick', 'deleteRow(' + id + ')');
+  deleteButton.setAttribute('onClick', 'deleteRow(' + id + ', ' + cid + ', ' + table_id')');
 
   var deleteHidden = document.createElement('input');
   deleteHidden.setAttribute('type', 'hidden');
-  deleteHidden.setAttribute('id', 'd0449210' + id);
+  deleteHidden.setAttribute('id', id);
   deleteCell.appendChild(deleteButton);
   deleteCell.appendChild(deleteHidden);
 
@@ -116,11 +107,12 @@ function newViewSiteAsCell(id){
 }
 
 
-function deleteRow(id) {
+function deleteCoRow(per_id, co_id, table_id) {
 
   var req = new XMLHttpRequest();
 
-  req.open("GET", "/delete?id=" + id, true);
+  var deleteParam = "/deleteFromCompany?per_id=" + per_id + "?co_id=" + co_id;
+  req.open("GET", deleteParam, true);
 
   req.addEventListener("load", function() {
     if (req.status >= 200 && req.status < 400) {
@@ -130,11 +122,11 @@ function deleteRow(id) {
     }
   });
 
-  req.send("delete/?id=" + id);
+  req.send(deleteParam);
   event.preventDefault();
 
-  var dtring = "d0449210" + id;
-  var table = document.getElementById('exerciseTable');
+  var dtring = "d0449210" + per_id;
+  var table = document.getElementById(table_id);
   var n = table.rows.length;
   var rowNum;
 
@@ -142,7 +134,7 @@ function deleteRow(id) {
     var row = table.rows[i];
     var allCells = row.getElementsByTagName("td");
     var dCell = allCells[allCells.length - 1];
-    if (dCell.children[1].id === "d0449210" + id) {
+    if (dCell.children[1].id === per_id) {
       rowNum = i;
     }
   }

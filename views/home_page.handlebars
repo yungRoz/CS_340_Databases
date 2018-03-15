@@ -63,7 +63,7 @@
 
 
 
-<table name="friends" id="friendsTable" align="center">
+<table name="friends" id="Friends" align="center">
   <caption> Friends </caption>
   <tr class="header">
     <th>Name</th>
@@ -78,9 +78,10 @@
           <td>{{this.fr_name}}</td>
           <td>{{this.fr_rating}}</td>
           <td>{{this.fr_term}}</td>
-          <td> <input type="button" name="delete" value="Delete" onClick="deleteRow({{this.id}})"><input type="hidden" id="d0449210{{this.id}}"></td>
+          <td> <input type="button" name="delete" value="Delete" onClick="deleteCoRow({{this.fr_per_id}}, {{this.fr_co_id}}, 'Friends')"><input type="hidden" id="{{this.fr_per_id}}"></td>
         </tr>
       {{/if}}
+      {{#if this.co_id}}
     {{/each}}
   {{/if}}
 </table>
@@ -88,7 +89,7 @@
 
 
 
-<table name="family" id="familyTable" align="center">
+<table name="family" id="Family" align="center">
   <caption> Family </caption>
   <tr class="header">
     <th>Name</th>
@@ -102,8 +103,8 @@
         <tr class="row">
           <td>{{this.fa_name}}</td>
           <td>{{this.fa_rating}}</td>
-          <td>{{this.fa_classifier}}</td>
-          <td> <input type="button" name="delete" value="Delete" onClick="deleteRow({{this.id}})"><input type="hidden" id="d0449210{{this.id}}"></td>
+          <td>{{this.fa_term}}</td>
+          <td> <input type="button" name="delete" value="Delete" onClick="deleteCoRow({{this.fa_per_id}}, {{this.fa_co_id}}, 'Family')"><input type="hidden" id="{{this.fa_per_id}}"></td>
         </tr>
       {{/if}}
     {{/each}}
@@ -111,11 +112,10 @@
 </table>
 
 
-<table name="work" id="workTable" align="center">
+<table name="work" id="Work" align="center">
   <caption> Work </caption>
   <tr class="header">
     <th>Name</th>
-    <th>Email</th>
     <th>Star Rating</th>
     <th>Top Classifer</th>
     <th>Delete</th>
@@ -125,10 +125,9 @@
       {{#if this.w_name}}
         <tr class="row">
           <td>{{this.w_name}}</td>
-          <td>{{this.w_email}}</td>
           <td>{{this.w_rating}}</td>
           <td>{{this.w_term}}</td>
-          <td> <input type="button" name="delete" value="Delete" onClick="deleteRow({{this.id}})"><input type="hidden" id="d0449210{{this.id}}"></td>
+          <td> <input type="button" name="delete" value="Delete" onClick="deleteRow({{this.w_per_id}},{{this.w_co_id}}, 'Work')"><input type="hidden" id="{{this.w_per_id}}"></td>
         </tr>
       {{/if}}
     {{/each}}
