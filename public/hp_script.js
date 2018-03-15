@@ -43,7 +43,7 @@ function bindAddPersonButton() {
             row.appendChild(cell);
           }
         }
-        var deleteRelationshipCell = newDeleteRelationshipCell(id, cId, tableId);
+        var deleteRelationshipCell = newDeleteRelationshipCell(id, cId, response['co_name']);
         row.appendChild(deleteRelationshipCell);
         var table = document.getElementById(response['co_name']);
         table.appendChild(row);
@@ -79,7 +79,7 @@ function newDeleteRelationshipCell(id,cid, table_id) {
   deleteButton.setAttribute('type', 'button');
   deleteButton.setAttribute('name', 'delete');
   deleteButton.setAttribute('value', 'Delete');
-  deleteButton.setAttribute('onClick', 'deleteCoRow(' + id + ', ' + cid + ', ' + table_id + ')');
+  deleteButton.setAttribute('onClick', 'deleteCoRow(' + id + ', ' + cid + ', "'  + table_id + '")');
 
   var deleteHidden = document.createElement('input');
   deleteHidden.setAttribute('type', 'hidden');
@@ -112,7 +112,7 @@ function deleteCoRow(perId, coId, tableId) {
 
   var req = new XMLHttpRequest();
 
-  var deleteParam = "/deleteFromCompany?per_id=" + perId + "?co_id=" + coId;
+  var deleteParam = "/deleteFromCompany?per_id=" + perId + "&co_id=" + coId;
   req.open("GET", deleteParam, true);
 
   req.addEventListener("load", function() {
@@ -125,7 +125,7 @@ function deleteCoRow(perId, coId, tableId) {
 
   req.send(deleteParam);
   event.preventDefault();
-
+  console.log(tableId);
   var table = document.getElementById(tableId);
   var n = table.rows.length;
   var rowNum;

@@ -240,7 +240,6 @@ app.get('/deleteFromCompany', function(req, res, next) {
       next(err);
       return;
     }
-    res.render('home_page', context);
   });
 });
 
