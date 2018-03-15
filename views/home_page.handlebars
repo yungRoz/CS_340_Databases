@@ -67,7 +67,6 @@
   <caption> Friends </caption>
   <tr class="header">
     <th>Name</th>
-    <th>Email</th>
     <th>Star Rating</th>
     <th>Top Classifer</th>
     <th>Delete</th>
@@ -77,9 +76,8 @@
       {{#if this.fr_name}}
         <tr class="row">
           <td>{{this.fr_name}}</td>
-          <td>{{this.fr_email}}</td>
           <td>{{this.fr_rating}}</td>
-          <td>{{this.fr_classifier}}</td>
+          <td>{{this.fr_term}}</td>
           <td> <input type="button" name="delete" value="Delete" onClick="deleteRow({{this.id}})"><input type="hidden" id="d0449210{{this.id}}"></td>
         </tr>
       {{/if}}
@@ -94,7 +92,6 @@
   <caption> Family </caption>
   <tr class="header">
     <th>Name</th>
-    <th>Email</th>
     <th>Star Rating</th>
     <th>Top Classifer</th>
     <th>Delete</th>
@@ -104,7 +101,6 @@
       {{#if this.fa_name}}
         <tr class="row">
           <td>{{this.fa_name}}</td>
-          <td>{{this.fa_email}}</td>
           <td>{{this.fa_rating}}</td>
           <td>{{this.fa_classifier}}</td>
           <td> <input type="button" name="delete" value="Delete" onClick="deleteRow({{this.id}})"><input type="hidden" id="d0449210{{this.id}}"></td>

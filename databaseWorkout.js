@@ -343,6 +343,7 @@ app.get('/homepage', function(req, res, next) {
 
         for (var i in rows) {
           if(rows[i].co_name == "Friends"){
+            console.log(rows[i].name);
             var member_info = {
               'fr_name': rows[i].name,
               'fr_id': rows[i].id,
