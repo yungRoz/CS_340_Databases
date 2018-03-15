@@ -61,7 +61,7 @@ function bindAddPersonButton() {
     event.preventDefault();
   });
 
-  document.getElementById('reviewPerson').addEventListener('click', function(event) {
+  document.getElementById('addToReviews').addEventListener('click', function(event) {
     var addPersonId = document.getElementById('reviewPerson').value;
     if (addPersonId == "") {
       alert("Name Cannot Be Empty");
