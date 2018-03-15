@@ -80,7 +80,7 @@ function newDeleteCell(id) {
 
   var deleteHidden = document.createElement('input');
   deleteHidden.setAttribute('type', 'hidden');
-  deleteHidden.setAttribute('id', 'd0449210' + id);
+  deleteHidden.setAttribute('id', id);
   deleteCell.appendChild(deleteButton);
   deleteCell.appendChild(deleteHidden);
 
@@ -122,7 +122,6 @@ function deleteRow(id) {
   req.send("/delete?id=" + id);
   event.preventDefault();
 
-  var dtring = "d0449210" + id;
   var table = document.getElementById('personTable');
   var n = table.rows.length;
   var rowNum;
@@ -130,8 +129,8 @@ function deleteRow(id) {
   for (var i = 1; i < n; i++) {
     var row = table.rows[i];
     var allCells = row.getElementsByTagName("td");
-    var dCell = allCells[allCells.length - 1];
-    if (dCell.children[1].id === "d0449210" + id) {
+    var dCell = allCells[allCells.length - 2];
+    if (dCell.children[1].id ==id) {
       rowNum = i;
     }
   }

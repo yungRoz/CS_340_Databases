@@ -187,14 +187,6 @@ app.get('/insertToCompany', function(req, res, next) {
 
 
 app.get('/delete', function(req, res, next) {
-  var context = {};
-  pool.query("DELETE FROM `person` WHERE id=?", [req.query.id], function(err, result) {
-    if (err) {
-      next(err);
-      return;
-    }
-    res.render('form_table', context);
-  });
   pool.query("DELETE FROM `review` WHERE given_by_id=?", [req.query.id], function(err,result){
     if (err) {
       next(err);
@@ -229,6 +221,34 @@ app.get('/delete', function(req, res, next) {
     if (err) {
       next(err);
       return;
+    }
+  });
+
+  pool.query("DELETE FROM `person` WHERE id=?", [req.query.id], function(err, result) {
+    if (err) {
+      next(err);
+      return;
+    }
+  });
+
+  var getUserCoString = "SELECT c.id AS cid, c.name AS co_name FROM company c " +
+    "INNER JOIN belongs_to bt ON bt.co_id = c.id " +
+    "INNER JOIN person p ON p.id = bt.per_id " +
+    "WHERE p.id =? " +
+    "GROUP BY c.id;";
+  pool.query(getUserCoString, [req.query.id], function(err, rows, fields) {
+    if (err) {
+      next(err);
+      return;
+    }
+
+    for (var i in rows) {
+      pool.query("DELETE FROM `company` WHERE id=?", [rows[i].id], function(err,result){
+        if (err) {
+          next(err);
+          return;
+        }
+      });
     }
   });
 });
