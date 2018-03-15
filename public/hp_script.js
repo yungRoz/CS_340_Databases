@@ -17,7 +17,7 @@ function bindAddPersonButton() {
       return;
     }
     var param = "?per_id=" + addPersonId + "&co_id=" + addCompanyId; // + "&weight=" + weight + "&date=" + date + "&lbs=" + unit;
-    console.log(param);
+    //sconsole.log(param);
     var req = new XMLHttpRequest();
     req.open("GET", "/insertToCompany" + param, true);
     req.addEventListener('load', function() {
@@ -34,7 +34,10 @@ function bindAddPersonButton() {
         for (var variableName in response) {
           if (variableName == 'id');
           else if(variableName == 'cid');
-          else if(variableName == 'co_name');
+          else if(variableName == 'co_name'){
+            tableId = response[variableName];
+            console.log(tableId);
+          };
           else {
             var cell = document.createElement("td");
             cell.id = variableName;
