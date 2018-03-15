@@ -166,7 +166,7 @@ document.getElementById('addToReviews').addEventListener('click', function(event
     numStars=1;
   }
   else if(twoStar.checked){
-    numStars=2;g
+    numStars=2;gggggg
   }
   else if (threeStar.checked) {
     numStars=3;
