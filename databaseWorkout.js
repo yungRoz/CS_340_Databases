@@ -187,13 +187,13 @@ app.get('/insertToCompany', function(req, res, next) {
 
 
 app.get('/delete', function(req, res, next) {
-  pool.query("DELETE FROM `review` WHERE given_by_id=?", [req.query.id], function(err,result){
+  pool.query("DELETE FROM `reviews` WHERE given_by_id=?", [req.query.id], function(err,result){
     if (err) {
       next(err);
       return;
     }
   });
-  pool.query("DELETE FROM `review` WHERE belongs_to_id=?", [req.query.id], function(err,result){
+  pool.query("DELETE FROM `reviews` WHERE belongs_to_id=?", [req.query.id], function(err,result){
     if (err) {
       next(err);
       return;
