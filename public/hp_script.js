@@ -86,7 +86,7 @@ function newDeleteRelationshipCell(id,cid, table_id) {
   deleteRelationshipCell.appendChild(deleteButton);
   deleteRelationshipCell.appendChild(deleteHidden);
 
-  return deleteCell;
+  return deleteRelationshipCell;
 }
 
 function newViewSiteAsCell(id){
