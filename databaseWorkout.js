@@ -168,9 +168,9 @@ app.get('/insertToCompany', function(req, res, next) {
         }
       });
 
-      var poiCoString = "SELECT everyone_else.name AS `name`, everyone_else.id AS `id`, " +
-                          "user.co_name AS `co_name`, user.cid AS `cid`, everyone_else.avg_rating AS `avg_rating`, " +
-                          "everyone_else.top_classifier AS `top_classifier` " +
+      var poiCoString = "SELECT poi.name AS `name`, poi.id AS `id`, " +
+                          "poi.co_name AS `co_name`, poi.co_id AS `cid`, poi.avg_rating AS `avg_rating`, " +
+                          "poi.top_classifier AS `top_classifier` " +
                           "FROM (SELECT p.name, p.id, p.avg_rating, p.top_classifier, bt.co_id AS `co_id`, c.name AS `co_name` FROM person p " +
                           "INNER JOIN belongs_to bt ON bt.per_id = p.id " +
                           "INNER JOIN company c ON c.id = bt.co_id"
