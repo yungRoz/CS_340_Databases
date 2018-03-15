@@ -34,7 +34,8 @@ function bindAddPersonButton() {
         console.log(response.co_name);
         for (var variableName in response) {
           if (variableName == 'id');
-          else if(variableName == 'cid');
+          else if(variableName == 'cid')
+            console.log(response[variableName]);
           else if(variableName == 'co_name'){
             var tableId = response[variableName];
             console.log(response[variableName]);
