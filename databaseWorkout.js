@@ -81,7 +81,6 @@ app.get('/insertToPerson', function(req, res, next) {
       }
       pool.query("INSERT INTO `belongs_to` (`per_id`, `co_id`) VALUES(?,?)", [person_id, result.insertId], function(err, result){
         if (err) {
-          console.log(person_id);
           next(err);
           return;
         }
@@ -338,7 +337,6 @@ app.get('/homepage', function(req, res, next) {
 
         for (var i in rows) {
           if(rows[i].co_name == "Friends"){
-            console.log(rows[i].name);
             var member_info = {
               'frName': rows[i].name,
               'frPerId': rows[i].id,
