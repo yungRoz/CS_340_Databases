@@ -172,14 +172,12 @@ app.get('/insertToCompany', function(req, res, next) {
                           "INNER JOIN company c ON c.id = bt.co_id " +
                           "WHERE p.id=? AND c.id=? ";
 
-      pool.query(poiCoString, [req.query.per_id, req.query.co_id], function(err, rows, result) {
+      pool.query(poiCoString, [req.query.per_id, req.query.co_id], function(err, result) {
         if (err) {
           next(err);
           return;
         }
-        for (var i in rows) {
-          console.log(rows[i].co_name)
-        }
+
         res.send(JSON.stringify(result[0]));
       });
     }
