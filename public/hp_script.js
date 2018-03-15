@@ -14,7 +14,7 @@ function bindAddPersonButton() {
     var addCompanyId= document.getElementById('addCompany').value;
 
     var param = "?per_id=" + addPersonId + "&co_id=" + addCompanyId; // + "&weight=" + weight + "&date=" + date + "&lbs=" + unit;
-    sconsole.log(param);
+    console.log(param);
     var req = new XMLHttpRequest();
     req.open("GET", "/insertToCompany" + param, true);
     req.addEventListener('load', function() {
