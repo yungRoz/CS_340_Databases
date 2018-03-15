@@ -48,18 +48,6 @@ function bindAddPersonButton() {
     });
     req.send("/insertToPerson" + bigLongParam);
     event.preventDefault();
-    /*var req2 = new XMLHttpRequest();
-    console.log("/createCompanies?id="+id);
-    req2.open("GET", "/createCompanies" + "?id=" + id, true);
-    req2.addEventListener("load", function() {
-      if (req.status >= 200 && req.status < 400) {
-        console.log('companies created');
-      } else {
-        console.log('there was an error creating companies');
-      }
-    });
-    req2.send("/createCompanies" + "?id=" + id);
-    event.preventDefault();*/
   });
 
 }

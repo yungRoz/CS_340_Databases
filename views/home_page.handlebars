@@ -4,30 +4,49 @@
 
     <label>Who is this review for?</label>
     <br/>
-    <input type="text" name="name" id="name" />
-    <br/>
-    <br/>
-    <select>
-      <optgroup label="Swedish Cars">
-        <option value="volvo">Volvo</option>
-        <option value="saab">Saab</option>
-      </optgroup>
-      <optgroup label="German Cars">
-        <option value="mercedes">Mercedes</option>
-        <option value="audi">Audi</option>
-      </optgroup>
+    <select name="person" id="reviewPerson">
+      {{#if results}}
+        {{#each results}}
+          {{#if this.notUId}}
+          <option value={{this.notUId}}> {{this.notUName}}</option>
+          {{/if}}
+        {{/each}}
+      {{/if}}
     </select>
+    <div class="stars">
+      <input type="radio" name="star" class="star-1" id="star-1" />
+      <label class="star-1" for="star-1">1</label>
+      <input type="radio" name="star" class="star-2" id="star-2" />
+      <label class="star-2" for="star-2">2</label>
+      <input type="radio" name="star" class="star-3" id="star-3" />
+      <label class="star-3" for="star-3">3</label>
+      <input type="radio" name="star" class="star-4" id="star-4" />
+      <label class="star-4" for="star-4">4</label>
+      <input type="radio" name="star" class="star-5" id="star-5" />
+      <label class="star-5" for="star-5">5</label>
+      <span></span>
+    </div>
 
-    <label>email</label>
-    <br/>
-    <input type="text" name="email" id="email" />
-    <br/>
-    <br/>
-
-    <input type="radio" name="lbs" id="lbs" value="true" />lbs</label>
-    <input type="radio" name="lbs" id="kg" value="false" />kg</label>
-    <input type="submit" id="reviewPerson" />
-  </fieldset>
+    <select name="classifier" id="classifier">
+      <optgroup label="Negatives">
+        <option value='Rude'>Rude</option>
+        <option value="Liar">Liar</option>
+        <option value="Cheater">Cheater</option>
+        <option value="Selfish">Selfish</option>
+        <option value="Know-it-all">Know-it-all</option>
+        <option value="Fake">Fake</option>
+        <option value="Boring">Boring</option>
+      <optgroup label="Positives">
+        <option value="Honest">Honest</option>
+        <option value='Kind'>Kind</option>
+        <option value="Altruistic">Altruistic</option>
+        <option value="Humble">Humble</option>
+        <option value="Creative">Creative</option>
+        <option value="Brave">Brave</option>
+        <option value="True to self">True to self</option>
+        <option value="Fun">Fun</option>
+        <option value="Nuce">Nice</option>
+    </select>
 </form>
 
 <form id="addToCompany" align="left">
