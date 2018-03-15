@@ -30,16 +30,12 @@ function bindAddPersonButton() {
         var row = document.createElement("tr");
         var id = response.id;
         var cId = response.cid;
-        //var tableId = response.co_name;
-        console.log(response.co_name);
+        var tableId = response.co_name;
+
         for (var variableName in response) {
           if (variableName == 'id');
-          else if(variableName == 'cid')
-            console.log(response[variableName]);
-          else if(variableName == 'co_name'){
-            var tableId = response[variableName];
-            console.log(response[variableName]);
-          }
+          else if(variableName == 'cid');
+          else if(variableName == 'co_name');
           else {
             var cell = document.createElement("td");
             cell.id = variableName;
@@ -83,7 +79,7 @@ function newDeleteRelationshipCell(id,cid, table_id) {
   deleteButton.setAttribute('type', 'button');
   deleteButton.setAttribute('name', 'delete');
   deleteButton.setAttribute('value', 'Delete');
-  deleteButton.setAttribute('onClick', 'deleteRow(' + id + ', ' + cid + ', ' + table_id + ')');
+  deleteButton.setAttribute('onClick', 'deleteCoRow(' + id + ', ' + cid + ', ' + table_id + ')');
 
   var deleteHidden = document.createElement('input');
   deleteHidden.setAttribute('type', 'hidden');
