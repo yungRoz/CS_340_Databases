@@ -37,7 +37,7 @@ function bindAddPersonButton() {
           else if(variableName == 'co_name'){
             tableId = response[variableName];
             console.log(tableId);
-          };
+          }
           else {
             var cell = document.createElement("td");
             cell.id = variableName;
