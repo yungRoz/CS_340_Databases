@@ -335,7 +335,7 @@ app.get('/homepage', function(req, res, next) {
                     	"WHERE p.id =? and c.id =? " +
                     	"GROUP BY c.id) AS user " +
                     "ON everyone_else.co_id = user.cid; "
-      pool.query(companyIdString, [req.query.id, req.query.id, rows[i].id], function(err, rows, fields){
+      pool.query(peopleString, [req.query.id, req.query.id, rows[i].id], function(err, rows, fields){
         if (err) {
           next(err);
           return;
