@@ -87,7 +87,7 @@ function newDeleteCell(id) {
   return deleteCell;
 }
 
-function newViewSiteAsCell(id){
+function newViewSiteAsCell(id, name){
   var vsaCell = document.createElement("td");
 
   var vsaUrl = document.createElement('a');
@@ -96,7 +96,7 @@ function newViewSiteAsCell(id){
 
   var vsaButton = document.createElement('input');
   vsaButton.setAttribute('type', 'button');
-  vsaButton.setAttribute('value', 'Update');
+  vsaButton.setAttribute('value', name);
 
   vsaUrl.appendChild(vsaButton);
   vsaCell.appendChild(vsaUrl);

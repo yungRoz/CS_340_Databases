@@ -1,18 +1,20 @@
-<form id="giveReview" align="left">
+<form id="giveReview" align="left" class="">
   <fieldset>
-    <h2> Give a review! </h2>
-
-    <label>Who is this review for?</label>
-    <br/>
-    <select name="person" id="reviewPerson">
-      {{#if results}}
-        {{#each results}}
-          {{#if this.notUId}}
-          <option value={{this.notUId}}> {{this.notUName}}</option>
+    <legend> Give a review! </legend>
+    <div class="pure-g">
+      <div class="pure-u-1 pure-u-md-1-3">
+        <label for="reviewFor">Review For</label>
+        <select name="person" id="reviewPerson" class="pure-input-1-2">
+          {{#if results}}
+            {{#each results}}
+              {{#if this.notUId}}
+                <option value={{this.notUId}}> {{this.notUName}}</option>
+              {{/if}}
+            {{/each}}
           {{/if}}
-        {{/each}}
-      {{/if}}
-    </select>
+        </select>
+      </div>
+    </div>
     <br/>
     <div class="stars">
       <input type="radio" name="star" class="star-1" id="star-1" />
@@ -28,7 +30,9 @@
       <span></span>
     </div>
     <br/>
-    <select name="classifier" id="classifier">
+    <div class="pure-g">
+      <div class="pure-u-1 pure-u-md-1-3">
+        <select name="classifier" id="classifier">
       <optgroup label="Negatives">
         <option value='Rude'>Rude</option>
         <option value="Liar">Liar</option>
@@ -48,6 +52,8 @@
         <option value="Fun">Fun</option>
         <option value="Nuce">Nice</option>
     </select>
+      </div>
+    </div>
     <br/>
     <input type="submit" id="addToReviews" />
   </fieldset>
@@ -59,7 +65,7 @@
     <br/>
     <label>Which company do you want to add them to?</label>
     <br/>
-    <select name="company" id="addCompany">
+    <select name="company" id="addCompany" class="pure-input-1-2">
       {{#if results}}
         {{#each results}}
           {{#if this.coId}}
@@ -71,7 +77,7 @@
     <br />
     <label>Who do you want to add?</label>
     <br/>
-    <select name="person" id="addPerson">
+    <select name="person" id="addPerson" class="pure-input-1-2">
     {{#if results}}
       {{#each results}}
         {{#if this.notUId}}
@@ -86,7 +92,7 @@
 
 
 
-<table name="friends" id="Friends" align="center">
+<table name="friends" id="Friends" align="center" class="pure-table-horizontal">
   <caption> Friends </caption>
   <tr class="header">
     <th>Name</th>
@@ -111,7 +117,7 @@
 
 
 
-<table name="family" id="Family" align="center">
+<table name="family" id="Family" align="center" class="pure-table-horizontal">
   <caption> Family </caption>
   <tr class="header">
     <th>Name</th>
@@ -134,7 +140,7 @@
 </table>
 
 
-<table name="work" id="Work" align="center">
+<table name="work" id="Work" align="center" class="pure-table-horizontal">
   <caption> Work </caption>
   <tr class="header">
     <th>Name</th>
