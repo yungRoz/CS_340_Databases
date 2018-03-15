@@ -168,13 +168,11 @@ app.get('/insertToCompany', function(req, res, next) {
         }
       });
 
-      var poiCoString = "SELECT poi.name AS `name`, poi.id AS `id`, " +
-                          "poi.co_name AS `co_name`, poi.co_id AS `cid`, poi.avg_rating AS `avg_rating`, " +
-                          "poi.top_classifier AS `top_classifier` " +
-                          "FROM (SELECT p.name, p.id, p.avg_rating, p.top_classifier, bt.co_id AS `co_id`, c.name AS `co_name` FROM person p " +
+      var poiCoString = "SELECT p.name AS `name`, p.id AS `id`, p.avg_rating AS `avg_rating`, " +
+      "p.top_classifier AS `top_classifier`, bt.co_id AS `cid`, c.name AS `co_name` FROM person p " +
                           "INNER JOIN belongs_to bt ON bt.per_id = p.id " +
                           "INNER JOIN company c ON c.id = bt.co_id"
-                          "WHERE p.id=? AND c.id=? ) AS poi; ";
+                          "WHERE p.id=? AND c.id=? ) AS poi ";
       pool.query(poiCoString, [req.query.per_id, req.query.co_id], function(err, result) {
         if (err) {
           next(err);
