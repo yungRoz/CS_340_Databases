@@ -320,7 +320,7 @@ app.get('/homepage', function(req, res, next) {
   var companyIdString = "SELECT DISTINCT c.name AS `name`, c.id AS `id` " +
     "FROM company c INNER JOIN belongs_to bt ON bt.co_id = c.id " +
     "INNER JOIN person p ON p.id = bt.per_id " +
-    "where p.id=? AND c.name !='World' ";
+    "where p.id=? AND c.name!='World' ;";
   pool.query(companyIdString, [req.query.id], function(err, rows, fields) {
     if (err) {
       next(err);
