@@ -169,7 +169,7 @@ app.get('/insertToCompany', function(req, res, next) {
 
       var poiCoString = "SELECT p.name, p.id, p.avg_rating, p.top_classifier, bt.co_id AS `cid`, c.name AS `co_name` FROM person p " +
                           "INNER JOIN belongs_to bt ON bt.per_id = p.id " +
-                          "INNER JOIN company c ON c.id = bt.co_id "
+                          "INNER JOIN company c ON c.id = bt.co_id " +
                           "WHERE p.id=? AND c.id=? ";
 
       pool.query(poiCoString, [req.query.per_id, req.query.co_id], function(err, rows, result) {
