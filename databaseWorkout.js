@@ -74,12 +74,12 @@ app.get('/insertToPerson', function(req, res, next) {
     }
     var person_id = result.insertId;
 
-    pool.query("INSERT INTO `company` (`name`) VALUES ('Family')",  function(err, result) {
+    pool.query("INSERT INTO `company` (`name`) VALUES ('Family')", function(err, result) {
       if (err) {
         next(err);
         return;
       }
-      pool.query("INSERT INTO `belongs_to` (`per_id`, `co_id`) VALUES(?,?)", [person_id, result.insertId], function(err, result){
+      pool.query("INSERT INTO `belongs_to` (`per_id`, `co_id`) VALUES(?,?)", [person_id, result.insertId], function(err, result) {
         if (err) {
           next(err);
           return;
@@ -91,7 +91,7 @@ app.get('/insertToPerson', function(req, res, next) {
         next(err);
         return;
       }
-      pool.query("INSERT INTO `belongs_to` (`per_id`, `co_id`) VALUES(?,?)", [person_id, result.insertId], function(err, result){
+      pool.query("INSERT INTO `belongs_to` (`per_id`, `co_id`) VALUES(?,?)", [person_id, result.insertId], function(err, result) {
         if (err) {
           next(err);
           return;
@@ -103,7 +103,7 @@ app.get('/insertToPerson', function(req, res, next) {
         next(err);
         return;
       }
-      pool.query("INSERT INTO `belongs_to` (`per_id`, `co_id`) VALUES(?,?)", [person_id, result.insertId], function(err, result){
+      pool.query("INSERT INTO `belongs_to` (`per_id`, `co_id`) VALUES(?,?)", [person_id, result.insertId], function(err, result) {
         if (err) {
           next(err);
           return;
@@ -111,7 +111,7 @@ app.get('/insertToPerson', function(req, res, next) {
       });
     });
 
-    pool.query("INSERT INTO `belongs_to` (`per_id`, `co_id`) VALUES(?,?)", [person_id, '8'], function(err, result){
+    pool.query("INSERT INTO `belongs_to` (`per_id`, `co_id`) VALUES(?,?)", [person_id, '8'], function(err, result) {
       if (err) {
         next(err);
         return;
@@ -153,10 +153,9 @@ app.get('/insertToCompany', function(req, res, next) {
       return;
     }
 
-    if ( result.length > 0) {
+    if (result.length > 0) {
       res.send(JSON.stringify([new String('false')]));
-    }
-    else {
+    } else {
       pool.query("INSERT INTO `belongs_to` (`per_id`, `co_id`) VALUES (?,?)", [req.query.per_id, req.query.co_id], function(err, result) {
         if (err) {
           next(err);
@@ -165,16 +164,16 @@ app.get('/insertToCompany', function(req, res, next) {
       });
 
       var poiCoString = "SELECT p.name, p.id, p.avg_rating, p.top_classifier, bt.co_id AS `cid`, c.name AS `co_name` FROM person p " +
-                          "INNER JOIN belongs_to bt ON bt.per_id = p.id " +
-                          "INNER JOIN company c ON c.id = bt.co_id " +
-                          "WHERE p.id=? AND c.id=? ;";
+        "INNER JOIN belongs_to bt ON bt.per_id = p.id " +
+        "INNER JOIN company c ON c.id = bt.co_id " +
+        "WHERE p.id=? AND c.id=? ;";
 
       pool.query(poiCoString, [req.query.per_id, req.query.co_id], function(err, result) {
         if (err) {
           next(err);
           return;
         }
-
+        console.log(JSON.stringify(result[0]));
         res.send(JSON.stringify(result[0]));
       });
     }
@@ -184,37 +183,37 @@ app.get('/insertToCompany', function(req, res, next) {
 
 
 app.get('/delete', function(req, res, next) {
-  pool.query("DELETE FROM `reviews` WHERE given_by_id=?", [req.query.id], function(err,result){
+  pool.query("DELETE FROM `reviews` WHERE given_by_id=?", [req.query.id], function(err, result) {
     if (err) {
       next(err);
       return;
     }
   });
-  pool.query("DELETE FROM `reviews` WHERE belongs_to_id=?", [req.query.id], function(err,result){
+  pool.query("DELETE FROM `reviews` WHERE belongs_to_id=?", [req.query.id], function(err, result) {
     if (err) {
       next(err);
       return;
     }
   });
-  pool.query("DELETE FROM `has` WHERE per_id=?", [req.query.id], function(err,result){
+  pool.query("DELETE FROM `has` WHERE per_id=?", [req.query.id], function(err, result) {
     if (err) {
       next(err);
       return;
     }
   });
-  pool.query("DELETE FROM `belongs_to` WHERE per_id=?", [req.query.id], function(err,result){
+  pool.query("DELETE FROM `belongs_to` WHERE per_id=?", [req.query.id], function(err, result) {
     if (err) {
       next(err);
       return;
     }
   });
-  pool.query("DELETE FROM `has_higher_status` WHERE hi_per_id=?", [req.query.id], function(err,result){
+  pool.query("DELETE FROM `has_higher_status` WHERE hi_per_id=?", [req.query.id], function(err, result) {
     if (err) {
       next(err);
       return;
     }
   });
-  pool.query("DELETE FROM `has_higher_status` WHERE lo_per_id=?", [req.query.id], function(err,result){
+  pool.query("DELETE FROM `has_higher_status` WHERE lo_per_id=?", [req.query.id], function(err, result) {
     if (err) {
       next(err);
       return;
@@ -240,7 +239,7 @@ app.get('/delete', function(req, res, next) {
     }
 
     for (var i in rows) {
-      pool.query("DELETE FROM `company` WHERE id=?", [rows[i].id], function(err,result){
+      pool.query("DELETE FROM `company` WHERE id=?", [rows[i].id], function(err, result) {
         if (err) {
           next(err);
           return;
@@ -319,41 +318,41 @@ app.get('/homepage', function(req, res, next) {
 
   //get company ids of user
   var companyIdString = "SELECT DISTINCT c.name AS `name`, c.id AS `id` " +
-              "FROM company c INNER JOIN belongs_to bt ON bt.co_id = c.id " +
-              "INNER JOIN person p ON p.id = bt.per_id " +
-              "where p.id=? AND c.name !='World' ";
-  pool.query(companyIdString, [req.query.id], function(err, rows, fields){
+    "FROM company c INNER JOIN belongs_to bt ON bt.co_id = c.id " +
+    "INNER JOIN person p ON p.id = bt.per_id " +
+    "where p.id=? AND c.name !='World' ";
+  pool.query(companyIdString, [req.query.id], function(err, rows, fields) {
     if (err) {
       next(err);
       return;
     }
 
     for (var i in rows) {
-      var  companyInfo={
+      var companyInfo = {
         'coName': rows[i].name,
         'coId': rows[i].id
       }
       params.push(companyInfo);
       var peopleString = "SELECT everyone_else.name AS `name`, everyone_else.id AS `id`, " +
-                          "user.co_name AS `co_name`, user.cid AS `cid`, everyone_else.avg_rating AS `avg_rating`, " +
-                          "everyone_else.top_classifier AS `top_classifier` " +
-                          "FROM (SELECT p.name, p.id, p.avg_rating, p.top_classifier, bt.co_id FROM person p " +
-                          "INNER JOIN belongs_to bt ON bt.per_id = p.id " +
-                          "WHERE p.id!=? ) AS everyone_else " +
-                    "INNER JOIN (SELECT c.id AS cid, c.name AS co_name FROM company c " +
-                    	"INNER JOIN belongs_to bt ON bt.co_id = c.id " +
-                    	"INNER JOIN person p ON p.id = bt.per_id " +
-                    	"WHERE p.id =? and c.id =? " +
-                    	"GROUP BY c.id) AS user " +
-                    "ON everyone_else.co_id = user.cid; ";
-      pool.query(peopleString, [req.query.id, req.query.id, rows[i].id], function(err, rows, fields){
+        "user.co_name AS `co_name`, user.cid AS `cid`, everyone_else.avg_rating AS `avg_rating`, " +
+        "everyone_else.top_classifier AS `top_classifier` " +
+        "FROM (SELECT p.name, p.id, p.avg_rating, p.top_classifier, bt.co_id FROM person p " +
+        "INNER JOIN belongs_to bt ON bt.per_id = p.id " +
+        "WHERE p.id!=? ) AS everyone_else " +
+        "INNER JOIN (SELECT c.id AS cid, c.name AS co_name FROM company c " +
+        "INNER JOIN belongs_to bt ON bt.co_id = c.id " +
+        "INNER JOIN person p ON p.id = bt.per_id " +
+        "WHERE p.id =? and c.id =? " +
+        "GROUP BY c.id) AS user " +
+        "ON everyone_else.co_id = user.cid; ";
+      pool.query(peopleString, [req.query.id, req.query.id, rows[i].id], function(err, rows, fields) {
         if (err) {
           next(err);
           return;
         }
 
         for (var i in rows) {
-          if(rows[i].co_name == "Friends"){
+          if (rows[i].co_name == "Friends") {
             var member_info = {
               'frName': rows[i].name,
               'frPerId': rows[i].id,
@@ -362,8 +361,7 @@ app.get('/homepage', function(req, res, next) {
               'frCoId': rows[i].cid
             };
             params.push(member_info);
-          }
-          else if(rows[i].co_name == "Work"){
+          } else if (rows[i].co_name == "Work") {
             var member_info = {
               'wName': rows[i].name,
               'wPerId': rows[i].id,
@@ -372,14 +370,13 @@ app.get('/homepage', function(req, res, next) {
               'wCoId': rows[i].cid
             };
             params.push(member_info);
-          }
-          else if(rows[i].co_name == "Family"){
+          } else if (rows[i].co_name == "Family") {
             var member_info = {
               'faName': rows[i].name,
               'faPerId': rows[i].id,
               'faRating': rows[i].avg_rating,
               'faTerm': rows[i].top_classifier,
-              'faCoId' : rows[i].cid
+              'faCoId': rows[i].cid
             };
             params.push(member_info);
           }
@@ -412,7 +409,7 @@ app.get('/homepage', function(req, res, next) {
       return;
     }
 
-    for (var i in rows){
+    for (var i in rows) {
       var info = {
         'belongsStarRating': rows[i].star_rating,
         'belongsClassifierTerm': rows[i].classifer_term,
@@ -439,7 +436,7 @@ app.get('/homepage', function(req, res, next) {
       };
       params.push(info);
     }
-    context.results=params;
+    context.results = params;
     res.render('home_page', context);
   });
 });
