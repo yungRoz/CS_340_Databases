@@ -37,7 +37,7 @@ function bindAddPersonButton() {
           else if(variableName == 'cid');
           else if(variableName == 'co_name'){
             var tableId = response[variableName];
-            console.log(tableId);
+            console.log(response[variableName]);
           }
           else {
             var cell = document.createElement("td");
@@ -48,7 +48,7 @@ function bindAddPersonButton() {
         }
         var deleteRelationshipCell = newDeleteRelationshipCell(id, cId, tableId);
         row.appendChild(deleteRelationshipCell);
-        var table = document.getElementById(tableId);
+        var table = document.getElementById(response['co_name']);
         table.appendChild(row);
       } else {
         console.log('ERROR' + req.statusText);
