@@ -1,26 +1,20 @@
-<form id="addPerson" align="left">
+<form id="addPerson" align="left" class="pure-form">
   <fieldset>
-    <h2> Add a person! </h2>
-
-    <label>name</label>
-    <br/>
-    <input type="text" name="name" id="name" />
-    <br/>
-    <br/>
+    <legend> Add a person! </legend>
+    <input type="text" placeholder="Name"name="name" id="name" />
 
     <label>email</label>
     <br/>
-    <input type="text" name="email" id="email" />
-    <br/>
-    <br/>
-    <input type="submit" id="submitPerson" />
+    <input type="text" placeholder="Email" name="email" id="email">
+
+    <button type="submit" id="submitPerson" class="pure-button pure-button-primary">Sign Up</button>
   </fieldset>
 </form>
 
 <br />
 <br />
 
-<table id="personTable" align="center">
+<table id="personTable" align="center" class="pure-table-horizontal">
   <tr class="header">
     <th>Name</th>
     <th>Email</th>
