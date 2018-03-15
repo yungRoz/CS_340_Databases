@@ -134,11 +134,11 @@ function deleteCoRow(perId, coId, tableId) {
     var row = table.rows[i];
     var allCells = row.getElementsByTagName("td");
     var dCell = allCells[allCells.length - 1];
-    console.log(dCell.children[1].id)
-    console.log(perId);
+    //console.log(dCell.children[1].id)
+    //console.log(perId);
     if (dCell.children[1].id ==  perId) {
       rowNum = i;
-      console.log(rowNum);
+      //console.log(rowNum);
     }
   }
   table.deleteRow(rowNum);
