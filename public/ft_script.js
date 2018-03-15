@@ -38,7 +38,7 @@ function bindAddPersonButton() {
         row.appendChild(updateCell);
         var deleteCell = newDeleteCell(id);
         row.appendChild(deleteCell);
-        var vsaCell = newViewSiteAsCell(id);
+        var vsaCell = newViewSiteAsCell(id, response['name']);
         row.appendChild(vsaCell);
         var table = document.getElementById('personTable');
         table.appendChild(row);

@@ -103,7 +103,7 @@
           <td>{{this.faName}}</td>
           <td>{{this.faRating}}</td>
           <td>{{this.faTerm}}</td>
-          <td> <input type="button" name="delete" value="Delete" onClick="deleteCoRow({{this.fa_perId}}, {{this.faCoId}}, 'Family')"><input type="hidden" id="{{this.faPerId}}"></td>
+          <td> <input type="button" name="delete" value="Delete" onClick="deleteCoRow({{this.faPerId}}, {{this.faCoId}}, 'Family')"><input type="hidden" id="{{this.faPerId}}"></td>
         </tr>
       {{/if}}
     {{/each}}
@@ -126,7 +126,7 @@
           <td>{{this.wName}}</td>
           <td>{{this.wRating}}</td>
           <td>{{this.wTerm}}</td>
-          <td> <input type="button" name="delete" value="Delete" onClick="deleteRow({{this.wPerId}},{{this.wCoId}}, 'Work')"><input type="hidden" id="{{this.wPerId}}"></td>
+          <td> <input type="button" name="delete" value="Delete" onClick="deleteRow({{this.wPerId}}, {{this.wCoId}}, 'Work')"><input type="hidden" id="{{this.wPerId}}"></td>
         </tr>
       {{/if}}
     {{/each}}
