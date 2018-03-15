@@ -78,7 +78,7 @@ function newDeleteRelationshipCell(id,cid, table_id) {
   deleteButton.setAttribute('type', 'button');
   deleteButton.setAttribute('name', 'delete');
   deleteButton.setAttribute('value', 'Delete');
-  deleteButton.setAttribute('onClick', 'deleteRow(' + id + ', ' + cid + ', ' + table_id')');
+  deleteButton.setAttribute('onClick', 'deleteRow(' + id + ', ' + cid + ', ' + table_id + ')');
 
   var deleteHidden = document.createElement('input');
   deleteHidden.setAttribute('type', 'hidden');
