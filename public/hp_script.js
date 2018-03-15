@@ -83,8 +83,8 @@ function newDeleteRelationshipCell(id,cid, table_id) {
   var deleteHidden = document.createElement('input');
   deleteHidden.setAttribute('type', 'hidden');
   deleteHidden.setAttribute('id', id);
-  deleteCell.appendChild(deleteButton);
-  deleteCell.appendChild(deleteHidden);
+  deleteRelationshipCell.appendChild(deleteButton);
+  deleteRelationshipCell.appendChild(deleteHidden);
 
   return deleteCell;
 }
