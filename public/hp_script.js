@@ -125,7 +125,7 @@ function deleteCoRow(perId, coId, tableId) {
 
   req.send(deleteParam);
   event.preventDefault();
-  console.log(tableId);
+  //console.log(tableId);
   var table = document.getElementById(tableId);
   var n = table.rows.length;
   var rowNum;
@@ -136,9 +136,9 @@ function deleteCoRow(perId, coId, tableId) {
     var dCell = allCells[allCells.length - 1];
     console.log(dCell.children[1].id)
     console.log(perId);
-    if (dCell.children[1].id === perId) {
+    if (dCell.children[1].id ==  perId) {
       rowNum = i;
-      console.log(rowNum); 
+      console.log(rowNum);
     }
   }
   table.deleteRow(rowNum);
