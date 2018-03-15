@@ -114,7 +114,8 @@ function deleteCoRow(perId, coId, tableId) {
   var deleteParam = "/deleteFromCompany?per_id=" + perId + "&co_id=" + coId;
   req.open("GET", deleteParam, true);
 
-  req.addEventListener("load", function() {
+  req.addEventListener("load", function(event) {
+    even.preventDefault();
     if (req.status >= 200 && req.status < 400) {
       console.log('delete processed');
     } else {
@@ -123,7 +124,7 @@ function deleteCoRow(perId, coId, tableId) {
   });
 
   req.send(deleteParam);
-  event.preventDefault();
+  //event.preventDefault();
   //console.log(tableId);
   var table = document.getElementById(tableId);
   var n = table.rows.length;
