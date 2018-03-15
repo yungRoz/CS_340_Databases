@@ -29,8 +29,8 @@ function bindAddPersonButton() {
         }
         var row = document.createElement("tr");
         var id = response.id;
-        var cid = response.cid;
-        var table_id = response.co_name;
+        var cId = response.cid;
+        var tableId = response.co_name;
         for (var variableName in response) {
           if (variableName == 'id');
           else if(variableName == 'cid');
@@ -42,9 +42,9 @@ function bindAddPersonButton() {
             row.appendChild(cell);
           }
         }
-        var deleteRelationshipCell = newDeleteRelationshipCell(id, cid, table_id);
+        var deleteRelationshipCell = newDeleteRelationshipCell(id, cId, tableId);
         row.appendChild(deleteRelationshipCell);
-        var table = document.getElementById(table_id);
+        var table = document.getElementById(tableId);
         table.appendChild(row);
       } else {
         console.log('ERROR' + req.statusText);
@@ -107,11 +107,11 @@ function newViewSiteAsCell(id){
 }
 
 
-function deleteCoRow(per_id, co_id, table_id) {
+function deleteCoRow(perId, coId, tableId) {
 
   var req = new XMLHttpRequest();
 
-  var deleteParam = "/deleteFromCompany?per_id=" + per_id + "?co_id=" + co_id;
+  var deleteParam = "/deleteFromCompany?per_id=" + perId + "?co_id=" + coId;
   req.open("GET", deleteParam, true);
 
   req.addEventListener("load", function() {
@@ -125,8 +125,7 @@ function deleteCoRow(per_id, co_id, table_id) {
   req.send(deleteParam);
   event.preventDefault();
 
-  var dtring = "d0449210" + per_id;
-  var table = document.getElementById(table_id);
+  var table = document.getElementById(tableId);
   var n = table.rows.length;
   var rowNum;
 

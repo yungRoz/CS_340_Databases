@@ -39,8 +39,8 @@
     <select name="company" id="addCompany">
       {{#if results}}
         {{#each results}}
-          {{#if this.co_id}}
-          <option value={{this.co_id}}> {{this.co_name}}</option>
+          {{#if this.coId}}
+          <option value={{this.coId}}> {{this.coName}}</option>
           {{/if}}
         {{/each}}
       {{/if}}
@@ -51,8 +51,8 @@
     <select name="person" id="addPerson">
     {{#if results}}
       {{#each results}}
-        {{#if this.notu_id}}
-        <option value={{this.notu_id}}> {{this.notu_name}}</option>
+        {{#if this.notUId}}
+        <option value={{this.notUId}}> {{this.notUName}}</option>
         {{/if}}
       {{/each}}
     {{/if}}
@@ -73,15 +73,14 @@
   </tr>
   {{#if results}}
     {{#each results}}
-      {{#if this.fr_name}}
+      {{#if this.frName}}
         <tr class="row">
-          <td>{{this.fr_name}}</td>
-          <td>{{this.fr_rating}}</td>
-          <td>{{this.fr_term}}</td>
-          <td> <input type="button" name="delete" value="Delete" onClick="deleteCoRow({{this.fr_per_id}}, {{this.fr_co_id}}, 'Friends')"><input type="hidden" id="{{this.fr_per_id}}"></td>
+          <td>{{this.frName}}</td>
+          <td>{{this.frRating}}</td>
+          <td>{{this.frTerm}}</td>
+          <td> <input type="button" name="delete" value="Delete" onClick="deleteCoRow({{this.frPerId}}, {{this.frCoId}}, 'Friends')"><input type="hidden" id="{{this.frPerId}}"></td>
         </tr>
       {{/if}}
-      {{#if this.co_id}}
     {{/each}}
   {{/if}}
 </table>
@@ -99,12 +98,12 @@
   </tr>
   {{#if results}}
     {{#each results}}
-      {{#if this.fa_name}}
+      {{#if this.faName}}
         <tr class="row">
-          <td>{{this.fa_name}}</td>
-          <td>{{this.fa_rating}}</td>
-          <td>{{this.fa_term}}</td>
-          <td> <input type="button" name="delete" value="Delete" onClick="deleteCoRow({{this.fa_per_id}}, {{this.fa_co_id}}, 'Family')"><input type="hidden" id="{{this.fa_per_id}}"></td>
+          <td>{{this.faName}}</td>
+          <td>{{this.faRating}}</td>
+          <td>{{this.faTerm}}</td>
+          <td> <input type="button" name="delete" value="Delete" onClick="deleteCoRow({{this.fa_perId}}, {{this.faCoId}}, 'Family')"><input type="hidden" id="{{this.faPerId}}"></td>
         </tr>
       {{/if}}
     {{/each}}
@@ -122,12 +121,12 @@
   </tr>
   {{#if results}}
     {{#each results}}
-      {{#if this.w_name}}
+      {{#if this.wName}}
         <tr class="row">
-          <td>{{this.w_name}}</td>
-          <td>{{this.w_rating}}</td>
-          <td>{{this.w_term}}</td>
-          <td> <input type="button" name="delete" value="Delete" onClick="deleteRow({{this.w_per_id}},{{this.w_co_id}}, 'Work')"><input type="hidden" id="{{this.w_per_id}}"></td>
+          <td>{{this.wName}}</td>
+          <td>{{this.wRating}}</td>
+          <td>{{this.wTerm}}</td>
+          <td> <input type="button" name="delete" value="Delete" onClick="deleteRow({{this.wPerId}},{{this.wCoId}}, 'Work')"><input type="hidden" id="{{this.wPerId}}"></td>
         </tr>
       {{/if}}
     {{/each}}

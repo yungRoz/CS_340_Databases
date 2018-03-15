@@ -53,8 +53,8 @@ app.get('/', function(req, res, next) {
       var exercise = {
         'name': rows[i].name,
         'email': rows[i].email,
-        'avg_rating': rows[i].avg_rating,
-        'top_classifier': rows[i].top_classifier,
+        'avgRating': rows[i].avg_rating,
+        'topClassifier': rows[i].top_classifier,
         'id': rows[i].id
       };
       params.push(exercise);
@@ -279,9 +279,9 @@ app.get('/homepage', function(req, res, next) {
     }
     for (var i in rows) {
       var info = {
-        'u_name': rows[i].name,
-        'u_email': rows[i].email,
-        'u_id': rows[i].id,
+        'uName': rows[i].name,
+        'uEmail': rows[i].email,
+        'uId': rows[i].id,
       };
       params.push(info);
     }
@@ -296,8 +296,8 @@ app.get('/homepage', function(req, res, next) {
 
     for (var i in rows) {
       var info = {
-        'notu_name': rows[i].name,
-        'notu_id': rows[i].id,
+        'notUName': rows[i].name,
+        'notUId': rows[i].id,
       };
       params.push(info);
     }
@@ -316,8 +316,8 @@ app.get('/homepage', function(req, res, next) {
 
     for (var i in rows) {
       var  companyInfo={
-        'co_name': rows[i].name,
-        'co_id': rows[i].id
+        'coName': rows[i].name,
+        'coId': rows[i].id
       }
       params.push(companyInfo);
       var peopleString = "SELECT everyone_else.name AS `name`, everyone_else.id AS `id`, " +
@@ -342,31 +342,31 @@ app.get('/homepage', function(req, res, next) {
           if(rows[i].co_name == "Friends"){
             console.log(rows[i].name);
             var member_info = {
-              'fr_name': rows[i].name,
-              'fr_per_id': rows[i].id,
-              'fr_rating': rows[i].avg_rating,
-              'fr_term': rows[i].top_classifier,
-              'fr_co_id': rows[i].cid
+              'frName': rows[i].name,
+              'frPerId': rows[i].id,
+              'frRating': rows[i].avg_rating,
+              'frTerm': rows[i].top_classifier,
+              'frCoId': rows[i].cid
             };
             params.push(member_info);
           }
           else if(rows[i].co_name == "Work"){
             var member_info = {
-              'w_name': rows[i].name,
-              'w_per_id': rows[i].id,
-              'w_rating': rows[i].avg_rating,
-              'w_term': rows[i].top_classifier,
-              'w_co_id': rows[i].cid
+              'wName': rows[i].name,
+              'wPerId': rows[i].id,
+              'wRating': rows[i].avg_rating,
+              'wTerm': rows[i].top_classifier,
+              'wCoId': rows[i].cid
             };
             params.push(member_info);
           }
           else if(rows[i].co_name == "Family"){
             var member_info = {
-              'fa_name': rows[i].name,
-              'fa_per_id': rows[i].id,
-              'fa_rating': rows[i].avg_rating,
-              'fa_term': rows[i].top_classifier,
-              'fa_co_id' : rows[i].cid
+              'faName': rows[i].name,
+              'faPerId': rows[i].id,
+              'faRating': rows[i].avg_rating,
+              'faTerm': rows[i].top_classifier,
+              'faCoId' : rows[i].cid
             };
             params.push(member_info);
           }
@@ -383,10 +383,10 @@ app.get('/homepage', function(req, res, next) {
 
     for (var i in rows) {
       var info = {
-        'given_star_rating': rows[i].star_rating,
-        'given_classifier_term': rows[i].classifer_term,
-        'given_given_by_id': rows[i].given_by_id,
-        'given_belongs_to_id': rows[i].belongs_to_id
+        'givenStarRating': rows[i].star_rating,
+        'givenClassifierTerm': rows[i].classifer_term,
+        'givenGivenById': rows[i].given_by_id,
+        'givenBelongsToId': rows[i].belongs_to_id
       };
       params.push(info);
     }
@@ -401,10 +401,10 @@ app.get('/homepage', function(req, res, next) {
 
     for (var i in rows){
       var info = {
-        'belongs_star_rating': rows[i].star_rating,
-        'belongs_classifier_term': rows[i].classifer_term,
-        'belongs_given_by_id': rows[i].given_by_id,
-        'belongs_belongs_to_id': rows[i].belongs_to_id
+        'belongsStarRating': rows[i].star_rating,
+        'belongsClassifierTerm': rows[i].classifer_term,
+        'belongsGivenById': rows[i].given_by_id,
+        'belongsBelongsToId': rows[i].belongs_to_id
       };
       params.push(info);
     }
@@ -419,10 +419,10 @@ app.get('/homepage', function(req, res, next) {
 
     for (var i in rows) {
       var info = {
-        'belongs_star_rating': rows[i].star_rating,
-        'belongs_classifier_term': rows[i].classifer_term,
-        'belongs_given_by_id': rows[i].given_by_id,
-        'belongs_belongs_to_id': rows[i].belongs_to_id
+        'belongsStarRating': rows[i].star_rating,
+        'belongsClassifierTerm': rows[i].classifer_term,
+        'belongsGivenById': rows[i].given_by_id,
+        'belongsBelongsToId': rows[i].belongs_to_id
       };
       params.push(info);
     }
