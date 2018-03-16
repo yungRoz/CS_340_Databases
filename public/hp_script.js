@@ -119,7 +119,7 @@ function bindAddPersonButton() {
           if (selectobject.options[i].value == findString )
             selectobject.remove(i);
           }
-          
+
         for (var variableName in response) {
           if (variableName == 'belongs_to_id');
           else if(variableName === 'given_by_id');
@@ -285,4 +285,5 @@ function deleteRevRow(btId, gbId) {
     }
   }
   table.deleteRow(rowNum);
+  location.reload(); 
 }
