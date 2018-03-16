@@ -1,3 +1,12 @@
+{{#if results}}
+  {{#each results}}
+    {{#if this.uName}}
+      <title> Welcome {{this.uName}}</title>
+      <input type="hidden" name="uid" id="{{this.uId}}">
+    {{/if}}
+  {{/each}}
+{{/if}}
+
 <form id="giveReview" align="left" class="">
   <fieldset>
     <legend> Give a review! </legend>
@@ -161,6 +170,50 @@
     {{/each}}
   {{/if}}
 </table>
+
+
+<table name="reviews" id="ReviewsG" align="center" class="pure-table pure-table-horizontal">
+  <caption> Reviews you've given </caption>
+  <tr class="header">
+    <th>Name</th>
+    <th>Star Rating</th>
+    <th>Classifer</th>
+    <th>Delete</th>
+  </tr>
+  {{#if results}}
+    {{#each results}}
+      {{#if this.givenStarRating}}
+        <tr class="row">
+          <td>{{this.givenBelongsToId}}</td>
+          <td>{{this.givenStarRating}}</td>
+          <td>{{this.givenClassifierTerm}}</td>
+          <td> <input type="button" name="delete" value="Delete" onClick="deleteRevRow({{this.givenBelongsToId}})"><input type="hidden" id="{{this.givenBelongsToId}}"></td>
+        </tr>
+      {{/if}}
+    {{/each}}
+  {{/if}}
+</table>
+
+<table name="reviews" id="ReviewsB" align="center" class="pure-table pure-table-horizontal">
+  <caption> Reviews you've received </caption>
+  <tr class="header">
+    <th>Given By</th>
+    <th>Star Rating</th>
+    <th>Classifer</th>
+  </tr>
+  {{#if results}}
+    {{#each results}}
+      {{#if this.belongsStarRating}}
+        <tr class="row">
+          <td>{{this.belongsGivenById}}</td>
+          <td>{{this.belongsStarRating}}</td>
+          <td>{{this.belongsClassifierTerm}}</td>
+        </tr>
+      {{/if}}
+    {{/each}}
+  {{/if}}
+</table>
+
 
 <script type="text/javascript" language="javascript" src="hp_script.js">
 </script>

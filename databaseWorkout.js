@@ -180,6 +180,32 @@ app.get('/insertToCompany', function(req, res, next) {
   });
 });
 
+app.get('/insertToReviews', function(req, res, next) {
+  pool.query("SELECT * FROM `reviews` WHERE `belongs_to_id`=? AND `given_by_id`=?", [req.query.bt_id, req.query.gb_id], function(err, result) {
+    if (err) {
+      next(err);
+      return;
+    }
+
+    if (result.length > 0) {
+      res.send(JSON.stringify([new String('false')]));
+    } else {
+      pool.query("INSERT INTO `reviews` (`belongs_to_id`, `given_by_id`, `star_rating`, `classifier_term`) VALUES (?,?,?,?)", [req.query.bt_id, req.query.gb_id, req.query.rating, req.query.term], function(err, result) {
+        if (err) {
+          next(err);
+          return;
+        }
+        pool.query("SELECT * FROM `reviews` WHERE `belongs_to_id`=? AND `given_by_id`=?", [req.query.bt_id, req.query.gb_id], function(err, result) {
+          if (err) {
+            next(err);
+            return;
+          }
+          res.send(JSON.stringify(result[0]));
+        });
+      });
+    }
+  });
+});
 
 
 app.get('/deleteAllButPerson', function(req, res, next) {
@@ -286,7 +312,7 @@ app.get('/deleteAllButPerson', function(req, res, next) {
       return;
     }
   });
-  
+
   pool.query("DELETE FROM `person` WHERE id=?", [req.query.id], function(err, result) {
     if (err) {
       next(err);
@@ -356,6 +382,15 @@ app.get('/deleteFromCompany', function(req, res, next) {
   });
 });
 
+app.get('/deleteFromReviews', function(req, res, next) {
+  var context = {};
+  pool.query("DELETE FROM `reviews` WHERE belongs_to_id=? AND given_by_id=?", [req.query.bt_id, req.query.gb_id], function(err, result) {
+    if (err) {
+      next(err);
+      return;
+    }
+  });
+});
 app.get('/update', function(req, res, next) {
   var context = {};
   pool.query("SELECT * FROM `person` WHERE id=?", [req.query.id], function(err, rows, fields) {
@@ -491,7 +526,7 @@ app.get('/homepage', function(req, res, next) {
     for (var i in rows) {
       var info = {
         'givenStarRating': rows[i].star_rating,
-        'givenClassifierTerm': rows[i].classifer_term,
+        'givenClassifierTerm': rows[i].classifier_term,
         'givenGivenById': rows[i].given_by_id,
         'givenBelongsToId': rows[i].belongs_to_id
       };
@@ -509,7 +544,7 @@ app.get('/homepage', function(req, res, next) {
     for (var i in rows) {
       var info = {
         'belongsStarRating': rows[i].star_rating,
-        'belongsClassifierTerm': rows[i].classifer_term,
+        'belongsClassifierTerm': rows[i].classifier_term,
         'belongsGivenById': rows[i].given_by_id,
         'belongsBelongsToId': rows[i].belongs_to_id
       };
@@ -517,25 +552,6 @@ app.get('/homepage', function(req, res, next) {
     }
   });
 
-  // get reviews they've received
-  pool.query("SELECT * FROM `reviews` WHERE belongs_to_id=?", [req.query.id], function(err, rows, fields) {
-    if (err) {
-      next(err);
-      return;
-    }
-
-    for (var i in rows) {
-      var info = {
-        'belongsStarRating': rows[i].star_rating,
-        'belongsClassifierTerm': rows[i].classifer_term,
-        'belongsGivenById': rows[i].given_by_id,
-        'belongsBelongsToId': rows[i].belongs_to_id
-      };
-      params.push(info);
-    }
-    context.results = params;
-    res.render('home_page', context);
-  });
 });
 
 app.get('/sendupdate', function(req, res, next) {
