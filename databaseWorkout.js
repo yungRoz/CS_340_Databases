@@ -220,12 +220,6 @@ app.get('/delete', function(req, res, next) {
     }
   });
 
-  pool.query("DELETE FROM `person` WHERE id=?", [req.query.id], function(err, result) {
-    if (err) {
-      next(err);
-      return;
-    }
-  });
 
   var getUserCoString = "SELECT c.id AS cid, c.name AS co_name FROM company c " +
     "INNER JOIN belongs_to bt ON bt.co_id = c.id " +
@@ -244,6 +238,13 @@ app.get('/delete', function(req, res, next) {
           return;
         }
       });
+    }
+  });
+
+  pool.query("DELETE FROM `person` WHERE id=?", [req.query.id], function(err, result) {
+    if (err) {
+      next(err);
+      return;
     }
   });
 });
