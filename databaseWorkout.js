@@ -299,14 +299,14 @@ app.get('/deleteAllButPerson', function(req, res, next) {
     }
   });
 
-  pool.query("ALTER TABLE `reviews` ADD CONSTRAINT `belongs_to_ibfk_1` FOREIGN KEY (`given_by_id`) REFERENCES `person`(`id`)", function(err, result) {
+  pool.query("ALTER TABLE `reviews` ADD CONSTRAINT `reviews_ibfk_1` FOREIGN KEY (`given_by_id`) REFERENCES `person`(`id`)", function(err, result) {
     if (err) {
       next(err);
       return;
     }
   });
 
-  pool.query("ALTER TABLE `reviews` ADD CONSTRAINT `belongs_to_ibfk_2`  FOREIGN KEY (`belongs_to_id`) REFERENCES `person`(`id`)", function(err, result) {
+  pool.query("ALTER TABLE `reviews` ADD CONSTRAINT `reviews_ibfk_2`  FOREIGN KEY (`belongs_to_id`) REFERENCES `person`(`id`)", function(err, result) {
     if (err) {
       next(err);
       return;
