@@ -455,8 +455,8 @@ app.get('/homepage', function(req, res, next) {
   pool.query("SELECT ap.name AS `name`, ap.id AS `id` "
   + "FROM(SELECT r.belongs_to_id AS `id` FROM reviews r "
   + "WHERE r.given_by_id=?) as ag "
-  + "RIGHT JOIN (SELECT p.id AS `id`, p.name AS `name` FROM person p WHERE p.id!=10) AS ap "
-  + "ON ag.id=ap.id WHERE ag.id IS NULL; ", [req.query.id], function(err, rows, fields) {
+  + "RIGHT JOIN (SELECT p.id AS `id`, p.name AS `name` FROM person p WHERE p.id!=?) AS ap "
+  + "ON ag.id=ap.id WHERE ag.id IS NULL; ", [req.query.id, req.query.id], function(err, rows, fields) {
     if (err) {
       next(err);
       return;
@@ -543,7 +543,7 @@ app.get('/homepage', function(req, res, next) {
   // get reviews they've been given
   pool.query("SELECT r.star_rating AS `star_rating`, r.classifier_term AS  `classifier_term`, r.belongs_to_id AS `belongs_to_id`," +
           " r.given_by_id AS `given_by_id`, p.name AS `name` FROM reviews r " +
-          "INNER JOIN person p ON p.id=r.given_by_id  WHERE given_by_id=?", [req.query.id], function(err, rows, fields) {
+          "INNER JOIN person p ON p.id=r.given_by_id  WHERE belongs_to_id=?", [req.query.id], function(err, rows, fields) {
     if (err) {
       next(err);
       return;
@@ -564,7 +564,7 @@ app.get('/homepage', function(req, res, next) {
   // get reviews that belong to them
   pool.query("SELECT r.star_rating AS `star_rating`, r.classifier_term AS  `classifier_term`, r.belongs_to_id AS `belongs_to_id`," +
           " r.given_by_id AS `given_by_id`, p.name AS `name` FROM reviews r " +
-          "INNER JOIN person p ON p.id=r.belongs_to_id  WHERE belongs_to_id=?", [req.query.id], function(err, rows, fields) {
+          "INNER JOIN person p ON p.id=r.belongs_to_id  WHERE given_by_id=?", [req.query.id], function(err, rows, fields) {
     if (err) {
       next(err);
       return;
