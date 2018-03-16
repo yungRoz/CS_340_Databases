@@ -249,7 +249,7 @@ function deleteRevRow(btId, gbId) {
   req.open("GET", deleteParam, true);
   console.log(deleteParam);
   req.addEventListener("load", function(event) {
-    even.preventDefault();
+    event.preventDefault();
     if (req.status >= 200 && req.status < 400) {
     } else {
       console.log('there was an error');
@@ -257,10 +257,9 @@ function deleteRevRow(btId, gbId) {
   });
   req.send(deleteParam);
 
-
   //event.preventDefault();
   //console.log(tableId);
-  var table = document.getElementById(ReviewsG);
+  var table = document.getElementById("ReviewsG");
   var n = table.rows.length;
   var rowNum;
 
