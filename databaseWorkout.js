@@ -196,7 +196,7 @@ app.get('/insertToReviews', function(req, res, next) {
       next(err);
       return;
     }
-    pool.query("SELECT  p.name AS `name` r.classifier_term AS  `classifier_term`, r.belongs_to_id AS `belongs_to_id`, r.star_rating AS `star_rating`," +
+    pool.query("SELECT  p.name AS `name`, r.classifier_term AS  `classifier_term`, r.belongs_to_id AS `belongs_to_id`, r.star_rating AS `star_rating`," +
       " r.given_by_id AS `given_by_id`,  r.classifier_term AS  `classifier_term` FROM reviews r " +
       "INNER JOIN person p ON p.id=r.belongs_to_id  WHERE `belongs_to_id`=? AND `given_by_id`=?", [req.query.bt_id, req.query.gb_id],
       function(err, result) {

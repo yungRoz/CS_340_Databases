@@ -106,13 +106,20 @@ function bindAddPersonButton() {
       if (req.status >= 200 && req.status < 400) {
         var response = JSON.parse(req.responseText);
         location.reload();
-        /*if (response[0] == "false"){
+        if (response[0] == "false"){
           alert("Cannot review same person twice");
           return;
         }
         var row = document.createElement("tr");
         var btId = response.belongs_to_id;
         var gbId = response.given_by_id;
+        var findString = btId+","+gbId;
+        var selectobject=document.getElementById("reviewPerson")
+        for (var i=0; i<selectobject.length; i++){
+          if (selectobject.options[i].value == findString )
+            selectobject.remove(i);
+          }
+          
         for (var variableName in response) {
           if (variableName == 'belongs_to_id');
           else if(variableName === 'given_by_id');
@@ -129,7 +136,7 @@ function bindAddPersonButton() {
         table.appendChild(row);
       } else {
         console.log('ERROR' + req.statusText);
-      }*/
+      }
     });
     req.send("/insertToReviews" + param);
     event.preventDefault();
