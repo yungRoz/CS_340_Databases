@@ -112,14 +112,14 @@ WHERE person.id !=?;
 -- Get all users friends belonging to a given company
 SELECT  everyone.name AS `name`, everyone.id AS `id`
 
--- Get Everyone not yet reviewed by the user 
+-- Get Everyone not yet reviewed by the user
 ---- Get EVERYONE in the users companies, name and company name
-SELECT everyone_else.name AS `name`, everyone_else.id AS `id`
+SELECT all_reviews.name AS `name`, all_reviews.id AS `id`
 FROM (SELECT r.belongs_to_id, p.name, FROM person p
       INNER JOIN reviews r ON r.given_by_id = p.id
       WHERE p.id=?
     ) AS alL_given_by_u
 INNER JOIN (SELECT r.belongs_to_id, p.name FROM person p
 INNER JOIN reviews r ON r.belongs_to_id = p.id
-INNER JOIN) as all_reviews
+) as all_reviews
 WHERE all_reviews.belongs_to_id != alL_given_by_u.belongs_to_id;

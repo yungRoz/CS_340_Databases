@@ -435,6 +435,27 @@ app.get('/homepage', function(req, res, next) {
     }
   });
 
+  //get everyone elses not reviewed by user
+  pool.query("SELECT ap.name AS `name`, ap.id AS `id` "
+  + "FROM(SELECT r.belongs_to_id AS `id` FROM reviews r "
+  + "WHERE r.given_by_id=?) as ag "
+  + "RIGHT JOIN (SELECT p.id AS `id`, p.name AS `name` FROM person p WHERE p.id!=10) AS ap "
+  + "ON ag.id=ap.id WHERE ag.id IS NULL; ", [req.query.id], function(err, rows, fields) {
+    if (err) {
+      next(err);
+      return;
+    }
+
+    for (var i in rows) {
+      var info = {
+        'notUName': rows[i].name,
+        'notUId': rows[i].id,
+        'totallyUId':req.query.id
+      };
+      params.push(info);
+    }
+  });
+
   //get company ids of user
   var companyIdString = "SELECT DISTINCT c.name AS `name`, c.id AS `id` " +
     "FROM company c INNER JOIN belongs_to bt ON bt.co_id = c.id " +
