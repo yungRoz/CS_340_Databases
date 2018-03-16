@@ -90,6 +90,7 @@ function bindAddPersonButton() {
     }
     else{
       alert("Reviews must contain star rating of at least 1");
+      return; 
     }
     var classifier = document.getElementById('classifier').value;
     if (classifier == "") {
@@ -285,5 +286,5 @@ function deleteRevRow(btId, gbId) {
     }
   }
   table.deleteRow(rowNum);
-  location.reload(); 
+  location.reload();
 }
