@@ -122,7 +122,7 @@ function deleteRow(id) {
 
   req.send("/deleteAllButPerson?id=" + id);
 
-  /*var req2 = new XMLHttpRequest();
+  var req2 = new XMLHttpRequest();
   req2.open("GET", "/deletePerson?id="+id, true);
   req2.addEventListener("load", function(event) {
     event.preventDefault();
@@ -146,7 +146,7 @@ function deleteRow(id) {
       rowNum = i;
     }
   }
-  table.deleteRow(rowNum);*/
+  table.deleteRow(rowNum);
 
   /*req.open("GET", "/deletePerson?id=" + id, true);
 
