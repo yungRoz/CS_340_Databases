@@ -269,12 +269,6 @@ app.get('/deleteAllButPerson', function(req, res, next) {
       next(err);
       return;
     }
-    pool.query("DELETE FROM `belongs_to` WHERE per_id=?", [req.query.id], function(err, result) {
-      if (err) {
-        next(err);
-        return;
-      }
-    });
 
     for (var i in rows) {
       pool.query("DELETE FROM `company` WHERE id=?", [rows[i].cid], function(err, result) {
@@ -286,6 +280,13 @@ app.get('/deleteAllButPerson', function(req, res, next) {
     }
   });
 
+  pool.query("DELETE FROM `belongs_to` WHERE per_id=?", [req.query.id], function(err, result) {
+    if (err) {
+      next(err);
+      return;
+    }
+  });
+  
   pool.query("DELETE FROM `person` WHERE id=?", [req.query.id], function(err, result) {
     if (err) {
       next(err);
