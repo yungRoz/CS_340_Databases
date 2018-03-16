@@ -93,7 +93,7 @@ function bindAddPersonButton() {
       return;
     }
 
-    var gbId = document.getElementsByTagName("uid").id;
+    var gbId = document.getElementByName("uid").id;
     var param = "?bt_id=" + btId  + "&gb_id=" + gbId + "&rating=" + numStars +"&term=" + classifier; // + "&weight=" + weight + "&date=" + date + "&lbs=" + unit;
     console.log(param);
     var req = new XMLHttpRequest();
