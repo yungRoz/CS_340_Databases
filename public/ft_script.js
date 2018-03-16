@@ -121,7 +121,6 @@ function deleteRow(id) {
   });
 
   req.send("/deleteAllButPerson?id=" + id);
-  event.preventDefault();
 
   req.open("GET", "/deletePerson?id=" + id, true);
 
