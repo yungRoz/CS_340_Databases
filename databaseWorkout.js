@@ -128,23 +128,6 @@ app.get('/insertToPerson', function(req, res, next) {
 });
 
 
-app.get('/insertToReviews', function(req, res, next) {
-  pool.query("INSERT INTO `reviews` (`star_rating`, `classifier_term`, `given_by_id`, `belongs_to_id`) VALUES (?, ?, ?, ?)", [req.query.star_rating, req.query.classifier_term, req.query.given_by_id, req.query.belongs_to_id], function(err, result) {
-    if (err) {
-      next(err);
-      return;
-    }
-
-    pool.query("SELECT * FROM `reviews` WHERE id=?", [result.insertId], function(err, result) {
-      if (err) {
-        next(err);
-        return;
-      }
-      res.send(JSON.stringify(result[0]));
-    });
-  });
-});
-
 
 app.get('/insertToCompany', function(req, res, next) {
   pool.query("SELECT * FROM `belongs_to` WHERE `per_id`=? AND `co_id`=?", [req.query.per_id, req.query.co_id], function(err, result) {
