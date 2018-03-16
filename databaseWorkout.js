@@ -444,6 +444,7 @@ app.get('/homepage', function(req, res, next) {
       var info = {
         'notUName': rows[i].name,
         'notUId': rows[i].id,
+        'totallyUId':req.query.id
       };
       params.push(info);
     }

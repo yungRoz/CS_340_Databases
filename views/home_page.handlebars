@@ -17,7 +17,7 @@
           {{#if results}}
             {{#each results}}
               {{#if this.notUId}}
-                <option value={{this.notUId}}> {{this.notUName}}</option>
+                <option value="{{this.notUId}},{{this.totallyUId}}"> {{this.notUName}}</option>
               {{/if}}
             {{/each}}
           {{/if}}

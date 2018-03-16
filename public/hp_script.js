@@ -57,7 +57,11 @@ function bindAddPersonButton() {
   });
 
   document.getElementById('addToReviews').addEventListener('click', function(event) {
-    var btId = document.getElementById('reviewPerson').value;
+    var bothIds = document.getElementById('reviewPerson').value;
+    var idArray = bothIds.split(",", 2);
+
+    var btId = idArray[0];
+    var gbId = idArray[1];
     if (btId == "") {
       alert("Name Cannot Be Empty");
       return;
@@ -93,7 +97,7 @@ function bindAddPersonButton() {
       return;
     }
 
-    var gbId = document.getElementsByTagName("h1").id;
+
     var param = "?bt_id=" + btId  + "&gb_id=" + gbId + "&rating=" + numStars +"&term=" + classifier; // + "&weight=" + weight + "&date=" + date + "&lbs=" + unit;
     console.log(param);
     var req = new XMLHttpRequest();
