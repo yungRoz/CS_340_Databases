@@ -52,7 +52,7 @@ function bindAddPersonButton() {
     event.preventDefault();
   });
 
-  /*document.querySelector("#giveReview").addEventListener('submit', function(event) {
+  document.querySelector("#giveReview").addEventListener('submit', function(event) {
     event.preventDefault();
   });
 
@@ -128,7 +128,7 @@ function bindAddPersonButton() {
     });
     req.send("/insertToReviews" + param);
     event.preventDefault();
-  });*/
+  });
 }
 
 function newUpdateCell(id) {

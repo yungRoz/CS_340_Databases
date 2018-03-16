@@ -391,6 +391,7 @@ app.get('/deleteFromReviews', function(req, res, next) {
     }
   });
 });
+
 app.get('/update', function(req, res, next) {
   var context = {};
   pool.query("SELECT * FROM `person` WHERE id=?", [req.query.id], function(err, rows, fields) {
@@ -550,6 +551,8 @@ app.get('/homepage', function(req, res, next) {
       };
       params.push(info);
     }
+    context.results = params;
+    res.render('home_page', context);
   });
 
 });
