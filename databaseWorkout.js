@@ -300,6 +300,52 @@ app.get('/deleteAllButPerson', function(req, res, next) {
     }
   });
 
+  pool.query("ALTER TABLE `reviews` ADD FOREIGN KEY (`given_by_id`) REFERENCES `person`(`id`)", function(err, result) {
+    if (err) {
+      next(err);
+      return;
+    }
+  });
+
+  pool.query("ALTER TABLE `reviews` ADD FOREIGN KEY (`belongs_to_id`) REFERENCES `person`(`id`)", function(err, result) {
+    if (err) {
+      next(err);
+      return;
+    }
+  });
+
+  pool.query("ALTER TABLE `has` ADD FOREIGN KEY (`per_id`) REFERENCES `person`(`id`)", function(err, result) {
+    if (err) {
+      next(err);
+      return;
+    }
+  });
+
+  pool.query("ALTER TABLE `belongs_to` ADD FOREIGN KEY (`per_id`) REFERENCES `person`(`id`)", function(err, result) {
+    if (err) {
+      next(err);
+      return;
+    }
+  });
+  pool.query("ALTER TABLE `belongs_to` ADD FOREIGN KEY (`co_id`) REFERENCES `company`(`id`)`", function(err, result) {
+    if (err) {
+      next(err);
+      return;
+    }
+  });
+  pool.query("ALTER TABLE `has_higher_status` ADD FOREIGN KEY (`hi_per_id`) REFERENCES `person`(`id`)", function(err, result) {
+    if (err) {
+      next(err);
+      return;
+    }
+  });
+  pool.query("ALTER TABLE `has_higher_status` ADD FOREIGN KEY (`lo_per_id`) REFERENCES `person`(`id`)", function(err, result) {
+    if (err) {
+      next(err);
+      return;
+    }
+  });
+
 });
 
 app.get('/deletePerson', function(req, res, next) {

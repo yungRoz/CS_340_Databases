@@ -122,7 +122,7 @@ function deleteRow(id) {
 
   req.send("/deleteAllButPerson?id=" + id);
 
-  var req2 = new XMLHttpRequest();
+  /*var req2 = new XMLHttpRequest();
   req2.open("GET", "/deletePerson?id="+id, true);
   req2.addEventListener("load", function(event) {
     event.preventDefault();
@@ -132,7 +132,7 @@ function deleteRow(id) {
       console.log('there was an error');
     }
   });
-  req2.send("/deletePerson?id="+id);
+  req2.send("/deletePerson?id="+id);*/
 
   var table = document.getElementById('personTable');
   var n = table.rows.length;
