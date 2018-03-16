@@ -110,7 +110,7 @@ function bindAddPersonButton() {
         var gbId = response.given_by_id;
         for (var variableName in response) {
           if (variableName == 'belongs_to_id');
-          else if(variableName === 'given_by_id')
+          else if(variableName === 'given_by_id');
           else {
             var cell = document.createElement("td");
             cell.id = variableName;
