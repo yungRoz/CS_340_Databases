@@ -138,7 +138,7 @@ function deleteRow(id) {
   }
   table.deleteRow(rowNum);
 
-  req.open("GET", "/deletePerson?id=" + id, true);
+  /*req.open("GET", "/deletePerson?id=" + id, true);
 
   req.addEventListener("load", function(event) {
     event.preventDefault();
@@ -149,7 +149,7 @@ function deleteRow(id) {
     }
   });
 
-  req.send("/deletePerson?id=" + id);
+  req.send("/deletePerson?id=" + id);*/
 }
 
 function deletePerson(id){
