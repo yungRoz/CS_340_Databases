@@ -120,14 +120,12 @@ function deleteCoRow(perId, coId, tableId) {
       var req2 = newXMLHttpRequest();
       req2.open("GET", "/deletePerson?per_id="+perId, true);
       req2.addEventListener("load", function(event) {
-        even.preventDefault();
         if (req2.status >= 200 && req2.status < 400) {
           console.log('delete processed');
         } else {
           console.log('there was an error');
         }
       });
-
       req2.send("/deletePerson?per_id="+perId);
     } else {
       console.log('there was an error');
