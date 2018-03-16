@@ -1,9 +1,7 @@
 {{#if results}}
   {{#each results}}
-    {{#if this.uName}}
-      <title> Welcome {{this.uName}}</title>
+      <h1> Welcome {{this.uName}}</h1>
       <input type="hidden" name="uid" id="{{this.uId}}">
-    {{/if}}
   {{/each}}
 {{/if}}
 
