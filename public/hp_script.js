@@ -87,13 +87,13 @@ function bindAddPersonButton() {
     else{
       alert("Reviews must contain star rating of at least 1");
     }
-    var classifier = document.getElementById('classifier');
+    var classifier = document.getElementById('classifier').value;
     if (classifier == "") {
       alert("Classifier Cannot Be Empty");
       return;
     }
 
-    var gbId = document.getElementsByName("uid").id;
+    var gbId = document.getElementsByTagName("h1").id;
     var param = "?bt_id=" + btId  + "&gb_id=" + gbId + "&rating=" + numStars +"&term=" + classifier; // + "&weight=" + weight + "&date=" + date + "&lbs=" + unit;
     console.log(param);
     var req = new XMLHttpRequest();
