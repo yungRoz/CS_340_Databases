@@ -122,19 +122,6 @@ function deleteRow(id) {
 
   req.send("/deleteAllButPerson?id=" + id);
 
-  req.open("GET", "/deletePerson?id=" + id, true);
-
-  req.addEventListener("load", function(event) {
-    event.preventDefault();
-    if (req.status >= 200 && req.status < 400) {
-      console.log('delete processed');
-    } else {
-      console.log('there was an error');
-    }
-  });
-
-  req.send("/deletePerson?id=" + id);
-
   var table = document.getElementById('personTable');
   var n = table.rows.length;
   var rowNum;
@@ -148,9 +135,22 @@ function deleteRow(id) {
     }
   }
   table.deleteRow(rowNum);
+  deletePerson(id); 
 }
 
-function vsa(id){
+function deletePerson(id){
+  req.open("GET", "/deletePerson?id=" + id, true);
+
+  req.addEventListener("load", function(event) {
+    event.preventDefault();
+    if (req.status >= 200 && req.status < 400) {
+      console.log('delete processed');
+    } else {
+      console.log('there was an error');
+    }
+  });
+
+  req.send("/deletePerson?id=" + id);
 
 }
 /**/
