@@ -230,7 +230,7 @@ app.get('/delete', function(req, res, next) {
   var getUserCoString = "SELECT c.id AS cid, c.name AS co_name FROM company c " +
     "INNER JOIN belongs_to bt ON bt.co_id = c.id " +
     "INNER JOIN person p ON p.id = bt.per_id " +
-    "WHERE p.id =?0 and c.name!='World'" +
+    "WHERE p.id =?0 and c.name!='World' " +
     "GROUP BY c.id;";
   pool.query(getUserCoString, [req.query.id], function(err, rows, fields) {
     if (err) {
