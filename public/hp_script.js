@@ -220,6 +220,7 @@ function deleteCoRow(perId, coId, tableId) {
   });
   req.send(deleteParam);
 
+  location.reload(); 
 
   //event.preventDefault();
   //console.log(tableId);
@@ -269,7 +270,7 @@ function deleteRevRow(btId, gbId) {
     var dCell = allCells[allCells.length - 1];
     //console.log(dCell.children[1].id)
     //console.log(perId);
-    console.log(dCell.children[1].id); 
+    console.log(dCell.children[1].id);
     if (dCell.children[1].id ==  btId + "_"+gbId) {
       rowNum = i;
       //console.log(rowNum);

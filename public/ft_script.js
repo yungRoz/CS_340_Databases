@@ -132,7 +132,7 @@ function deleteRow(id) {
       console.log('there was an error');
     }
   });
-  req2.send("/deletePerson?id="+id);*/
+  req2.send("/deletePerson?id="+id);
 
   var table = document.getElementById('personTable');
   var n = table.rows.length;
@@ -146,7 +146,7 @@ function deleteRow(id) {
       rowNum = i;
     }
   }
-  table.deleteRow(rowNum);
+  table.deleteRow(rowNum);*/
 
   /*req.open("GET", "/deletePerson?id=" + id, true);
 
