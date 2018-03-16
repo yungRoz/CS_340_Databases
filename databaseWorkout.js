@@ -178,7 +178,7 @@ app.get('/insertToReviews', function(req, res, next) {
           next(err);
           return;
         }
-        pool.query("SELECT r.star_rating, r.classifier_term, r.belongs_to_id, r.given_by_id, p.name FROM reviews r" +
+        pool.query("SELECT r.star_rating, r.classifier_term, r.belongs_to_id, r.given_by_id, p.name FROM reviews r " +
                 "INNER JOIN person p ON p.id=r.belongs_to_id  WHERE `belongs_to_id`=? AND `given_by_id`=?", [req.query.bt_id, req.query.gb_id], function(err, result) {
           if (err) {
             next(err);
@@ -503,7 +503,7 @@ app.get('/homepage', function(req, res, next) {
     }
   });
   // get reviews they've given info
-  pool.query("SELECT r.star_rating, r.classifier_term, r.belongs_to_id, r.given_by_id, p.name FROM reviews r" +
+  pool.query("SELECT r.star_rating, r.classifier_term, r.belongs_to_id, r.given_by_id, p.name FROM reviews r " +
           "INNER JOIN person p ON p.id=r.belongs_to_id  WHERE given_by_id=?", [req.query.id], function(err, rows, fields) {
     if (err) {
       next(err);
@@ -523,7 +523,7 @@ app.get('/homepage', function(req, res, next) {
   });
 
   // get reviews they've received
-  pool.query("SELECT r.star_rating, r.classifier_term, r.belongs_to_id, r.given_by_id, p.name FROM reviews r" +
+  pool.query("SELECT r.star_rating, r.classifier_term, r.belongs_to_id, r.given_by_id, p.name FROM reviews r " +
           "INNER JOIN person p ON p.id=r.given_by_id  WHERE belongs_to_id=?", [req.query.id], function(err, rows, fields) {
     if (err) {
       next(err);
