@@ -197,14 +197,15 @@ app.get('/insertToReviews', function(req, res, next) {
       return;
     }
     pool.query("SELECT r.star_rating AS `star_rating`, r.classifier_term AS  `classifier_term`, r.belongs_to_id AS `belongs_to_id`," +
-            " r.given_by_id AS `given_by_id`, p.name AS `name` FROM reviews r " +
-            "INNER JOIN person p ON p.id=r.belongs_to_id  WHERE `belongs_to_id`=? AND `given_by_id`=?", [req.query.bt_id, req.query.gb_id], function(err, result) {
-      if (err) {
-        next(err);
-        return;
-      }
-      res.send(JSON.stringify(result[0]));
-    });
+      " r.given_by_id AS `given_by_id`, p.name AS `name` FROM reviews r " +
+      "INNER JOIN person p ON p.id=r.belongs_to_id  WHERE `belongs_to_id`=? AND `given_by_id`=?", [req.query.bt_id, req.query.gb_id],
+      function(err, result) {
+        if (err) {
+          next(err);
+          return;
+        }
+        res.send(JSON.stringify(result[0]));
+      });
   });
 });
 
@@ -445,32 +446,33 @@ app.get('/homepage', function(req, res, next) {
       var info = {
         'notUName': rows[i].name,
         'notUId': rows[i].id,
-        'totallyUId':req.query.id
+        'totallyUId': req.query.id
       };
       params.push(info);
     }
   });
 
   //get everyone elses not reviewed by user
-  pool.query("SELECT ap.name AS `name`, ap.id AS `id` "
-  + "FROM(SELECT r.belongs_to_id AS `id` FROM reviews r "
-  + "WHERE r.given_by_id=?) as ag "
-  + "RIGHT JOIN (SELECT p.id AS `id`, p.name AS `name` FROM person p WHERE p.id!=?) AS ap "
-  + "ON ag.id=ap.id WHERE ag.id IS NULL; ", [req.query.id, req.query.id], function(err, rows, fields) {
-    if (err) {
-      next(err);
-      return;
-    }
+  pool.query("SELECT ap.name AS `name`, ap.id AS `id` " +
+    "FROM(SELECT r.belongs_to_id AS `id` FROM reviews r " +
+    "WHERE r.given_by_id=?) as ag " +
+    "RIGHT JOIN (SELECT p.id AS `id`, p.name AS `name` FROM person p WHERE p.id!=?) AS ap " +
+    "ON ag.id=ap.id WHERE ag.id IS NULL; ", [req.query.id, req.query.id],
+    function(err, rows, fields) {
+      if (err) {
+        next(err);
+        return;
+      }
 
-    for (var i in rows) {
-      var info = {
-        'notRevName': rows[i].name,
-        'notRevId': rows[i].id,
-        'totallyUId':req.query.id
-      };
-      params.push(info);
-    }
-  });
+      for (var i in rows) {
+        var info = {
+          'notRevName': rows[i].name,
+          'notRevId': rows[i].id,
+          'totallyUId': req.query.id
+        };
+        params.push(info);
+      }
+    });
 
   //get company ids of user
   var companyIdString = "SELECT DISTINCT c.name AS `name`, c.id AS `id` " +
@@ -540,49 +542,52 @@ app.get('/homepage', function(req, res, next) {
       });
     }
   });
-  // get reviews they've been given
-  pool.query("SELECT r.star_rating AS `star_rating`, r.classifier_term AS  `classifier_term`, r.belongs_to_id AS `belongs_to_id`," +
-          " r.given_by_id AS `given_by_id`, p.name AS `name` FROM reviews r " +
-          "INNER JOIN person p ON p.id=r.given_by_id  WHERE belongs_to_id=?", [req.query.id], function(err, rows, fields) {
-    if (err) {
-      next(err);
-      return;
-    }
-
-    for (var i in rows) {
-      var info = {
-        'givenStarRating': rows[i].star_rating,
-        'givenClassifierTerm': rows[i].classifier_term,
-        'givenGivenById': rows[i].given_by_id,
-        'givenBelongsToId': rows[i].belongs_to_id,
-        'givenName': rows[i].name
-      };
-      params.push(info);
-    }
-  });
 
   // get reviews that belong to them
   pool.query("SELECT r.star_rating AS `star_rating`, r.classifier_term AS  `classifier_term`, r.belongs_to_id AS `belongs_to_id`," +
-          " r.given_by_id AS `given_by_id`, p.name AS `name` FROM reviews r " +
-          "INNER JOIN person p ON p.id=r.belongs_to_id  WHERE given_by_id=?", [req.query.id], function(err, rows, fields) {
-    if (err) {
-      next(err);
-      return;
-    }
+    " r.given_by_id AS `given_by_id`, p.name AS `name` FROM reviews r " +
+    "INNER JOIN person p ON p.id=r.belongs_to_id  WHERE given_by_id=?", [req.query.id],
+    function(err, rows, fields) {
+      if (err) {
+        next(err);
+        return;
+      }
 
-    for (var i in rows) {
-      var info = {
-        'belongsStarRating': rows[i].star_rating,
-        'belongsClassifierTerm': rows[i].classifier_term,
-        'belongsGivenById': rows[i].given_by_id,
-        'belongsBelongsToId': rows[i].belongs_to_id,
-        'belongsName': rows[i].name
-      };
-      params.push(info);
-    }
-    context.results = params;
-    res.render('home_page', context);
-  });
+      for (var i in rows) {
+        var info = {
+          'givenStarRating': rows[i].star_rating,
+          'givenClassifierTerm': rows[i].classifier_term,
+          'givenGivenById': rows[i].given_by_id,
+          'givenBelongsToId': rows[i].belongs_to_id,
+          'givenName': rows[i].name
+        };
+        params.push(info);
+      }
+    });
+
+  // get reviews they've been given
+  pool.query("SELECT r.star_rating AS `star_rating`, r.classifier_term AS  `classifier_term`, r.belongs_to_id AS `belongs_to_id`," +
+    " r.given_by_id AS `given_by_id`, p.name AS `name` FROM reviews r " +
+    "INNER JOIN person p ON p.id=r.given_by_id  WHERE belongs_to_id=?", [req.query.id],
+    function(err, rows, fields) {
+      if (err) {
+        next(err);
+        return;
+      }
+
+      for (var i in rows) {
+        var info = {
+          'belongsStarRating': rows[i].star_rating,
+          'belongsClassifierTerm': rows[i].classifier_term,
+          'belongsGivenById': rows[i].given_by_id,
+          'belongsBelongsToId': rows[i].belongs_to_id,
+          'belongsName': rows[i].name
+        };
+        params.push(info);
+      }
+      context.results = params;
+      res.render('home_page', context);
+    });
 
 });
 
