@@ -327,7 +327,7 @@ app.get('/deleteAllButPerson', function(req, res, next) {
       return;
     }
   });
-  pool.query("ALTER TABLE `belongs_to` ADD FOREIGN KEY (`co_id`) REFERENCES `company`(`id`)`", function(err, result) {
+  pool.query("ALTER TABLE `belongs_to` ADD FOREIGN KEY (`co_id`) REFERENCES `company`(`id`)", function(err, result) {
     if (err) {
       next(err);
       return;
