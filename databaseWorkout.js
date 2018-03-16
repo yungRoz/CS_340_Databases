@@ -253,13 +253,6 @@ app.get('/deleteAllButPerson', function(req, res, next) {
     }
   });
 
-  pool.query("DELETE FROM `person` WHERE id=?", [req.query.id], function(err, result) {
-    if (err) {
-      next(err);
-      return;
-    }
-  });
-
   pool.query("SET FOREIGN_KEY_CHECKS=1;", function(err, result) {
     if (err) {
       next(err);

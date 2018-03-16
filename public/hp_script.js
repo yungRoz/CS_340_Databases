@@ -113,11 +113,22 @@ function deleteCoRow(perId, coId, tableId) {
 
   var deleteParam = "/deleteFromCompany?per_id=" + perId + "&co_id=" + coId;
   req.open("GET", deleteParam, true);
-  console.log(deleteParam); 
+  console.log(deleteParam);
   req.addEventListener("load", function(event) {
     even.preventDefault();
     if (req.status >= 200 && req.status < 400) {
-      console.log('delete processed');
+      var req2 = newXMLHttpRequest();
+      req2.open("GET", "/deletePerson?per_id="+perId, true);
+      req2.addEventListener("load", function(event) {
+        even.preventDefault();
+        if (req2.status >= 200 && req2.status < 400) {
+          console.log('delete processed');
+        } else {
+          console.log('there was an error');
+        }
+      });
+
+      req2.send("/deletePerson?per_id="+perId);
     } else {
       console.log('there was an error');
     }
