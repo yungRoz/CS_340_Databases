@@ -2,14 +2,13 @@
 -- for a web project "Scary Future Rating
 -- Database"
 
-DROP TABLE IF EXISTS `person`;
+
 DROP TABLE IF EXISTS `belongs_to`;
 DROP TABLE IF EXISTS `has_higher_status`;
 DROP TABLE IF EXISTS `has`;
-DROP TABLE IF EXISTS `company`;
-DROP TABLE IF EXISTS `module`;
+--DROP TABLE IF EXISTS `module`;
 DROP TABLE IF EXISTS `reviews`;
-
+DROP TABLE IF EXISTS `person`;
 
 CREATE TABLE `person` (
   `id` int NOT NULL AUTO_INCREMENT,

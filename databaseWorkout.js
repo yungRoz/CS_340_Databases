@@ -185,46 +185,46 @@ app.get('/insertToCompany', function(req, res, next) {
 app.get('/deleteAllButPerson', function(req, res, next) {
 
 
-  pool.query("ALTER TABLE `reviews` DROP FOREIGN KEY (`given_by_id`) REFERENCES `person`(`id`)", function(err, result) {
+  pool.query("ALTER TABLE `reviews` DROP FOREIGN KEY `reviews_ibfk_1`", function(err, result) {
     if (err) {
       next(err);
       return;
     }
   });
 
-  pool.query("ALTER TABLE `reviews` DROP FOREIGN KEY (`belongs_to_id`) REFERENCES `person`(`id`)", function(err, result) {
+  pool.query("ALTER TABLE `reviews` DROP FOREIGN KEY `reviews_ibfk_2`", function(err, result) {
     if (err) {
       next(err);
       return;
     }
   });
 
-  pool.query("ALTER TABLE `has` DROP FOREIGN KEY (`per_id`) REFERENCES `person`(`id`)", function(err, result) {
+  pool.query("ALTER TABLE `has` DROP FOREIGN KEY `has_ibfk_1`", function(err, result) {
     if (err) {
       next(err);
       return;
     }
   });
 
-  pool.query("ALTER TABLE `belongs_to` DROP FOREIGN KEY (`per_id`) REFERENCES `person`(`id`)", function(err, result) {
+  pool.query("ALTER TABLE `belongs_to` DROP FOREIGN KEY `belongs_to_ibfk_1`", function(err, result) {
     if (err) {
       next(err);
       return;
     }
   });
-  pool.query("ALTER TABLE `belongs_to` DROP FOREIGN KEY (`co_id`) REFERENCES `company`(`id`)", function(err, result) {
+  pool.query("ALTER TABLE `belongs_to` DROP FOREIGN KEY `belongs_to_ibfk_2`", function(err, result) {
     if (err) {
       next(err);
       return;
     }
   });
-  pool.query("ALTER TABLE `has_higher_status` DROP FOREIGN KEY (`hi_per_id`) REFERENCES `person`(`id`)", function(err, result) {
+  pool.query("ALTER TABLE `has_higher_status` DROP FOREIGN KEY `has_higher_status_ibfk_1`", function(err, result) {
     if (err) {
       next(err);
       return;
     }
   });
-  pool.query("ALTER TABLE `has_higher_status` DROP FOREIGN KEY (`lo_per_id`) REFERENCES `person`(`id`)", function(err, result) {
+  pool.query("ALTER TABLE `has_higher_status` DROP FOREIGN KEY `has_higher_status_ibfk_2`", function(err, result) {
     if (err) {
       next(err);
       return;
@@ -299,46 +299,46 @@ app.get('/deleteAllButPerson', function(req, res, next) {
     }
   });
 
-  pool.query("ALTER TABLE `reviews` ADD FOREIGN KEY (`given_by_id`) REFERENCES `person`(`id`)", function(err, result) {
+  pool.query("ALTER TABLE `reviews` ADD CONSTRAINT `belongs_to_ibfk_1` FOREIGN KEY (`given_by_id`) REFERENCES `person`(`id`)", function(err, result) {
     if (err) {
       next(err);
       return;
     }
   });
 
-  pool.query("ALTER TABLE `reviews` ADD FOREIGN KEY (`belongs_to_id`) REFERENCES `person`(`id`)", function(err, result) {
+  pool.query("ALTER TABLE `reviews` ADD CONSTRAINT `belongs_to_ibfk_2`  FOREIGN KEY (`belongs_to_id`) REFERENCES `person`(`id`)", function(err, result) {
     if (err) {
       next(err);
       return;
     }
   });
 
-  pool.query("ALTER TABLE `has` ADD FOREIGN KEY (`per_id`) REFERENCES `person`(`id`)", function(err, result) {
+  pool.query("ALTER TABLE `has` ADD CONSTRAINT `has_ibfk_1` FOREIGN KEY (`per_id`) REFERENCES `person`(`id`)", function(err, result) {
     if (err) {
       next(err);
       return;
     }
   });
 
-  pool.query("ALTER TABLE `belongs_to` ADD FOREIGN KEY (`per_id`) REFERENCES `person`(`id`)", function(err, result) {
+  pool.query("ALTER TABLE `belongs_to` ADD CONSTRAINT `belongs_to_ibfk_1` FOREIGN KEY (`per_id`) REFERENCES `person`(`id`)", function(err, result) {
     if (err) {
       next(err);
       return;
     }
   });
-  pool.query("ALTER TABLE `belongs_to` ADD FOREIGN KEY (`co_id`) REFERENCES `company`(`id`)", function(err, result) {
+  pool.query("ALTER TABLE `belongs_to` ADD CONSTRAINT `belongs_to_ibfk_2` FOREIGN KEY (`co_id`) REFERENCES `company`(`id`)", function(err, result) {
     if (err) {
       next(err);
       return;
     }
   });
-  pool.query("ALTER TABLE `has_higher_status` ADD FOREIGN KEY (`hi_per_id`) REFERENCES `person`(`id`)", function(err, result) {
+  pool.query("ALTER TABLE `has_higher_status` ADD CONSTRAINT `has_higher_status_ibfk_1` FOREIGN KEY (`hi_per_id`) REFERENCES `person`(`id`)", function(err, result) {
     if (err) {
       next(err);
       return;
     }
   });
-  pool.query("ALTER TABLE `has_higher_status` ADD FOREIGN KEY (`lo_per_id`) REFERENCES `person`(`id`)", function(err, result) {
+  pool.query("ALTER TABLE `has_higher_status` ADD CONSTRAINT `has_higher_status_ibfk_2` FOREIGN KEY (`lo_per_id`) REFERENCES `person`(`id`)", function(err, result) {
     if (err) {
       next(err);
       return;
