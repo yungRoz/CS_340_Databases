@@ -503,10 +503,10 @@ app.get('/homepage', function(req, res, next) {
       });
     }
   });
-  // get reviews they've given info
+  // get reviews they've been given
   pool.query("SELECT r.star_rating AS `star_rating`, r.classifier_term AS  `classifier_term`, r.belongs_to_id AS `belongs_to_id`," +
           " r.given_by_id AS `given_by_id`, p.name AS `name` FROM reviews r " +
-          "INNER JOIN person p ON p.id=r.belongs_to_id  WHERE given_by_id=?", [req.query.id], function(err, rows, fields) {
+          "INNER JOIN person p ON p.id=r.given_by_id  WHERE given_by_id=?", [req.query.id], function(err, rows, fields) {
     if (err) {
       next(err);
       return;
@@ -524,7 +524,7 @@ app.get('/homepage', function(req, res, next) {
     }
   });
 
-  // get reviews they've received
+  // get reviews that belong to them
   pool.query("SELECT r.star_rating AS `star_rating`, r.classifier_term AS  `classifier_term`, r.belongs_to_id AS `belongs_to_id`," +
           " r.given_by_id AS `given_by_id`, p.name AS `name` FROM reviews r " +
           "INNER JOIN person p ON p.id=r.belongs_to_id  WHERE belongs_to_id=?", [req.query.id], function(err, rows, fields) {
