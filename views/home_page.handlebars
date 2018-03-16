@@ -81,10 +81,10 @@
     {{#each results}}
       {{#if this.givenStarRating}}
         <tr class="row">
-          <td>{{this.givenBelongsToId}}</td>
+          <td>{{this.givenName}}</td>
           <td>{{this.givenStarRating}}</td>
           <td>{{this.givenClassifierTerm}}</td>
-          <td> <input type="button" name="delete" value="Delete" onClick="deleteRevRow({{this.givenBelongsToId}})"><input type="hidden" id="{{this.givenBelongsToId}}"></td>
+          <td> <input type="button" name="delete" value="Delete" onClick="deleteRevRow({{this.givenBelongsToId}},{{this.givenGivenById}} )"><input type="hidden" id="{{this.givenBelongsToId}}"+"_"+"{{this.givenGivenById}}"></td>
         </tr>
       {{/if}}
     {{/each}}
@@ -102,7 +102,7 @@
     {{#each results}}
       {{#if this.belongsStarRating}}
         <tr class="row">
-          <td>{{this.belongsGivenById}}</td>
+          <td>{{this.belongsName}}</td>
           <td>{{this.belongsStarRating}}</td>
           <td>{{this.belongsClassifierTerm}}</td>
         </tr>
