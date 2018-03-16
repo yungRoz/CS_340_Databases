@@ -111,7 +111,7 @@ app.get('/insertToPerson', function(req, res, next) {
       });
     });
 
-    pool.query("INSERT INTO `belongs_to` (`per_id`, `co_id`) VALUES(?,?)", [person_id, '8'], function(err, result) {
+    pool.query("INSERT INTO `belongs_to` (`per_id`, `co_id`) VALUES(?,?)", [person_id, '1'], function(err, result) {
       if (err) {
         next(err);
         return;
@@ -235,7 +235,7 @@ app.get('/deleteAllButPerson', function(req, res, next) {
     }
   });
 
-  
+
   pool.query("DELETE FROM `reviews` WHERE given_by_id=?", [req.query.id], function(err, result) {
     if (err) {
       next(err);
