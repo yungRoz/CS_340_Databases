@@ -111,7 +111,8 @@ function deleteRow(id) {
 
   req.open("GET", "/deleteAllButPerson?id=" + id, true);
 
-  req.addEventListener("load", function() {
+  req.addEventListener("load", function(event) {
+    event.preventDefault();
     if (req.status >= 200 && req.status < 400) {
       console.log('delete processed');
     } else {
@@ -124,7 +125,8 @@ function deleteRow(id) {
 
   req.open("GET", "/deletePerson?id=" + id, true);
 
-  req.addEventListener("load", function() {
+  req.addEventListener("load", function(event) {
+    event.preventDefault();
     if (req.status >= 200 && req.status < 400) {
       console.log('delete processed');
     } else {
@@ -133,7 +135,6 @@ function deleteRow(id) {
   });
 
   req.send("/deletePerson?id=" + id);
-  event.preventDefault();
 
   var table = document.getElementById('personTable');
   var n = table.rows.length;
