@@ -73,7 +73,7 @@ function bindAddPersonButton() {
       numStars=1;
     }
     else if(twoStar.checked){
-      numStars=2;gggggg
+      numStars=2;
     }
     else if (threeStar.checked) {
       numStars=3;
