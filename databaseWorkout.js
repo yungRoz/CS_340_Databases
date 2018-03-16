@@ -205,6 +205,12 @@ app.get('/deleteAllButPerson', function(req, res, next) {
       return;
     }
   });
+  pool.query("ALTER TABLE `has` DROP FOREIGN KEY `has_ibfk_2`", function(err, result) {
+    if (err) {
+      next(err);
+      return;
+    }
+  });
 
   pool.query("ALTER TABLE `has_higher_status` DROP FOREIGN KEY `has_higher_status_ibfk_1`", function(err, result) {
     if (err) {
