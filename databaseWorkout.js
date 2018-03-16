@@ -235,7 +235,7 @@ app.get('/deleteAllButPerson', function(req, res, next) {
     }
   });
 
-  poo
+  
   pool.query("DELETE FROM `reviews` WHERE given_by_id=?", [req.query.id], function(err, result) {
     if (err) {
       next(err);
