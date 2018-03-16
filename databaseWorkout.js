@@ -183,52 +183,9 @@ app.get('/insertToCompany', function(req, res, next) {
 
 
 app.get('/deleteAllButPerson', function(req, res, next) {
-  pool.query("ALTER TABLE `reviews` drop CONSTRAINT `reviews_ibfk_1`; ALTER TABLE `reviews`"
-  + " ADD CONSTRAINT `reviews_ibfk_1` FOREIGN KEY (`given_by_id`)  REFERENCES `person` (`id`)"
-  + " ON DELETE CASCADE ON UPDATE NO ACTION;", [req.query.id], function(err, result) {
-    if (err) {
-      next(err);
-      return;
-    }
-  });
-  pool.query("ALTER TABLE `reviews` drop CONSTRAINT `reviews_ibfk_2`; ALTER TABLE `reviews`"
-  + " ADD CONSTRAINT `reviews_ibfk_2` FOREIGN KEY (`belongs_to_id`)  REFERENCES `person` (`id`)"
-  + " ON DELETE CASCADE ON UPDATE NO ACTION;", [req.query.id], function(err, result) {
-    if (err) {
-      next(err);
-      return;
-    }
-  });
-  pool.query("ALTER TABLE `has` drop CONSTRAINT `has_ibfk_1`; ALTER TABLE `has`"
-  + " ADD CONSTRAINT `has_ibfk_1` FOREIGN KEY (`per_id`)  REFERENCES `person` (`id`)"
-  + " ON DELETE CASCADE ON UPDATE NO ACTION;", [req.query.id], function(err, result) {
-    if (err) {
-      next(err);
-      return;
-    }
-  });
 
-  pool.query("ALTER TABLE `belongs_to` drop CONSTRAINT `belongs_to_ibfk_1`; ALTER TABLE `belongs_to`"
-  + " ADD CONSTRAINT `belongs_to_ibfk_1` FOREIGN KEY (`per_id`)  REFERENCES `person` (`id`)"
-  + " ON DELETE CASCADE ON UPDATE NO ACTION;", [req.query.id], function(err, result) {
-    if (err) {
-      next(err);
-      return;
-    }
-  });
 
-  pool.query("ALTER TABLE `has_higher_status` drop CONSTRAINT `has_higher_status_ibfk_1`; ALTER TABLE `has_higher_status`"
-  + " ADD CONSTRAINT `has_higher_status_ibfk_1` FOREIGN KEY (`hi_per_id`)  REFERENCES `person` (`id`)"
-  + " ON DELETE CASCADE ON UPDATE NO ACTION;", [req.query.id], function(err, result) {
-    if (err) {
-      next(err);
-      return;
-    }
-  });
-
-  pool.query("ALTER TABLE `has_higher_status` drop CONSTRAINT `has_higher_status_ibfk_2`; ALTER TABLE `has_higher_status`"
-  + " ADD CONSTRAINT `has_higher_status_ibfk_2` FOREIGN KEY (`lo_per_id`)  REFERENCES `person` (`id`)"
-  + " ON DELETE CASCADE ON UPDATE NO ACTION;", [req.query.id], function(err, result) {
+  pool.query("SET FOREIGN_KEY_CHECKS=0;", function(err, result) {
     if (err) {
       next(err);
       return;
@@ -295,6 +252,21 @@ app.get('/deleteAllButPerson', function(req, res, next) {
       });
     }
   });
+
+  pool.query("DELETE FROM `person` WHERE id=?", [req.query.id], function(err, result) {
+    if (err) {
+      next(err);
+      return;
+    }
+  });
+
+  pool.query("SET FOREIGN_KEY_CHECKS=1;", function(err, result) {
+    if (err) {
+      next(err);
+      return;
+    }
+  });
+
 
 });
 
