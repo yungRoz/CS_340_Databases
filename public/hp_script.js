@@ -105,7 +105,8 @@ function bindAddPersonButton() {
     req.addEventListener('load', function() {
       if (req.status >= 200 && req.status < 400) {
         var response = JSON.parse(req.responseText);
-        if (response[0] == "false"){
+        location.reload();
+        /*if (response[0] == "false"){
           alert("Cannot review same person twice");
           return;
         }
@@ -128,7 +129,7 @@ function bindAddPersonButton() {
         table.appendChild(row);
       } else {
         console.log('ERROR' + req.statusText);
-      }
+      }*/
     });
     req.send("/insertToReviews" + param);
     event.preventDefault();
@@ -220,7 +221,7 @@ function deleteCoRow(perId, coId, tableId) {
   });
   req.send(deleteParam);
 
-  location.reload(); 
+  location.reload();
 
   //event.preventDefault();
   //console.log(tableId);
