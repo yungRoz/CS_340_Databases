@@ -185,12 +185,52 @@ app.get('/insertToCompany', function(req, res, next) {
 app.get('/deleteAllButPerson', function(req, res, next) {
 
 
-  pool.query("SET FOREIGN_KEY_CHECKS=0;", function(err, result) {
+  pool.query("ALTER TABLE `reviews` DROP FOREIGN KEY `reviews_ibfk_1`", function(err, result) {
     if (err) {
       next(err);
       return;
     }
   });
+
+  pool.query("ALTER TABLE `reviews` DROP FOREIGN KEY `reviews_ibfk_2`", function(err, result) {
+    if (err) {
+      next(err);
+      return;
+    }
+  });
+
+  pool.query("ALTER TABLE `has` DROP FOREIGN KEY `has_ibfk_1`", function(err, result) {
+    if (err) {
+      next(err);
+      return;
+    }
+  });
+
+  pool.query("ALTER TABLE `belongs_to` DROP FOREIGN KEY `belongs_to_ibfk_1`", function(err, result) {
+    if (err) {
+      next(err);
+      return;
+    }
+  });
+  pool.query("ALTER TABLE `belongs_to` DROP FOREIGN KEY `belongs_to_ibfk_2`", function(err, result) {
+    if (err) {
+      next(err);
+      return;
+    }
+  });
+  pool.query("ALTER TABLE `has_higher_status` DROP FOREIGN KEY `has_higher_status_ibfk_2`", function(err, result) {
+    if (err) {
+      next(err);
+      return;
+    }
+  });
+  pool.query("ALTER TABLE `has_higher_status` DROP FOREIGN KEY `has_higher_status_ibfk_1`", function(err, result) {
+    if (err) {
+      next(err);
+      return;
+    }
+  });
+
 
 
   pool.query("DELETE FROM `reviews` WHERE given_by_id=?", [req.query.id], function(err, result) {
@@ -253,13 +293,12 @@ app.get('/deleteAllButPerson', function(req, res, next) {
     }
   });
 
-  pool.query("SET FOREIGN_KEY_CHECKS=1;", function(err, result) {
+  pool.query("DELETE FROM `person` WHERE id=?", [req.query.id], function(err, result) {
     if (err) {
       next(err);
       return;
     }
   });
-
 
 });
 
