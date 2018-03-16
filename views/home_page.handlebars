@@ -16,8 +16,8 @@
         <select name="person" id="reviewPerson" class="pure-input-1-2">
           {{#if results}}
             {{#each results}}
-              {{#if this.notUId}}
-                <option value="{{this.notUId}},{{this.totallyUId}}"> {{this.notUName}}</option>
+              {{#if this.notRevId}}
+                <option value="{{this.notRevId}},{{this.totallyUId}}"> {{this.notRevName}}</option>
               {{/if}}
             {{/each}}
           {{/if}}

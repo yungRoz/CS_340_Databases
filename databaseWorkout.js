@@ -464,8 +464,8 @@ app.get('/homepage', function(req, res, next) {
 
     for (var i in rows) {
       var info = {
-        'notUName': rows[i].name,
-        'notUId': rows[i].id,
+        'notRevName': rows[i].name,
+        'notRevId': rows[i].id,
         'totallyUId':req.query.id
       };
       params.push(info);
