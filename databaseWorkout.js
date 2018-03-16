@@ -178,7 +178,8 @@ app.get('/insertToReviews', function(req, res, next) {
           next(err);
           return;
         }
-        pool.query("SELECT * FROM `reviews` WHERE `belongs_to_id`=? AND `given_by_id`=?", [req.query.bt_id, req.query.gb_id], function(err, result) {
+        pool.query("SELECT r.star_rating, r.classifier_term, r.belongs_to_id, r.given_by_id, p.name FROM reviews r" +
+                "INNER JOIN person p ON p.id=r.belongs_to_id  WHERE `belongs_to_id`=? AND `given_by_id`=?", [req.query.bt_id, req.query.gb_id], function(err, result) {
           if (err) {
             next(err);
             return;
@@ -502,7 +503,8 @@ app.get('/homepage', function(req, res, next) {
     }
   });
   // get reviews they've given info
-  pool.query("SELECT * FROM `reviews` WHERE given_by_id=?", [req.query.id], function(err, rows, fields) {
+  pool.query("SELECT r.star_rating, r.classifier_term, r.belongs_to_id, r.given_by_id, p.name FROM reviews r" +
+          "INNER JOIN person p ON p.id=r.belongs_to_id  WHERE given_by_id=?", [req.query.id], function(err, rows, fields) {
     if (err) {
       next(err);
       return;
@@ -513,14 +515,16 @@ app.get('/homepage', function(req, res, next) {
         'givenStarRating': rows[i].star_rating,
         'givenClassifierTerm': rows[i].classifier_term,
         'givenGivenById': rows[i].given_by_id,
-        'givenBelongsToId': rows[i].belongs_to_id
+        'givenBelongsToId': rows[i].belongs_to_id,
+        'givenName': rows[i].name
       };
       params.push(info);
     }
   });
 
   // get reviews they've received
-  pool.query("SELECT * FROM `reviews` WHERE belongs_to_id=?", [req.query.id], function(err, rows, fields) {
+  pool.query("SELECT r.star_rating, r.classifier_term, r.belongs_to_id, r.given_by_id, p.name FROM reviews r" +
+          "INNER JOIN person p ON p.id=r.given_by_id  WHERE belongs_to_id=?", [req.query.id], function(err, rows, fields) {
     if (err) {
       next(err);
       return;
@@ -531,7 +535,8 @@ app.get('/homepage', function(req, res, next) {
         'belongsStarRating': rows[i].star_rating,
         'belongsClassifierTerm': rows[i].classifier_term,
         'belongsGivenById': rows[i].given_by_id,
-        'belongsBelongsToId': rows[i].belongs_to_id
+        'belongsBelongsToId': rows[i].belongs_to_id,
+        'belongsName': rows[i].name
       };
       params.push(info);
     }

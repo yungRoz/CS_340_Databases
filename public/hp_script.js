@@ -245,7 +245,7 @@ function deleteRevRow(btId, gbId) {
 
   var req = new XMLHttpRequest();
 
-  var deleteParam = "/deleteFromReview?bt_id=" + btId + "&gb_id=" + gbId;
+  var deleteParam = "/deleteFromReviews?bt_id=" + btId + "&gb_id=" + gbId;
   req.open("GET", deleteParam, true);
   console.log(deleteParam);
   req.addEventListener("load", function(event) {
@@ -269,7 +269,7 @@ function deleteRevRow(btId, gbId) {
     var dCell = allCells[allCells.length - 1];
     //console.log(dCell.children[1].id)
     //console.log(perId);
-    if (dCell.children[1].id ==  btId + " "+gbId) {
+    if (dCell.children[1].id ==  btId + "_"+gbId) {
       rowNum = i;
       //console.log(rowNum);
     }
