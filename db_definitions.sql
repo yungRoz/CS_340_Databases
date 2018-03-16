@@ -114,12 +114,21 @@ SELECT  everyone.name AS `name`, everyone.id AS `id`
 
 -- Get Everyone not yet reviewed by the user
 ---- Get EVERYONE in the users companies, name and company name
-SELECT all_reviews.name AS `name`, all_reviews.id AS `id`
-FROM (SELECT r.belongs_to_id, p.name, FROM person p
-      INNER JOIN reviews r ON r.given_by_id = p.id
-      WHERE p.id=?
-    ) AS alL_given_by_u
-INNER JOIN (SELECT r.belongs_to_id, p.name FROM person p
-INNER JOIN reviews r ON r.belongs_to_id = p.id
-) as all_reviews
-WHERE all_reviews.belongs_to_id != alL_given_by_u.belongs_to_id;
+SELECT ap.name AS `name`, ap.id AS `id`
+FROM(SELECT r.belongs_to_id AS `id` FROM reviews r
+WHERE r.given_by_id=?) as ag
+RIGHT JOIN (SELECT p.id AS `id`, p.name AS `name` FROM person p WHERE p.id!=10) AS ap
+ON ag.id=ap.id
+WHERE ag.id IS NULL;
+
+SELECT AVG(reviews.star_rating)
+FROM `reviews`
+WHERE  belongs_to_id=?;
+
+
+
+SELECT `classifier`, COUNT(`classifier`) AS `classifier_occurrence`
+FROM `reviews`
+GROUP BY `classifier`
+ORDER BY `classifier_occurrence` DESC
+LIMIT    1;
