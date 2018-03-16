@@ -182,7 +182,7 @@ app.get('/insertToCompany', function(req, res, next) {
 
 
 
-app.get('/delete', function(req, res, next) {
+app.get('/deleteAllButPerson', function(req, res, next) {
   pool.query("DELETE FROM `reviews` WHERE given_by_id=?", [req.query.id], function(err, result) {
     if (err) {
       next(err);
@@ -242,6 +242,10 @@ app.get('/delete', function(req, res, next) {
       });
     }
   });
+
+});
+
+app.get('/deletePerson', function(req, res, next) {
   pool.query("DELETE FROM `person` WHERE id=?", [req.query.id], function(err, result) {
     if (err) {
       next(err);
@@ -249,7 +253,6 @@ app.get('/delete', function(req, res, next) {
     }
   });
 });
-
 app.get('/deleteFromCompany', function(req, res, next) {
   var context = {};
   pool.query("DELETE FROM `belongs_to` WHERE per_id=? AND co_id=?", [req.query.per_id, req.query.co_id], function(err, result) {
