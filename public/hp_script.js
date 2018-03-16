@@ -124,7 +124,7 @@ function bindAddPersonButton() {
         }
         var deleteReviewCell = newDeleteReviewCell(btId, gbId);
         row.appendChild(deleteReviewCell);
-        var table = document.getElementById(ReviewsG);
+        var table = document.getElementById("ReviewsG");
         table.appendChild(row);
       } else {
         console.log('ERROR' + req.statusText);
