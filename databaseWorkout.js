@@ -242,12 +242,12 @@ app.get('/delete', function(req, res, next) {
       });
     }
   });
-  pool.query("DELETE FROM `person` WHERE id=?", [req.query.id], function(err, result) {
+  /*pool.query("DELETE FROM `person` WHERE id=?", [req.query.id], function(err, result) {
     if (err) {
       next(err);
       return;
     }
-  });
+  });*/
 });
 
 app.get('/deleteFromCompany', function(req, res, next) {
