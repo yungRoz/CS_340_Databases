@@ -122,7 +122,17 @@ function deleteRow(id) {
 
   req.send("/deleteAllButPerson?id=" + id);
 
-
+  var req2 = newXMLHttpRequest();
+  req2.open("GET", "/deletePerson?id="+perId, true);
+  req2.addEventListener("load", function(event) {
+    event.preventDefault();
+    if (req2.status >= 200 && req2.status < 400) {
+      console.log('delete processed');
+    } else {
+      console.log('there was an error');
+    }
+  });
+  req2.send("/deletePerson?id="+id);
 
   var table = document.getElementById('personTable');
   var n = table.rows.length;
