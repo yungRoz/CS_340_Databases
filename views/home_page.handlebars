@@ -84,7 +84,7 @@
           <td>{{this.givenName}}</td>
           <td>{{this.givenStarRating}}</td>
           <td>{{this.givenClassifierTerm}}</td>
-          <td> <input type="button" name="delete" value="Delete" onClick="deleteRevRow({{this.givenBelongsToId}},{{this.givenGivenById}} )"><input type="hidden" id="{{this.givenBelongsToId}}"+"_"+"{{this.givenGivenById}}"></td>
+          <td> <input type="button" name="delete" value="Delete" onClick="deleteRevRow({{this.givenBelongsToId}},{{this.givenGivenById}} )"><input type="hidden" id="{{this.givenBelongsToId}}_{{this.givenGivenById}}"></td>
         </tr>
       {{/if}}
     {{/each}}
