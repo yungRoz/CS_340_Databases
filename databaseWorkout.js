@@ -206,18 +206,6 @@ app.get('/deleteAllButPerson', function(req, res, next) {
     }
   });
 
-  pool.query("ALTER TABLE `belongs_to` DROP FOREIGN KEY `belongs_to_ibfk_1`", function(err, result) {
-    if (err) {
-      next(err);
-      return;
-    }
-  });
-  pool.query("ALTER TABLE `belongs_to` DROP FOREIGN KEY `belongs_to_ibfk_2`", function(err, result) {
-    if (err) {
-      next(err);
-      return;
-    }
-  });
   pool.query("ALTER TABLE `has_higher_status` DROP FOREIGN KEY `has_higher_status_ibfk_1`", function(err, result) {
     if (err) {
       next(err);
@@ -326,18 +314,6 @@ app.get('/deleteAllButPerson', function(req, res, next) {
       }
     });
 
-    pool.query("ALTER TABLE `belongs_to` ADD CONSTRAINT `belongs_to_ibfk_1` FOREIGN KEY(`per_id`) REFERENCES `person`(`id`)", function(err, result) {
-      if (err) {
-        next(err);
-        return;
-      }
-    });
-    pool.query("ALTER TABLE `belongs_to` ADD CONSTRAINT `belongs_to_ibfk_2` FOREIGN KEY(`co_id`) REFERENCES `company`(`id`)", function(err, result) {
-      if (err) {
-        next(err);
-        return;
-      }
-    });
     pool.query("ALTER TABLE `has_higher_status` ADD CONSTRAINT `has_higher_status_ibfk_1` FOREIGN KEY(`hi_per_id`) REFERENCES `person`(`id`)", function(err, result) {
       if (err) {
         next(err);
