@@ -94,7 +94,7 @@ function bindAddPersonButton() {
     }
 
     var gbId = document.getElementsByTagName("uid").id;
-    var param = "?bt_id=" + btId + + "&gb_id=" + gbId + "&rating=" + numStars +"&term=" + classifier; // + "&weight=" + weight + "&date=" + date + "&lbs=" + unit;
+    var param = "?bt_id=" + btId  + "&gb_id=" + gbId + "&rating=" + numStars +"&term=" + classifier; // + "&weight=" + weight + "&date=" + date + "&lbs=" + unit;
     console.log(param);
     var req = new XMLHttpRequest();
     req.open("GET", "/insertToReviews" + param, true);
