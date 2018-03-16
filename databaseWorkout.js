@@ -183,44 +183,6 @@ app.get('/insertToCompany', function(req, res, next) {
 
 
 app.get('/delete', function(req, res, next) {
-  pool.query("DELETE FROM `reviews` WHERE given_by_id=?", [req.query.id], function(err, result) {
-    if (err) {
-      next(err);
-      return;
-    }
-  });
-  pool.query("DELETE FROM `reviews` WHERE belongs_to_id=?", [req.query.id], function(err, result) {
-    if (err) {
-      next(err);
-      return;
-    }
-  });
-  pool.query("DELETE FROM `has` WHERE per_id=?", [req.query.id], function(err, result) {
-    if (err) {
-      next(err);
-      return;
-    }
-  });
-  pool.query("DELETE FROM `belongs_to` WHERE per_id=?", [req.query.id], function(err, result) {
-    if (err) {
-      next(err);
-      return;
-    }
-  });
-  pool.query("DELETE FROM `has_higher_status` WHERE hi_per_id=?", [req.query.id], function(err, result) {
-    if (err) {
-      next(err);
-      return;
-    }
-  });
-  pool.query("DELETE FROM `has_higher_status` WHERE lo_per_id=?", [req.query.id], function(err, result) {
-    if (err) {
-      next(err);
-      return;
-    }
-  });
-
-
   var getUserCoString = "SELECT c.id AS cid, c.name AS co_name FROM company c " +
     "INNER JOIN belongs_to bt ON bt.co_id = c.id " +
     "INNER JOIN person p ON p.id = bt.per_id " +
@@ -231,6 +193,44 @@ app.get('/delete', function(req, res, next) {
       return;
     }
 
+    pool.query("DELETE FROM `reviews` WHERE given_by_id=?", [req.query.id], function(err, result) {
+      if (err) {
+        next(err);
+        return;
+      }
+    });
+    pool.query("DELETE FROM `reviews` WHERE belongs_to_id=?", [req.query.id], function(err, result) {
+      if (err) {
+        next(err);
+        return;
+      }
+    });
+    pool.query("DELETE FROM `has` WHERE per_id=?", [req.query.id], function(err, result) {
+      if (err) {
+        next(err);
+        return;
+      }
+    });
+    pool.query("DELETE FROM `belongs_to` WHERE per_id=?", [req.query.id], function(err, result) {
+      if (err) {
+        next(err);
+        return;
+      }
+    });
+    pool.query("DELETE FROM `has_higher_status` WHERE hi_per_id=?", [req.query.id], function(err, result) {
+      if (err) {
+        next(err);
+        return;
+      }
+    });
+    pool.query("DELETE FROM `has_higher_status` WHERE lo_per_id=?", [req.query.id], function(err, result) {
+      if (err) {
+        next(err);
+        return;
+      }
+    });
+
+
     for (var i in rows) {
       pool.query("DELETE FROM `company` WHERE id=?", [rows[i].id], function(err, result) {
         if (err) {
@@ -239,6 +239,7 @@ app.get('/delete', function(req, res, next) {
         }
       });
     }
+    
   });
 
   pool.query("DELETE FROM `person` WHERE id=?", [req.query.id], function(err, result) {
