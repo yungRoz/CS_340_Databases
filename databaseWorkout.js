@@ -232,14 +232,20 @@ app.get('/delete', function(req, res, next) {
 
 
     for (var i in rows) {
-      pool.query("DELETE FROM `company` WHERE id=?", [rows[i].id], function(err, result) {
+      pool.query("DELETE FROM `belongs_to` WHERE co_id=?", [rows[i].cid], function(err, result) {
+        if (err) {
+          next(err);
+          return;
+        }
+      });
+      pool.query("DELETE FROM `company` WHERE id=?", [rows[i].cid], function(err, result) {
         if (err) {
           next(err);
           return;
         }
       });
     }
-    
+
   });
 
   pool.query("DELETE FROM `person` WHERE id=?", [req.query.id], function(err, result) {
