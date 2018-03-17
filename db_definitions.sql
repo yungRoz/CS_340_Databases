@@ -121,35 +121,26 @@ RIGHT JOIN (SELECT p.id AS `id`, p.name AS `name` FROM person p WHERE p.id!=10) 
 ON ag.id=ap.id
 WHERE ag.id IS NULL;
 
-SELECT AVG(reviews.star_rating)
-FROM `reviews`
-WHERE  belongs_to_id=?;
 
 
-
-SELECT `classifier`, COUNT(`classifier`) AS `classifier_occurrence`
-FROM `reviews`
-GROUP BY `classifier`
-ORDER BY `classifier_occurrence` DESC
-LIMIT    1;
-
-
+--Set avg_rating
 UPDATE `person`
-SET `avg_rating` = 
+SET `avg_rating` =
 (SELECT AVG(reviews.star_rating) AS `avg_star_rating`
  FROM `reviews`
  WHERE reviews.belongs_to_id=16)
-WHERE person.id=16; 
+WHERE person.id=16;
 
+-- Set topClassifier
 UPDATE `person`
-SET `top_classifier` = 
+SET `top_classifier` =
 (SELECT n1term.classifier_term FROM (SELECT `classifier_term`, COUNT(`classifier_term`) AS `classifier_occurrence`
 FROM `reviews`
 WHERE reviews.belongs_to_id=20
 GROUP BY `classifier_term`
 ORDER BY `classifier_occurrence` DESC
 LIMIT    1) AS n1term)
-WHERE person.id=20; 
+WHERE person.id=20;
 
 
 
@@ -157,4 +148,3 @@ WHERE person.id=20;
 INSERT INTO `has_higher_status` (`hi_per_id`,`lo_per_id`)
 SELECT person.id, '19' FROM `person`
 WHERE person.avg_rating < (SELECT person.avg_rating FROM `person` WHERE person.id=19)
-

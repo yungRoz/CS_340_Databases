@@ -196,17 +196,114 @@ app.get('/insertToReviews', function(req, res, next) {
       next(err);
       return;
     }
-    pool.query("SELECT  p.name AS `name`, r.belongs_to_id AS `belongs_to_id`, r.star_rating AS `star_rating`," +
-      " r.given_by_id AS `given_by_id`,  r.classifier_term AS  `classifier_term` FROM reviews r " +
-      "INNER JOIN person p ON p.id=r.belongs_to_id  WHERE `belongs_to_id`=? AND `given_by_id`=?", [req.query.bt_id, req.query.gb_id],
-      function(err, result) {
-        if (err) {
-          next(err);
-          return;
-        }
-        res.send(JSON.stringify(result[0]));
-      });
   });
+
+  // update avg_rating
+  pool.query("UPDATE `person`
+    SET `avg_rating` =
+    (SELECT AVG(reviews.star_rating) AS `avg_star_rating`
+      FROM `reviews`
+      WHERE reviews.belongs_to_id = ? ) WHERE person.id = ? ;
+    ", [req.query.bt_id, req.query.bt_id],
+    function(err, result) {
+      if (err) {
+        next(err);
+        return;
+      }
+    });
+
+  // update top classifier
+  pool.query("UPDATE `person`
+    SET `top_classifier` =
+    (SELECT n1term.classifier_term FROM(SELECT `classifier_term`, COUNT(`classifier_term`) AS `classifier_occurrence`
+      FROM `reviews`
+      WHERE reviews.belongs_to_id = ?
+      GROUP BY `classifier_term`
+      ORDER BY `classifier_occurrence`
+      DESC LIMIT 1) AS n1term) WHERE person.id = ? ;
+    ", [req.query.bt_id, req.query.bt_id],
+    function(err, result) {
+      if (err) {
+        next(err);
+        return;
+      }
+    });
+
+  // update  has_higher_status // alter constraints
+  pool.query("ALTER TABLE `has_higher_status` DROP FOREIGN KEY `has_higher_status_ibfk_1`", function(err, result) {
+    if (err) {
+      next(err);
+      return;
+    }
+  });
+  pool.query("ALTER TABLE `has_higher_status` DROP FOREIGN KEY `has_higher_status_ibfk_2`", function(err, result) {
+    if (err) {
+      next(err);
+      return;
+    }
+  });
+  // perform delete
+  pool.query("DELETE FROM `has_higher_status` WHERE hi_per_id=?", [req.query.bt_id], function(err, result) {
+    if (err) {
+      next(err);
+      return;
+    }
+  });
+  pool.query("DELETE FROM `has_higher_status` WHERE lo_per_id=?", [req.query.bt_id], function(err, result) {
+    if (err) {
+      next(err);
+      return;
+    }
+  });
+  // reinstate constraints
+  pool.query("ALTER TABLE `has_higher_status` ADD CONSTRAINT `has_higher_status_ibfk_1` FOREIGN KEY(`hi_per_id`) REFERENCES `person`(`id`)", function(err, result) {
+    if (err) {
+      next(err);
+      return;
+    }
+  });
+  pool.query("ALTER TABLE `has_higher_status` ADD CONSTRAINT `has_higher_status_ibfk_2` FOREIGN KEY(`lo_per_id`) REFERENCES `person`(`id`)", function(err, result) {
+    if (err) {
+      next(err);
+      return;
+    }
+  });
+  // update has_higher_status
+  pool.query("
+    INSERT INTO `has_higher_status` (`hi_per_id`, `lo_per_id`) SELECT person.id, ? FROM `person`
+    WHERE person.avg_rating > (SELECT person.avg_rating FROM `person`
+      WHERE person.id = ? )
+    ", [req.query.bt_id, req.query.bt_id],
+    function(err, result) {
+      if (err) {
+        next(err);
+        return;
+      }
+    });
+  // update has_higher_status
+  pool.query("
+    INSERT INTO `has_higher_status` (`lo_per_id`, `hi_per_id`) SELECT person.id, ? FROM `person`
+    WHERE person.avg_rating < (SELECT person.avg_rating FROM `person`
+      WHERE person.id = ? )
+    ", [req.query.bt_id, req.query.bt_id],
+    function(err, result) {
+      if (err) {
+        next(err);
+        return;
+      }
+    });
+
+  pool.query("SELECT  p.name AS `name`, r.belongs_to_id AS `belongs_to_id`, r.star_rating AS `star_rating`," +
+    " r.given_by_id AS `given_by_id`,  r.classifier_term AS  `classifier_term` FROM reviews r " +
+    "INNER JOIN person p ON p.id=r.belongs_to_id  WHERE `belongs_to_id`=? AND `given_by_id`=?", [req.query.bt_id, req.query.gb_id],
+    function(err, result) {
+      if (err) {
+        next(err);
+        return;
+      }
+    });
+
+
 });
 
 
@@ -392,6 +489,101 @@ app.get('/deleteFromReviews', function(req, res, next) {
       return;
     }
   });
+
+  // update avg_rating
+  pool.query("UPDATE `person`
+    SET `avg_rating` =
+    (SELECT AVG(reviews.star_rating) AS `avg_star_rating`
+      FROM `reviews`
+      WHERE reviews.belongs_to_id = ? ) WHERE person.id = ? ;
+    ", [req.query.bt_id, req.query.bt_id],
+    function(err, result) {
+      if (err) {
+        next(err);
+        return;
+      }
+    });
+
+  // update top classifier
+  pool.query("UPDATE `person`
+    SET `top_classifier` =
+    (SELECT n1term.classifier_term FROM(SELECT `classifier_term`, COUNT(`classifier_term`) AS `classifier_occurrence`
+      FROM `reviews`
+      WHERE reviews.belongs_to_id = ?
+      GROUP BY `classifier_term`
+      ORDER BY `classifier_occurrence`
+      DESC LIMIT 1) AS n1term) WHERE person.id = ? ;
+    ", [req.query.bt_id, req.query.bt_id],
+    function(err, result) {
+      if (err) {
+        next(err);
+        return;
+      }
+    });
+
+  // update  has_higher_status // alter constraints
+  pool.query("ALTER TABLE `has_higher_status` DROP FOREIGN KEY `has_higher_status_ibfk_1`", function(err, result) {
+    if (err) {
+      next(err);
+      return;
+    }
+  });
+  pool.query("ALTER TABLE `has_higher_status` DROP FOREIGN KEY `has_higher_status_ibfk_2`", function(err, result) {
+    if (err) {
+      next(err);
+      return;
+    }
+  });
+  // perform delete
+  pool.query("DELETE FROM `has_higher_status` WHERE hi_per_id=?", [req.query.bt_id], function(err, result) {
+    if (err) {
+      next(err);
+      return;
+    }
+  });
+  pool.query("DELETE FROM `has_higher_status` WHERE lo_per_id=?", [req.query.bt_id], function(err, result) {
+    if (err) {
+      next(err);
+      return;
+    }
+  });
+  // reinstate constraints
+  pool.query("ALTER TABLE `has_higher_status` ADD CONSTRAINT `has_higher_status_ibfk_1` FOREIGN KEY(`hi_per_id`) REFERENCES `person`(`id`)", function(err, result) {
+    if (err) {
+      next(err);
+      return;
+    }
+  });
+  pool.query("ALTER TABLE `has_higher_status` ADD CONSTRAINT `has_higher_status_ibfk_2` FOREIGN KEY(`lo_per_id`) REFERENCES `person`(`id`)", function(err, result) {
+    if (err) {
+      next(err);
+      return;
+    }
+  });
+  // update has_higher_status
+  pool.query("
+    INSERT INTO `has_higher_status` (`hi_per_id`, `lo_per_id`) SELECT person.id, ? FROM `person`
+    WHERE person.avg_rating > (SELECT person.avg_rating FROM `person`
+      WHERE person.id = ? )
+    ", [req.query.bt_id, req.query.bt_id],
+    function(err, result) {
+      if (err) {
+        next(err);
+        return;
+      }
+    });
+  // update has_higher_status
+  pool.query("
+    INSERT INTO `has_higher_status` (`lo_per_id`, `hi_per_id`) SELECT person.id, ? FROM `person`
+    WHERE person.avg_rating < (SELECT person.avg_rating FROM `person`
+      WHERE person.id = ? )
+    ", [req.query.bt_id, req.query.bt_id],
+    function(err, result) {
+      if (err) {
+        next(err);
+        return;
+      }
+    });
 });
 
 app.get('/update', function(req, res, next) {
@@ -430,6 +622,8 @@ app.get('/homepage', function(req, res, next) {
         'uName': rows[i].name,
         'uEmail': rows[i].email,
         'uId': rows[i].id,
+        'uAvg_Rating': rows[i].avg_rating,
+        'uTop_Classifier':row[i].top_classifier
       };
       params.push(info);
     }

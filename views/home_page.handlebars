@@ -1,7 +1,9 @@
 {{#if results}}
   {{#each results}}
     {{#if this.uName}}
-      <h1 id="{{this.uId}}"> Welcome {{this.uName}}</h1>
+      <h1 id="{{this.uId}}">{{this.uName}}</h1>
+      <h2>{{this.uAvg_Rating}}</h2>
+      <h2>{{this.uTop_Classifier}}</h2>
       <input type="hidden" name="uid" id="{{this.uId}}" value="{{this.uId}}">
     {{/if}}
   {{/each}}

@@ -90,7 +90,7 @@ function bindAddPersonButton() {
     }
     else{
       alert("Reviews must contain star rating of at least 1");
-      return; 
+      return;
     }
     var classifier = document.getElementById('classifier').value;
     if (classifier == "") {
@@ -106,7 +106,6 @@ function bindAddPersonButton() {
     req.addEventListener('load', function() {
       if (req.status >= 200 && req.status < 400) {
         var response = JSON.parse(req.responseText);
-        location.reload();
         if (response[0] == "false"){
           alert("Cannot review same person twice");
           return;
@@ -135,6 +134,7 @@ function bindAddPersonButton() {
         row.appendChild(deleteReviewCell);
         var table = document.getElementById("ReviewsG");
         table.appendChild(row);
+        location.reload(); 
       } else {
         console.log('ERROR' + req.statusText);
       }
