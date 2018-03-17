@@ -164,32 +164,6 @@ app.get('/insertToCompany', function(req, res, next) {
 });
 
 app.get('/insertToReviews', function(req, res, next) {
-  /*pool.query("SELECT * FROM `reviews` WHERE `belongs_to_id`=? AND `given_by_id`=?", [req.query.bt_id, req.query.gb_id], function(err, result) {
-    if (err) {
-      next(err);
-      return;
-    }
-
-    if (result.length > 0) {
-      res.send(JSON.stringify([new String('false')]));
-    } else {
-      pool.query("INSERT INTO `reviews` (`belongs_to_id`, `given_by_id`, `star_rating`, `classifier_term`) VALUES (?,?,?,?)", [req.query.bt_id, req.query.gb_id, req.query.rating, req.query.term], function(err, result) {
-        if (err) {
-          next(err);
-          return;
-        }
-        pool.query("SELECT r.star_rating AS `star_rating`, r.classifier_term AS  `classifier_term`, r.belongs_to_id AS `belongs_to_id`," +
-                " r.given_by_id AS `given_by_id`, p.name AS `name` FROM reviews r " +
-                "INNER JOIN person p ON p.id=r.belongs_to_id  WHERE `belongs_to_id`=? AND `given_by_id`=?", [req.query.bt_id, req.query.gb_id], function(err, result) {
-          if (err) {
-            next(err);
-            return;
-          }
-          res.send(JSON.stringify(result[0]));
-        });
-      });
-    }
-  });*/
 
   pool.query("INSERT INTO `reviews` (`belongs_to_id`, `given_by_id`, `star_rating`, `classifier_term`) VALUES (?,?,?,?)", [req.query.bt_id, req.query.gb_id, req.query.rating, req.query.term], function(err, result) {
     if (err) {
@@ -199,12 +173,8 @@ app.get('/insertToReviews', function(req, res, next) {
   });
 
   // update avg_rating
-  pool.query("UPDATE `person`
-    SET `avg_rating` =
-    (SELECT AVG(reviews.star_rating) AS `avg_star_rating`
-      FROM `reviews`
-      WHERE reviews.belongs_to_id = ? ) WHERE person.id = ? ;
-    ", [req.query.bt_id, req.query.bt_id],
+  pool.query("UPDATE `person` SET `avg_rating` = (SELECT AVG(reviews.star_rating) AS `avg_star_rating` " +
+      "FROM `reviews` WHERE reviews.belongs_to_id = ? ) WHERE person.id = ? ;", [req.query.bt_id, req.query.bt_id],
     function(err, result) {
       if (err) {
         next(err);
@@ -213,15 +183,9 @@ app.get('/insertToReviews', function(req, res, next) {
     });
 
   // update top classifier
-  pool.query("UPDATE `person`
-    SET `top_classifier` =
-    (SELECT n1term.classifier_term FROM(SELECT `classifier_term`, COUNT(`classifier_term`) AS `classifier_occurrence`
-      FROM `reviews`
-      WHERE reviews.belongs_to_id = ?
-      GROUP BY `classifier_term`
-      ORDER BY `classifier_occurrence`
-      DESC LIMIT 1) AS n1term) WHERE person.id = ? ;
-    ", [req.query.bt_id, req.query.bt_id],
+  pool.query("UPDATE `person` SET `top_classifier` = (SELECT n1term.classifier_term FROM(SELECT `classifier_term`, COUNT(`classifier_term`) AS `classifier_occurrence` " +
+      "FROM `reviews` WHERE reviews.belongs_to_id = ? GROUP BY `classifier_term` " +
+      "ORDER BY `classifier_occurrence` DESC LIMIT 1) AS n1term) WHERE person.id = ? ;", [req.query.bt_id, req.query.bt_id],
     function(err, result) {
       if (err) {
         next(err);
@@ -269,11 +233,9 @@ app.get('/insertToReviews', function(req, res, next) {
     }
   });
   // update has_higher_status
-  pool.query("
-    INSERT INTO `has_higher_status` (`hi_per_id`, `lo_per_id`) SELECT person.id, ? FROM `person`
-    WHERE person.avg_rating > (SELECT person.avg_rating FROM `person`
-      WHERE person.id = ? )
-    ", [req.query.bt_id, req.query.bt_id],
+  pool.query("INSERT INTO `has_higher_status` (`hi_per_id`, `lo_per_id`) SELECT person.id, ? FROM `person` " +
+    "WHERE person.avg_rating > (SELECT person.avg_rating FROM `person` " +
+    "WHERE person.id = ? )", [req.query.bt_id, req.query.bt_id],
     function(err, result) {
       if (err) {
         next(err);
@@ -281,11 +243,9 @@ app.get('/insertToReviews', function(req, res, next) {
       }
     });
   // update has_higher_status
-  pool.query("
-    INSERT INTO `has_higher_status` (`lo_per_id`, `hi_per_id`) SELECT person.id, ? FROM `person`
-    WHERE person.avg_rating < (SELECT person.avg_rating FROM `person`
-      WHERE person.id = ? )
-    ", [req.query.bt_id, req.query.bt_id],
+  pool.query("INSERT INTO `has_higher_status` (`lo_per_id`, `hi_per_id`) SELECT person.id, ? FROM `person` " +
+  "WHERE person.avg_rating < (SELECT person.avg_rating FROM `person` " +
+  "WHERE person.id = ? ) ", [req.query.bt_id, req.query.bt_id],
     function(err, result) {
       if (err) {
         next(err);
@@ -293,8 +253,8 @@ app.get('/insertToReviews', function(req, res, next) {
       }
     });
 
-  pool.query("SELECT  p.name AS `name`, r.belongs_to_id AS `belongs_to_id`, r.star_rating AS `star_rating`," +
-    " r.given_by_id AS `given_by_id`,  r.classifier_term AS  `classifier_term` FROM reviews r " +
+  pool.query("SELECT  p.name AS `name`, r.belongs_to_id AS `belongs_to_id`, r.star_rating AS `star_rating`, " +
+    "r.given_by_id AS `given_by_id`,  r.classifier_term AS  `classifier_term` FROM reviews r " +
     "INNER JOIN person p ON p.id=r.belongs_to_id  WHERE `belongs_to_id`=? AND `given_by_id`=?", [req.query.bt_id, req.query.gb_id],
     function(err, result) {
       if (err) {
@@ -491,12 +451,8 @@ app.get('/deleteFromReviews', function(req, res, next) {
   });
 
   // update avg_rating
-  pool.query("UPDATE `person`
-    SET `avg_rating` =
-    (SELECT AVG(reviews.star_rating) AS `avg_star_rating`
-      FROM `reviews`
-      WHERE reviews.belongs_to_id = ? ) WHERE person.id = ? ;
-    ", [req.query.bt_id, req.query.bt_id],
+  pool.query("UPDATE `person` SET `avg_rating` = (SELECT AVG(reviews.star_rating) AS `avg_star_rating` " +
+      "FROM `reviews` WHERE reviews.belongs_to_id = ? ) WHERE person.id = ? ;", [req.query.bt_id, req.query.bt_id],
     function(err, result) {
       if (err) {
         next(err);
@@ -505,15 +461,9 @@ app.get('/deleteFromReviews', function(req, res, next) {
     });
 
   // update top classifier
-  pool.query("UPDATE `person`
-    SET `top_classifier` =
-    (SELECT n1term.classifier_term FROM(SELECT `classifier_term`, COUNT(`classifier_term`) AS `classifier_occurrence`
-      FROM `reviews`
-      WHERE reviews.belongs_to_id = ?
-      GROUP BY `classifier_term`
-      ORDER BY `classifier_occurrence`
-      DESC LIMIT 1) AS n1term) WHERE person.id = ? ;
-    ", [req.query.bt_id, req.query.bt_id],
+  pool.query("UPDATE `person` SET `top_classifier` = (SELECT n1term.classifier_term FROM(SELECT `classifier_term`, COUNT(`classifier_term`) AS `classifier_occurrence` " +
+      "FROM `reviews` WHERE reviews.belongs_to_id = ? GROUP BY `classifier_term` " +
+      "ORDER BY `classifier_occurrence` DESC LIMIT 1) AS n1term) WHERE person.id = ? ;", [req.query.bt_id, req.query.bt_id],
     function(err, result) {
       if (err) {
         next(err);
@@ -561,11 +511,9 @@ app.get('/deleteFromReviews', function(req, res, next) {
     }
   });
   // update has_higher_status
-  pool.query("
-    INSERT INTO `has_higher_status` (`hi_per_id`, `lo_per_id`) SELECT person.id, ? FROM `person`
-    WHERE person.avg_rating > (SELECT person.avg_rating FROM `person`
-      WHERE person.id = ? )
-    ", [req.query.bt_id, req.query.bt_id],
+  pool.query("INSERT INTO `has_higher_status` (`hi_per_id`, `lo_per_id`) SELECT person.id, ? FROM `person` " +
+    "WHERE person.avg_rating > (SELECT person.avg_rating FROM `person` " +
+    "WHERE person.id = ? )", [req.query.bt_id, req.query.bt_id],
     function(err, result) {
       if (err) {
         next(err);
@@ -573,11 +521,19 @@ app.get('/deleteFromReviews', function(req, res, next) {
       }
     });
   // update has_higher_status
-  pool.query("
-    INSERT INTO `has_higher_status` (`lo_per_id`, `hi_per_id`) SELECT person.id, ? FROM `person`
-    WHERE person.avg_rating < (SELECT person.avg_rating FROM `person`
-      WHERE person.id = ? )
-    ", [req.query.bt_id, req.query.bt_id],
+  pool.query("INSERT INTO `has_higher_status` (`lo_per_id`, `hi_per_id`) SELECT person.id, ? FROM `person` " +
+  "WHERE person.avg_rating < (SELECT person.avg_rating FROM `person` " +
+  "WHERE person.id = ? ) ", [req.query.bt_id, req.query.bt_id],
+    function(err, result) {
+      if (err) {
+        next(err);
+        return;
+      }
+    });
+
+  pool.query("SELECT  p.name AS `name`, r.belongs_to_id AS `belongs_to_id`, r.star_rating AS `star_rating`, " +
+    "r.given_by_id AS `given_by_id`,  r.classifier_term AS  `classifier_term` FROM reviews r " +
+    "INNER JOIN person p ON p.id=r.belongs_to_id  WHERE `belongs_to_id`=? AND `given_by_id`=?", [req.query.bt_id, req.query.gb_id],
     function(err, result) {
       if (err) {
         next(err);
