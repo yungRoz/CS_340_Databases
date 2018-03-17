@@ -173,8 +173,7 @@ app.get('/insertToReviews', function(req, res, next) {
   });
 
   // update avg_rating
-  pool.query("UPDATE `person` SET `avg_rating` = (SELECT AVG(reviews.star_rating) AS `avg_star_rating` " +
-      "FROM `reviews` WHERE reviews.belongs_to_id = ? ) WHERE person.id = ? ;", [req.query.bt_id, req.query.bt_id],
+  pool.query("UPDATE `person` SET `avg_rating` = (SELECT AVG(reviews.star_rating) AS `avg_star_rating` FROM `reviews` WHERE reviews.belongs_to_id = ? ) WHERE person.id = ? ;", [req.query.bt_id, req.query.bt_id],
     function(err, result) {
       if (err) {
         next(err);
@@ -184,8 +183,8 @@ app.get('/insertToReviews', function(req, res, next) {
 
   // update top classifier
   pool.query("UPDATE `person` SET `top_classifier` = (SELECT n1term.classifier_term FROM(SELECT `classifier_term`, COUNT(`classifier_term`) AS `classifier_occurrence` " +
-      "FROM `reviews` WHERE reviews.belongs_to_id = ? GROUP BY `classifier_term` " +
-      "ORDER BY `classifier_occurrence` DESC LIMIT 1) AS n1term) WHERE person.id = ? ;", [req.query.bt_id, req.query.bt_id],
+    "FROM `reviews` WHERE reviews.belongs_to_id = ? GROUP BY `classifier_term` " +
+    "ORDER BY `classifier_occurrence` DESC LIMIT 1) AS n1term) WHERE person.id = ? ;", [req.query.bt_id, req.query.bt_id],
     function(err, result) {
       if (err) {
         next(err);
@@ -242,10 +241,11 @@ app.get('/insertToReviews', function(req, res, next) {
         return;
       }
     });
+
   // update has_higher_status
   pool.query("INSERT INTO `has_higher_status` (`lo_per_id`, `hi_per_id`) SELECT person.id, ? FROM `person` " +
-  "WHERE person.avg_rating < (SELECT person.avg_rating FROM `person` " +
-  "WHERE person.id = ? ) ", [req.query.bt_id, req.query.bt_id],
+    "WHERE person.avg_rating < (SELECT person.avg_rating FROM `person` " +
+    "WHERE person.id = ? ) ", [req.query.bt_id, req.query.bt_id],
     function(err, result) {
       if (err) {
         next(err);
@@ -452,7 +452,7 @@ app.get('/deleteFromReviews', function(req, res, next) {
 
   // update avg_rating
   pool.query("UPDATE `person` SET `avg_rating` = (SELECT AVG(reviews.star_rating) AS `avg_star_rating` " +
-      "FROM `reviews` WHERE reviews.belongs_to_id = ? ) WHERE person.id = ? ;", [req.query.bt_id, req.query.bt_id],
+    "FROM `reviews` WHERE reviews.belongs_to_id = ? ) WHERE person.id = ? ;", [req.query.bt_id, req.query.bt_id],
     function(err, result) {
       if (err) {
         next(err);
@@ -462,8 +462,8 @@ app.get('/deleteFromReviews', function(req, res, next) {
 
   // update top classifier
   pool.query("UPDATE `person` SET `top_classifier` = (SELECT n1term.classifier_term FROM(SELECT `classifier_term`, COUNT(`classifier_term`) AS `classifier_occurrence` " +
-      "FROM `reviews` WHERE reviews.belongs_to_id = ? GROUP BY `classifier_term` " +
-      "ORDER BY `classifier_occurrence` DESC LIMIT 1) AS n1term) WHERE person.id = ? ;", [req.query.bt_id, req.query.bt_id],
+    "FROM `reviews` WHERE reviews.belongs_to_id = ? GROUP BY `classifier_term` " +
+    "ORDER BY `classifier_occurrence` DESC LIMIT 1) AS n1term) WHERE person.id = ? ;", [req.query.bt_id, req.query.bt_id],
     function(err, result) {
       if (err) {
         next(err);
@@ -522,8 +522,8 @@ app.get('/deleteFromReviews', function(req, res, next) {
     });
   // update has_higher_status
   pool.query("INSERT INTO `has_higher_status` (`lo_per_id`, `hi_per_id`) SELECT person.id, ? FROM `person` " +
-  "WHERE person.avg_rating < (SELECT person.avg_rating FROM `person` " +
-  "WHERE person.id = ? ) ", [req.query.bt_id, req.query.bt_id],
+    "WHERE person.avg_rating < (SELECT person.avg_rating FROM `person` " +
+    "WHERE person.id = ? ) ", [req.query.bt_id, req.query.bt_id],
     function(err, result) {
       if (err) {
         next(err);
@@ -579,7 +579,7 @@ app.get('/homepage', function(req, res, next) {
         'uEmail': rows[i].email,
         'uId': rows[i].id,
         'uAvg_Rating': rows[i].avg_rating,
-        'uTop_Classifier':row[i].top_classifier
+        'uTop_Classifier': rows[i].top_classifier
       };
       params.push(info);
     }
