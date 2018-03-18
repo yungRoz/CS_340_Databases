@@ -98,7 +98,7 @@ function bindAddPersonButton() {
 
     var param = "?bt_id=" + btId + "&gb_id=" + gbId + "&rating=" + numStars + "&term=" + classifier; // + "&weight=" + weight + "&date=" + date + "&lbs=" + unit;
     console.log(param);
-    var req = new XMLHttpRequest();
+    var req1 = new XMLHttpRequest();
     req1.open("GET", "/insertToReviews" + param, true);
     req1.addEventListener('load', function() {
       if (req1.status >= 200 && req1.status < 400) {
