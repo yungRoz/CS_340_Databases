@@ -30,7 +30,7 @@
           <br />
           <label>Name</label>
           <br/>
-          <select name="person" id="addPerson" class="pure-input-1-2">
+          <select name="person" id="addPerson">
       {{#if results}}
       {{#each results}}
         {{#if this.notUId}}
@@ -42,7 +42,7 @@
           <input type="submit" id="addPersonToCompany" value="Add" />
         </form>
       </div>
-      
+
       <table name="friends" id="Friends" align="center">
         <caption> Friends </caption>
         <tr class="header">
@@ -215,3 +215,6 @@
 </ul>
 
 <br style="clear: both;" />
+
+<script type="text/javascript" language="javascript" src="hp_script.js">
+</script>
