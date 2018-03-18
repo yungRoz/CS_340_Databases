@@ -733,7 +733,7 @@ app.get('/sendupdate', function(req, res, next) {
 
 app.get('/ranking', function(req, res, next) {
   var context = {};
-  pool.query("SELECT * FROM `person` WHERE id=?", [req.query.id]function(err, rows, fields) {
+  pool.query("SELECT * FROM `person` WHERE id=?", [req.query.id], function(err, rows, fields) {
     if (err) {
       next(err);
       return;
