@@ -132,10 +132,9 @@ function bindAddPersonButton() {
       } else {
         console.log('ERROR' + req.statusText);
       }
-
-      req.send("/insertToReviews" + param);
-      event.preventDefault();
     });
+    req.send("/insertToReviews" + param);
+    event.preventDefault();
   });
 }
 
