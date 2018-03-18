@@ -12,7 +12,37 @@
     <label for="tab1" role="tab" aria-selected="true" aria-controls="panel1" tabindex="0" class="tabClass">Company</label>
     <div id="tab-content1" class="tab-content" role="tabpanel" aria-labelledby="description" aria-hidden="false">
       <!-- Trigger the modal with a button -->
-      <a href="#" id="opener">Click me</a>
+      <div class="all-my-forms" id="addToCompanyModal">
+        <form id="addToCompany" align="left">
+          <h2> Who do you know? </h2>
+          <br/>
+          <label>Relationship</label>
+          <br/>
+          <select name="company" id="addCompany" class="pure-input-1-2">
+      {{#if results}}
+        {{#each results}}
+          {{#if this.coId}}
+          <option value={{this.coId}}> {{this.coName}}</option>
+          {{/if}}
+        {{/each}}
+      {{/if}}
+      </select>
+          <br />
+          <label>Name</label>
+          <br/>
+          <select name="person" id="addPerson" class="pure-input-1-2">
+      {{#if results}}
+      {{#each results}}
+        {{#if this.notUId}}
+        <option value={{this.notUId}}> {{this.notUName}}</option>
+        {{/if}}
+      {{/each}}
+      {{/if}}
+      </select>
+          <input type="submit" id="addPersonToCompany" value="Add" />
+        </form>
+      </div>
+      
       <table name="friends" id="Friends" align="center">
         <caption> Friends </caption>
         <tr class="header">
@@ -171,7 +201,9 @@
         {{#each results}}
           {{#if this.uName}}
             <h1 id="{{this.uId}}">{{this.uName}}</h1>
-            <h2>{{this.uAvg_Rating}}</h2>
+            <br/>
+            <h2>Average Rating: {{this.uAvg_Rating}}</h2>
+            <br/>
             <h2>{{this.uTop_Classifier}}</h2>
             <input type="button" name="ranking" value="See Ranking" onclick="lb({{this.uId}})">
           {{/if}}
@@ -183,34 +215,3 @@
 </ul>
 
 <br style="clear: both;" />
-
-<div class="all-my-forms" id="addToCompanyModal">
-  <form id="addToCompany" align="left">
-    <h2> Who do you know? </h2>
-    <br/>
-    <label>Relationship</label>
-    <br/>
-    <select name="company" id="addCompany" class="pure-input-1-2">
-{{#if results}}
-  {{#each results}}
-    {{#if this.coId}}
-    <option value={{this.coId}}> {{this.coName}}</option>
-    {{/if}}
-  {{/each}}
-{{/if}}
-</select>
-    <br />
-    <label>Name</label>
-    <br/>
-    <select name="person" id="addPerson" class="pure-input-1-2">
-{{#if results}}
-{{#each results}}
-  {{#if this.notUId}}
-  <option value={{this.notUId}}> {{this.notUName}}</option>
-  {{/if}}
-{{/each}}
-{{/if}}
-</select>
-    <input type="submit" id="addPersonToCompany" value="Add" />
-  </form>
-</div>
