@@ -1,0 +1,245 @@
+<h1 class="title">JustUs</h1>
+
+<main>
+
+  <input id="tab1" type="radio" name="tabs" class="tabs"checked>
+  <label for="tab1" class="tabs">You</label>
+
+  <input id="tab2" type="radio" name="tabs" class="tabs">
+  <label for="tab2" class="tabs">Review</label>
+
+  <input id="tab3" type="radio" name="tabs" class="tabs">
+  <label for="tab3"class="tabs">Company</label>
+
+  <input id="tab4" type="radio" name="tabs" class="tabs">
+  <label for="tab4" class="tabs">Help</label>
+
+  <section id="content1">
+{{#if results}}
+  {{#each results}}
+    {{#if this.uName}}
+      <h1>Welcome, {{this.uName}}!</h1>
+      <br/>
+      <h3>Rating: {{this.uAvg_Rating}}</h3>
+      <h3>Classifier: {{this.uTop_Classifier}}</h3>
+      <input type="button" name="ranking" value="See How You Compare With Others" onclick="lb({{this.uId}})">
+    {{/if}}
+  {{/each}}
+{{/if}}
+
+    <table name="reviews" id="ReviewsB" align="center" class="pure-table pure-table-horizontal">
+  <caption> Reviews you've received </caption>
+  <tr class="header">
+    <th>Given By</th>
+    <th>Star Rating</th>
+    <th>Classifer</th>
+  </tr>
+  {{#if results}}
+    {{#each results}}
+      {{#if this.belongsStarRating}}
+        <tr class="row">
+          <td>{{this.belongsName}}</td>
+          <td>{{this.belongsStarRating}}</td>
+          <td>{{this.belongsClassifierTerm}}</td>
+        </tr>
+      {{/if}}
+    {{/each}}
+  {{/if}}
+</table>
+
+  </section>
+
+  <section id="content2">
+ <div class="all-my-forms" <form id="giveReview">
+  <h2> Give a review! </h2>
+
+  <label>Review For</label>
+  <select name="person" id="reviewPerson" class="pure-input-1-2">
+          {{#if results}}
+            {{#each results}}
+              {{#if this.notRevId}}
+                <option value="{{this.notRevId}},{{this.totallyUId}}"> {{this.notRevName}}</option>
+              {{/if}}
+            {{/each}}
+          {{/if}}
+        </select>
+  </br>
+  <input type="radio" name="star" class="star-1" id="star-1" />
+  <label class="star-1" for="star-1">1</label>
+  <input type="radio" name="star" class="star-2" id="star-2" />
+  <label class="star-2" for="star-2">2</label>
+  <input type="radio" name="star" class="star-3" id="star-3" />
+  <label class="star-3" for="star-3">3</label>
+  <input type="radio" name="star" class="star-4" id="star-4" />
+  <label class="star-4" for="star-4">4</label>
+  <input type="radio" name="star" class="star-5" id="star-5" />
+  <label class="star-5" for="star-5">5</label>
+  <span></span>
+  </br>
+  </br>
+  <label>Classifier</label>
+  <select name="classifier" id="classifier">
+      <optgroup label="Negatives">
+        <option value='Rude'>Rude</option>
+        <option value="Liar">Liar</option>
+        <option value="Cheater">Cheater</option>
+        <option value="Selfish">Selfish</option>
+        <option value="Know-it-all">Know-it-all</option>
+        <option value="Fake">Fake</option>
+        <option value="Boring">Boring</option>
+      <optgroup label="Positives">
+        <option value="Honest">Honest</option>
+        <option value='Kind'>Kind</option>
+        <option value="Altruistic">Altruistic</option>
+        <option value="Humble">Humble</option>
+        <option value="Creative">Creative</option>
+        <option value="Brave">Brave</option>
+        <option value="True to self">True to self</option>
+        <option value="Fun">Fun</option>
+        <option value="Nuce">Nice</option>
+    </select>
+  <input type="submit" id="addToReviews" value="Send it" />
+  </form>
+</div>
+
+
+<table name="reviews" id="ReviewsG" align="center" >
+  <caption> Reviews you've given </caption>
+  <tr class="header">
+    <th>Name</th>
+    <th>Star Rating</th>
+    <th>Classifer</th>
+    <th>Delete</th>
+  </tr>
+  {{#if results}}
+    {{#each results}}
+      {{#if this.givenStarRating}}
+        <tr class="row">
+          <td>{{this.givenName}}</td>
+          <td>{{this.givenStarRating}}</td>
+          <td>{{this.givenClassifierTerm}}</td>
+          <td> <input type="button" name="delete" value="Delete" onClick="deleteRevRow({{this.givenBelongsToId}}, {{this.givenGivenById}} )"><input type="hidden" id="{{this.givenBelongsToId}}_{{this.givenGivenById}}"></td>
+        </tr>
+      {{/if}}
+    {{/each}}
+  {{/if}}
+</table>
+  </section>
+
+  <section id="content3">
+    <p>
+<div class="all-my-forms">
+  <form id="addToCompany" align="left">
+    <h2> Add someone to a company! </h2>
+    <br/>
+    <label>Which company do you want to add them to?</label>
+    <br/>
+    <select name="company" id="addCompany" class="pure-input-1-2">
+      {{#if results}}
+        {{#each results}}
+          {{#if this.coId}}
+          <option value={{this.coId}}> {{this.coName}}</option>
+          {{/if}}
+        {{/each}}
+      {{/if}}
+    </select>
+    <br />
+    <label>Who do you want to add?</label>
+    <br/>
+    <select name="person" id="addPerson" class="pure-input-1-2">
+    {{#if results}}
+      {{#each results}}
+        {{#if this.notUId}}
+        <option value={{this.notUId}}> {{this.notUName}}</option>
+        {{/if}}
+      {{/each}}
+    {{/if}}
+    </select>
+    <input type="submit" id="addPersonToCompany" value="Add Person"/>
+  </form>
+</div>
+
+
+<table name="friends" id="Friends" align="center">
+  <caption> Friends </caption>
+  <tr class="header">
+    <th>Name</th>
+    <th>Star Rating</th>
+    <th>Top Classifer</th>
+    <th>Delete</th>
+  </tr>
+  {{#if results}}
+    {{#each results}}
+      {{#if this.frName}}
+        <tr class="row">
+          <td>{{this.frName}}</td>
+          <td>{{this.frRating}}</td>
+          <td>{{this.frTerm}}</td>
+          <td> <input type="button" name="delete" value="Delete" onClick="deleteCoRow({{this.frPerId}}, {{this.frCoId}}, 'Friends')"><input type="hidden" id="{{this.frPerId}}"></td>
+        </tr>
+      {{/if}}
+    {{/each}}
+  {{/if}}
+</table>
+
+
+
+
+<table name="family" id="Family" align="center" class="pure-table pure-table-horizontal">
+  <caption> Family </caption>
+  <tr class="header">
+    <th>Name</th>
+    <th>Star Rating</th>
+    <th>Top Classifer</th>
+    <th>Delete</th>
+  </tr>
+  {{#if results}}
+    {{#each results}}
+      {{#if this.faName}}
+        <tr class="row">
+          <td>{{this.faName}}</td>
+          <td>{{this.faRating}}</td>
+          <td>{{this.faTerm}}</td>
+          <td> <input type="button" name="delete" value="Delete" onClick="deleteCoRow({{this.faPerId}}, {{this.faCoId}}, 'Family')"><input type="hidden" id="{{this.faPerId}}"></td>
+        </tr>
+      {{/if}}
+    {{/each}}
+  {{/if}}
+</table>
+
+
+<table name="work" id="Work" align="center" class="pure-table pure-table-horizontal">
+  <caption> Work </caption>
+  <tr class="header">
+    <th>Name</th>
+    <th>Star Rating</th>
+    <th>Top Classifer</th>
+    <th>Delete</th>
+  </tr>
+  {{#if results}}
+    {{#each results}}
+      {{#if this.wName}}
+        <tr class="row">
+          <td>{{this.wName}}</td>
+          <td>{{this.wRating}}</td>
+          <td>{{this.wTerm}}</td>
+          <td> <input type="button" name="delete" value="Delete" onClick="deleteCoRow({{this.wPerId}}, {{this.wCoId}}, 'Work')"><input type="hidden" id="{{this.wPerId}}"></td>
+        </tr>
+      {{/if}}
+    {{/each}}
+  {{/if}}
+</table>
+
+  </section>
+
+  <section id="content4">
+    <p>
+      Bacon ipsum dolor sit amet landjaeger sausage brisket, jerky drumstick fatback boudin ball tip turducken. Pork belly meatball t-bone bresaola tail filet mignon kevin turkey ribeye shank flank doner cow kielbasa shankle. Pig swine chicken hamburger, tenderloin turkey rump ball tip sirloin frankfurter meatloaf boudin brisket ham hock. Hamburger venison brisket tri-tip andouille pork belly ball tip short ribs biltong meatball chuck. Pork chop ribeye tail short ribs, beef hamburger meatball kielbasa rump corned beef porchetta landjaeger flank. Doner rump frankfurter meatball meatloaf, cow kevin pork pork loin venison fatback spare ribs salami beef ribs.
+    </p>
+    <p>
+      Jerky jowl pork chop tongue, kielbasa shank venison. Capicola shank pig ribeye leberkas filet mignon brisket beef kevin tenderloin porchetta. Capicola fatback venison shank kielbasa, drumstick ribeye landjaeger beef kevin tail meatball pastrami prosciutto pancetta. Tail kevin spare ribs ground round ham ham hock brisket shoulder. Corned beef tri-tip leberkas flank sausage ham hock filet mignon beef ribs pancetta turkey.
+    </p>
+  </section>
+  <script type="text/javascript" language="javascript" src="hp_script.js">
+  </script>
+</main>

@@ -24,21 +24,6 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 app.use(express.static("public"));
 
-app.get('/reset-table', function(req, res, next) { //A function that allows us to completely reset the table by visiting the url (given to us)
-  var context = {};
-  pool.query("DROP TABLE IF EXISTS workouts", function(err) {
-    var createString = "CREATE TABLE workouts(" +
-      "id INT PRIMARY KEY AUTO_INCREMENT," +
-      "name VARCHAR(255) NOT NULL," +
-      "reps INT," +
-      "weight INT," +
-      "date DATE," +
-      "lbs BOOLEAN)";
-    pool.query(createString, function(err) {
-      res.render('form_table', context);
-    })
-  });
-});
 
 app.get('/', function(req, res, next) {
   var context = {};
@@ -60,7 +45,7 @@ app.get('/', function(req, res, next) {
       params.push(exercise);
     }
     context.results = params;
-    res.render('form_table', context);
+    res.render('form_table2', context);
   });
 });
 
@@ -688,52 +673,11 @@ app.get('/homepage', function(req, res, next) {
         params.push(info);
       }
       context.results = params;
-      res.render('home_page2', context);
+      res.render('home_page3', context);
     });
 
 });
 
-app.get('/sendupdate', function(req, res, next) {
-  var context = {};
-  pool.query("SELECT * FROM `person` WHERE  id=?", [req.query.id], function(err, result) {
-    if (err) {
-      next(err);
-      return;
-    }
-    if (result.length == 1) {
-      var stored = result[0];
-
-      pool.query("UPDATE `person` SET name=?, email=? WHERE id=?", [req.query.name || stored.name, req.query.email || stored.email, req.query.id], function(err, result) {
-        if (err) {
-          next(err);
-          return;
-        }
-        pool.query("SELECT * FROM `person`", function(err, rows, fields) {
-          if (err) {
-            next(err);
-            return;
-          }
-          var params = [];
-
-          for (var i in rows) {
-            var exercise = {
-              'name': rows[i].name,
-              'reps': rows[i].reps,
-              'weight': rows[i].weight,
-              'date': rows[i].date,
-              'id': rows[i].id,
-              'lbs': rows[i].lbs
-            };
-            params.push(exercise);
-
-          }
-          context.results = params;
-          res.render('form_table', context);
-        });
-      });
-    }
-  });
-});
 
 app.get('/ranking', function(req, res, next) {
   var context = {};

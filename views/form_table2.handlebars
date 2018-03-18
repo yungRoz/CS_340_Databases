@@ -1,0 +1,55 @@
+<h1 class="title">JustUs</h1>
+
+<main>
+
+  <input id="tab1" type="radio" name="tabs" class="tabs" checked>
+  <label for="tab1" class="tabs">Add Users</label>
+
+  <input id="tab2" type="radio" name="tabs" class="tabs">
+  <label for="tab2" class="tabs">View Site</label>
+
+
+  <section id="content1">
+    <div class="all-my-forms">
+      <form id="addPerson" align="left">
+        <h2> Add a person! </h2>
+        <input type="text" placeholder="Name" name="name" id="name" />
+        <input type="text" placeholder="Email" name="email" id="email">
+
+        <button type="submit" id="submitPerson" class="pure-button pure-button-primary">Sign Up</button>
+      </form>
+    </div>
+
+  </section>
+
+  <section id="content2">
+
+    <table id="personTable" align="center" class="pure-table pure-table-horizontal">
+      <tr class="header">
+        <th>Name</th>
+        <th>Email</th>
+        <th>Star Rating</th>
+        <th>Top Classifer</th>
+        <th>Delete</th>
+        <th>View Site As</th>
+      </tr>
+      {{#if results}}
+        {{#each results}}
+          <tr class="row">
+            <td>{{this.name}}</td>
+            <td>{{this.email}}</td>
+            <td>{{this.avgRating}}</td>
+            <td>{{this.topClassifier}}</td>
+            <td> <input type="button" name="delete" value="Delete" onClick="deleteRow({{this.id}})"><input type="hidden" id="{{this.id}}"></td>
+            <td> <a href="/homepage?id={{this.id}}"><input type="button" value="{{this.name}}"></a></td>
+          </tr>
+        {{/each}}
+      {{/if}}
+
+    </table>
+
+    <script type="text/javascript" language="javascript" src="ft_script.js">
+    </script>
+
+  </section>
+</main>
