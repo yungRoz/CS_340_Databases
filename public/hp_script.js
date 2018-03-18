@@ -1,12 +1,34 @@
 document.addEventListener('DOMContentLoaded', bindAddPersonButton);
 //document.addEventListener('DOMContentLoadedHP', bindHomePageButton);
+var opener = document.getElementById("opener");
+opener.onclick = function() {
+  var lightbox = document.getElementById("addToCompanyModal"),
+    dimmer = document.createElement("div");
+
+  dimmer.style.width = window.innerWidth + 'px';
+  dimmer.style.height = window.innerHeight + 'px';
+  dimmer.className = 'dimmer';
+
+  dimmer.onclick = function() {
+    document.body.removeChild(this);
+    lightbox.style.visibility = 'hidden';
+  }
+
+  document.body.appendChild(dimmer);
+
+  lightbox.style.visibility = 'visible';
+  lightbox.style.top = window.innerHeight / 2 - 50 + 'px';
+  lightbox.style.left = window.innerWidth / 2 - 100 + 'px';
+  return false;
+}
+
 function bindAddPersonButton() {
   document.querySelector("#addToCompany").addEventListener('submit', function(event) {
     event.preventDefault();
   });
 
   document.getElementById('addPersonToCompany').addEventListener('click', function(event) {
-    $('#MyModal').modal('hide');
+
     var addPersonId = document.getElementById('addPerson').value;
     if (addPersonId == "") {
       alert("Name Cannot Be Empty");
@@ -326,8 +348,7 @@ function deleteRevRow(btId, gbId) {
     event.preventDefault();
     if (req.status >= 200 && req.status < 400) {
       console.log('Review Deleted');
-    }
-    else {
+    } else {
       console.log('Error deleting review');
     }
   });
