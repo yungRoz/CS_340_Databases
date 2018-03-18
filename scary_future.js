@@ -688,7 +688,7 @@ app.get('/homepage', function(req, res, next) {
         params.push(info);
       }
       context.results = params;
-      res.render('home_page', context);
+      res.render('home_page2', context);
     });
 
 });

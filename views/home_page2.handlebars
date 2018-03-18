@@ -1,0 +1,226 @@
+<h1>JustUs <span></span></h1>
+<figure>
+  <div>
+    <span id="prism">View As</span>
+    <span id="prism">Someone Else ?</span>
+  </div>
+</figure>
+
+<ul class="tabs" role="tablist">
+  <li>
+    <input type="radio" name="tabs" id="tab1" class="tabClass" />
+    <label for="tab1" role="tab" aria-selected="true" aria-controls="panel1" tabindex="0" class="tabClass">Company</label>
+    <div id="tab-content1" class="tab-content" role="tabpanel" aria-labelledby="description" aria-hidden="false">
+      <!-- Trigger the modal with a button -->
+      <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Add Someone</button>
+
+      <table name="friends" id="Friends" align="center">
+        <caption> Friends </caption>
+        <tr class="header">
+          <th>Name</th>
+          <th>Star Rating</th>
+          <th>Top Classifer</th>
+          <th>Delete</th>
+        </tr>
+        {{#if results}}
+          {{#each results}}
+            {{#if this.frName}}
+              <tr class="row">
+                <td>{{this.frName}}</td>
+                <td>{{this.frRating}}</td>
+                <td>{{this.frTerm}}</td>
+                <td> <input type="button" name="delete" value="Delete" onClick="deleteCoRow({{this.frPerId}}, {{this.frCoId}}, 'Friends')"><input type="hidden" id="{{this.frPerId}}"></td>
+              </tr>
+            {{/if}}
+          {{/each}}
+        {{/if}}
+      </table>
+
+
+
+
+      <table name="family" id="Family" align="center" class="pure-table pure-table-horizontal">
+        <caption> Family </caption>
+        <tr class="header">
+          <th>Name</th>
+          <th>Star Rating</th>
+          <th>Top Classifer</th>
+          <th>Delete</th>
+        </tr>
+        {{#if results}}
+          {{#each results}}
+            {{#if this.faName}}
+              <tr class="row">
+                <td>{{this.faName}}</td>
+                <td>{{this.faRating}}</td>
+                <td>{{this.faTerm}}</td>
+                <td> <input type="button" name="delete" value="Delete" onClick="deleteCoRow({{this.faPerId}}, {{this.faCoId}}, 'Family')"><input type="hidden" id="{{this.faPerId}}"></td>
+              </tr>
+            {{/if}}
+          {{/each}}
+        {{/if}}
+      </table>
+
+      <table name="work" id="Work" align="center" class="pure-table pure-table-horizontal">
+        <caption> Work </caption>
+        <tr class="header">
+          <th>Name</th>
+          <th>Star Rating</th>
+          <th>Top Classifer</th>
+          <th>Delete</th>
+        </tr>
+        {{#if results}}
+          {{#each results}}
+            {{#if this.wName}}
+              <tr class="row">
+                <td>{{this.wName}}</td>
+                <td>{{this.wRating}}</td>
+                <td>{{this.wTerm}}</td>
+                <td> <input type="button" name="delete" value="Delete" onClick="deleteCoRow({{this.wPerId}}, {{this.wCoId}}, 'Work')"><input type="hidden" id="{{this.wPerId}}"></td>
+              </tr>
+            {{/if}}
+          {{/each}}
+        {{/if}}
+      </table>
+    </div>
+  </li>
+
+  <li>
+    <input type="radio" name="tabs" id="tab2" class="tabClass" />
+    <label for="tab2" role="tab" aria-selected="false" aria-controls="panel2" tabindex="0">Reviews</label>
+    <div id="tab-content2" class="tab-content" role="tabpanel" aria-labelledby="specification" aria-hidden="true" class="tabClass">
+      <div class="all-my-forms" <form id="giveReview">
+        <h2> Give a review! </h2>
+
+        <label>Review For</label>
+        <select name="person" id="reviewPerson" class="pure-input-1-2">
+          {{#if results}}
+            {{#each results}}
+              {{#if this.notRevId}}
+                <option value="{{this.notRevId}},{{this.totallyUId}}"> {{this.notRevName}}</option>
+              {{/if}}
+            {{/each}}
+          {{/if}}
+        </select>
+
+        <input type="radio" name="star" class="star-1" id="star-1" />
+        <label class="star-1" for="star-1">1</label>
+        <input type="radio" name="star" class="star-2" id="star-2" />
+        <label class="star-2" for="star-2">2</label>
+        <input type="radio" name="star" class="star-3" id="star-3" />
+        <label class="star-3" for="star-3">3</label>
+        <input type="radio" name="star" class="star-4" id="star-4" />
+        <label class="star-4" for="star-4">4</label>
+        <input type="radio" name="star" class="star-5" id="star-5" />
+        <label class="star-5" for="star-5">5</label>
+        <span></span>
+        </br>
+        <h2>Classifier</h2>
+        <select name="classifier" id="classifier">
+      <optgroup label="Negatives">
+        <option value='Rude'>Rude</option>
+        <option value="Liar">Liar</option>
+        <option value="Cheater">Cheater</option>
+        <option value="Selfish">Selfish</option>
+        <option value="Know-it-all">Know-it-all</option>
+        <option value="Fake">Fake</option>
+        <option value="Boring">Boring</option>
+      <optgroup label="Positives">
+        <option value="Honest">Honest</option>
+        <option value='Kind'>Kind</option>
+        <option value="Altruistic">Altruistic</option>
+        <option value="Humble">Humble</option>
+        <option value="Creative">Creative</option>
+        <option value="Brave">Brave</option>
+        <option value="True to self">True to self</option>
+        <option value="Fun">Fun</option>
+        <option value="Nuce">Nice</option>
+    </select>
+        <input type="submit" id="addToReviews" value="Send it" />
+        </form>
+      </div>
+
+      <table name="reviews" id="ReviewsG" align="center" class="pure-table pure-table-horizontal">
+        <caption> Reviews you've given </caption>
+        <tr class="header">
+          <th>Name</th>
+          <th>Star Rating</th>
+          <th>Classifer</th>
+          <th>Delete</th>
+        </tr>
+        {{#if results}}
+          {{#each results}}
+            {{#if this.givenStarRating}}
+              <tr class="row">
+                <td>{{this.givenName}}</td>
+                <td>{{this.givenStarRating}}</td>
+                <td>{{this.givenClassifierTerm}}</td>
+                <td> <input type="button" name="delete" value="Delete" onClick="deleteRevRow({{this.givenBelongsToId}}, {{this.givenGivenById}} )"><input type="hidden" id="{{this.givenBelongsToId}}_{{this.givenGivenById}}"></td>
+              </tr>
+            {{/if}}
+          {{/each}}
+        {{/if}}
+      </table>
+    </div>
+  </li>
+
+  <li>
+    <input type="radio" name="tabs" id="tab3" class="tabClass" checked/>
+    <label for="tab3" role="tab" aria-selected="false" aria-controls="panel3" tabindex="0">You</label>
+    <div id="tab-content3" class="tab-content" role="tabpanel" aria-labelledby="specification" aria-hidden="true">
+      {{#if results}}
+        {{#each results}}
+          {{#if this.uName}}
+            <h1 id="{{this.uId}}">{{this.uName}}</h1>
+            <h2>{{this.uAvg_Rating}}</h2>
+            <h2>{{this.uTop_Classifier}}</h2>
+            <input type="button" name="ranking" value="See Ranking" onclick="lb({{this.uId}})">
+          {{/if}}
+        {{/each}}
+      {{/if}}
+
+    </div>
+  </li>
+</ul>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="all-my-forms" id="addToCompanyModal">
+        <form id="addToCompany" align="left">
+          <h2> Who do you know? </h2>
+          <br/>
+          <label>Relationship</label>
+          <br/>
+          <select name="company" id="addCompany" class="pure-input-1-2">
+      {{#if results}}
+        {{#each results}}
+          {{#if this.coId}}
+          <option value={{this.coId}}> {{this.coName}}</option>
+          {{/if}}
+        {{/each}}
+      {{/if}}
+      </select>
+          <br />
+          <label>Name</label>
+          <br/>
+          <select name="person" id="addPerson" class="pure-input-1-2">
+      {{#if results}}
+      {{#each results}}
+        {{#if this.notUId}}
+        <option value={{this.notUId}}> {{this.notUName}}</option>
+        {{/if}}
+      {{/each}}
+      {{/if}}
+      </select>
+          <input type="submit" id="addPersonToCompany" value="Add" />
+        </form>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<br style="clear: both;" />

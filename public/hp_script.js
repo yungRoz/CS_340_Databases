@@ -6,6 +6,7 @@ function bindAddPersonButton() {
   });
 
   document.getElementById('addPersonToCompany').addEventListener('click', function(event) {
+    $('#MyModal').modal('hide');
     var addPersonId = document.getElementById('addPerson').value;
     if (addPersonId == "") {
       alert("Name Cannot Be Empty");
@@ -181,6 +182,7 @@ function bindAddPersonButton() {
         for (var variableName in response) {
           if (variableName == 'belongs_to_id');
           else if (variableName === 'given_by_id');
+          else if (variableName === 'avg_rating');
           else {
             var cell = document.createElement("td");
             cell.id = variableName;
