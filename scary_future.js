@@ -444,14 +444,15 @@ app.get('/deleteFromReviews', function(req, res, next) {
         next(err);
         return;
       }
+      // perform delete
+      pool.query("DELETE FROM `has_higher_status` WHERE hi_per_id=?", [req.query.bt_id], function(err, result) {
+        if (err) {
+          next(err);
+          return;
+        }
+      });
     });
-  // perform delete
-  pool.query("DELETE FROM `has_higher_status` WHERE hi_per_id=?", [req.query.bt_id], function(err, result) {
-    if (err) {
-      next(err);
-      return;
-    }
-  });
+
   pool.query("DELETE FROM `has_higher_status` WHERE lo_per_id=?", [req.query.bt_id], function(err, result) {
     if (err) {
       next(err);
