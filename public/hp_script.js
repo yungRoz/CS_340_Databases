@@ -16,6 +16,7 @@ function bindAddPersonButton() {
 
     var param = "?per_id=" + addPersonId + "&co_id=" + addCompanyId; // + "&weight=" + weight + "&date=" + date + "&lbs=" + unit;
     console.log(param);
+
     var req = new XMLHttpRequest();
     req.open("GET", "/insertToCompany" + param, true);
     req.addEventListener('load', function() {
@@ -58,148 +59,176 @@ function bindAddPersonButton() {
   });
 
   document.getElementById('addToReviews').addEventListener('click', function(event) {
-    var bothIds = document.getElementById('reviewPerson').value;
-    var idArray = bothIds.split(",", 2);
+      var bothIds = document.getElementById('reviewPerson').value;
+      var idArray = bothIds.split(",", 2);
 
-    var btId = idArray[0];
-    var gbId = idArray[1];
-    if (btId == "") {
-      alert("Name Cannot Be Empty");
-      return;
-    }
+      var btId = idArray[0];
+      var gbId = idArray[1];
+      if (btId == "") {
+        alert("Name Cannot Be Empty");
+        return;
+      }
 
-    var oneStar = document.getElementById('star-1');
-    var twoStar = document.getElementById('star-2');
-    var threeStar = document.getElementById('star-3');
-    var fourStar = document.getElementById('star-4');
-    var fiveStar = document.getElementById('star-5');
-    var numStars;
-    if (oneStar.checked) {
-      numStars = 1;
-    } else if (twoStar.checked) {
-      numStars = 2;
-    } else if (threeStar.checked) {
-      numStars = 3;
-    } else if (fourStar.checked) {
-      numStars = 4;
-    } else if (fiveStar.checked) {
-      numStars = 5;
-    } else {
-      alert("Reviews must contain star rating of at least 1");
-      return;
-    }
-    var classifier = document.getElementById('classifier').value;
-    if (classifier == "") {
-      alert("Classifier Cannot Be Empty");
-      return;
-    }
-
-
-    var param = "?bt_id=" + btId + "&gb_id=" + gbId + "&rating=" + numStars + "&term=" + classifier; // + "&weight=" + weight + "&date=" + date + "&lbs=" + unit;
-    console.log(param);
-    var req = new XMLHttpRequest();
-    req.open("GET", "/insertToReviews" + param, true);
-    req.addEventListener('load', function() {
-      if (req.status >= 200 && req.status < 400) {
-        var response = JSON.parse(req.responseText);
-        if (response[0] == "false") {
-          alert("Cannot review same person twice");
-          return;
-        }
-
-        var btId = response.belongs_to_id;
-        var gbId = response.given_by_id;
-        var rating = response.avg_rating;
-        //remove option
-        var findString = btId + "," + gbId;
-        var selectobject = document.getElementById("reviewPerson")
-        for (var i = 0; i < selectobject.length; i++) {
-          if (selectobject.options[i].value == findString) {
-            selectobject.remove(i);
-          }
-        }
-
-        var table = document.getElementById("Family");
-        var n = table.rows.length;
-        var rowNum;
-        //add cell to row
-        for (var i = 1; i < n; i++) {
-          var urow = table.rows[i];
-          var allCells = urow.getElementsByTagName("td");
-          var dCell = allCells[allCells.length - 1];
-          //console.log(dCell.children[1].id)
-          //console.log(perId);
-          if (dCell.children[1].id == btId) {
-            rowNum = i;
-            //console.log(rowNum);
-            //update rating
-            var x = document.getElementById("Family").rows[rowNum].cells;
-            x[1].innerHTML = rating;
-          }
-        }
-
-
-        var table = document.getElementById("Friends");
-        var n = table.rows.length;
-        var rowNum;
-        //add cell to row
-        for (var i = 1; i < n; i++) {
-          var urow = table.rows[i];
-          var allCells = urow.getElementsByTagName("td");
-          var dCell = allCells[allCells.length - 1];
-          //console.log(dCell.children[1].id)
-          //console.log(perId);
-          if (dCell.children[1].id == btId) {
-            rowNum = i;
-            //console.log(rowNum);
-            //update rating
-            var x = document.getElementById("Friends").rows[rowNum].cells;
-            x[1].innerHTML = rating;
-          }
-        }
-
-
-        var table = document.getElementById("Work");
-        var n = table.rows.length;
-        var rowNum;
-        //add cell to row
-        for (var i = 1; i < n; i++) {
-          var urow = table.rows[i];
-          var allCells = urow.getElementsByTagName("td");
-          var dCell = allCells[allCells.length - 1];
-          //console.log(dCell.children[1].id)
-          //console.log(perId);
-          if (dCell.children[1].id == btId) {
-            rowNum = i;
-            //console.log(rowNum);
-            //update rating
-            var x = document.getElementById("Work").rows[rowNum].cells;
-            x[1].innerHTML = rating;
-          }
-        }
-
-        var row = document.createElement("tr");
-        for (var variableName in response) {
-          if (variableName == 'belongs_to_id');
-          else if (variableName === 'given_by_id');
-          else if (variableName === 'avg_rating');
-          else {
-            var cell = document.createElement("td");
-            cell.id = variableName;
-            cell.textContent = response[variableName];
-            row.appendChild(cell);
-          }
-        }
-        var deleteReviewCell = newDeleteReviewCell(btId, gbId);
-        row.appendChild(deleteReviewCell);
-        var table = document.getElementById("ReviewsG");
-        table.appendChild(row);
+      var oneStar = document.getElementById('star-1');
+      var twoStar = document.getElementById('star-2');
+      var threeStar = document.getElementById('star-3');
+      var fourStar = document.getElementById('star-4');
+      var fiveStar = document.getElementById('star-5');
+      var numStars;
+      if (oneStar.checked) {
+        numStars = 1;
+      } else if (twoStar.checked) {
+        numStars = 2;
+      } else if (threeStar.checked) {
+        numStars = 3;
+      } else if (fourStar.checked) {
+        numStars = 4;
+      } else if (fiveStar.checked) {
+        numStars = 5;
       } else {
-        console.log('ERROR' + req.statusText);
+        alert("Reviews must contain star rating of at least 1");
+        return;
+      }
+      var classifier = document.getElementById('classifier').value;
+      if (classifier == "") {
+        alert("Classifier Cannot Be Empty");
+        return;
+      }
+
+
+      var param = "?bt_id=" + btId + "&gb_id=" + gbId + "&rating=" + numStars + "&term=" + classifier; // + "&weight=" + weight + "&date=" + date + "&lbs=" + unit;
+      console.log(param);
+      var req = new XMLHttpRequest();
+      req.open("GET", "/insertToReviews" + param, true);
+      req.addEventListener('load', function(event)) {
+        event.preventDefault;
+        if (req.status >= 200 && req.status < 400) {
+          var response = JSON.parse(req.responseText);
+          if (response[0] == "false") {
+            alert("Cannot review same person twice");
+            return;
+          }
+
+          var btId = response.belongs_to_id;
+          var gbId = response.given_by_id;
+          var rating = response.avg_rating;
+          //remove option
+          var findString = btId + "," + gbId;
+          var selectobject = document.getElementById("reviewPerson")
+          for (var i = 0; i < selectobject.length; i++) {
+            if (selectobject.options[i].value == findString) {
+              selectobject.remove(i);
+            }
+          }
+
+          // update company tables
+          var table = document.getElementById("Family");
+          var n = table.rows.length;
+          var rowNum;
+          //add cell to row
+          for (var i = 1; i < n; i++) {
+            var urow = table.rows[i];
+            var allCells = urow.getElementsByTagName("td");
+            var dCell = allCells[allCells.length - 1];
+            //console.log(dCell.children[1].id)
+            //console.log(perId);
+            if (dCell.children[1].id == btId) {
+              rowNum = i;
+              //console.log(rowNum);
+              //update rating
+              var x = document.getElementById("Family").rows[rowNum].cells;
+              x[1].innerHTML = rating;
+            }
+          }
+
+
+          var table = document.getElementById("Friends");
+          var n = table.rows.length;
+          var rowNum;
+          //add cell to row
+          for (var i = 1; i < n; i++) {
+            var urow = table.rows[i];
+            var allCells = urow.getElementsByTagName("td");
+            var dCell = allCells[allCells.length - 1];
+            //console.log(dCell.children[1].id)
+            //console.log(perId);
+            if (dCell.children[1].id == btId) {
+              rowNum = i;
+              //console.log(rowNum);
+              //update rating
+              var x = document.getElementById("Friends").rows[rowNum].cells;
+              x[1].innerHTML = rating;
+            }
+          }
+
+
+          var table = document.getElementById("Work");
+          var n = table.rows.length;
+          var rowNum;
+          //add cell to row
+          for (var i = 1; i < n; i++) {
+            var urow = table.rows[i];
+            var allCells = urow.getElementsByTagName("td");
+            var dCell = allCells[allCells.length - 1];
+            //console.log(dCell.children[1].id)
+            //console.log(perId);
+            if (dCell.children[1].id == btId) {
+              rowNum = i;
+              //console.log(rowNum);
+              //update rating
+              var x = document.getElementById("Work").rows[rowNum].cells;
+              x[1].innerHTML = rating;
+            }
+          }
+
+          var row = document.createElement("tr");
+          for (var variableName in response) {
+            if (variableName == 'belongs_to_id');
+            else if (variableName === 'given_by_id');
+            else if (variableName === 'avg_rating');
+            else {
+              var cell = document.createElement("td");
+              cell.id = variableName;
+              cell.textContent = response[variableName];
+              row.appendChild(cell);
+            }
+          }
+          var deleteReviewCell = newDeleteReviewCell(btId, gbId);
+          row.appendChild(deleteReviewCell);
+          var table = document.getElementById("ReviewsG");
+          table.appendChild(row);
+        } else {
+          console.log('ERROR' + req.statusText);
+        }
+      });
+      req.send("/insertToReviews" + param);
+
+    //open a new request to delete from has higher status
+    var req = new XMLHttpRequest();
+    var deleteParam = "/deleteFromHHS?bt_id=" + btId + "&gb_id=" + gbId; req.open("GET", deleteParam, true); req.addEventListener("load", function(event) {
+      event.preventDefault();
+      if (req.status >= 200 && req.status < 400) {
+        console.log('Higher status tables deleted');
+      } else {
+        console.log('Error deleting from HHS');
       }
     });
-    req.send("/insertToReviews" + param);
-    event.preventDefault();
+    req.send(deleteParam);
+
+
+    //update has higher status tables
+    var req = new XMLHttpRequest();
+    var updateParam = "/updateHHS?bt_id=" + btId + "&gb_id=" + gbId; req.open("GET", deleteParam, true); req.addEventListener("load", function(event) {
+      event.preventDefault();
+      if (req.status >= 200 && req.status < 400) {
+        console.log('Update performed for HHS');
+      } else {
+        console.log('Error updating HHS');
+      }
+    });
+    req.send(updateParam);
+
+
   });
 }
 
@@ -345,6 +374,8 @@ function deleteRevRow(btId, gbId) {
   req2.send("/updateAfterReview?bt_id=" + btId + "&gb_id=" + gbId);
   //event.preventDefault();
   //console.log(tableId);
+
+  //delete from table 
   var table = document.getElementById("ReviewsG");
   var n = table.rows.length;
   var rowNum;
@@ -361,5 +392,33 @@ function deleteRevRow(btId, gbId) {
     }
   }
   table.deleteRow(rowNum);
+
+  //open a new request to delete from has higher status
+  var req = new XMLHttpRequest();
+  var deleteParam = "/deleteFromHHS?bt_id=" + btId + "&gb_id=" + gbId;
+  req.open("GET", deleteParam, true); req.addEventListener("load", function(event) {
+    event.preventDefault();
+    if (req.status >= 200 && req.status < 400) {
+      console.log('Higher status tables deleted');
+    } else {
+      console.log('Error deleting from HHS');
+    }
+  });
+  req.send(deleteParam);
+
+
+  //update has higher status tables
+  var req = new XMLHttpRequest();
+  var updateParam = "/updateHHS?bt_id=" + btId + "&gb_id=" + gbId;
+  req.open("GET", deleteParam, true); req.addEventListener("load", function(event) {
+    event.preventDefault();
+    if (req.status >= 200 && req.status < 400) {
+      console.log('Update performed for HHS');
+    } else {
+      console.log('Error updating HHS');
+    }
+  });
+  req.send(updateParam);
+
   location.reload();
 }
