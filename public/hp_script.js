@@ -102,7 +102,7 @@ function bindAddPersonButton() {
     req1.open("GET", "/insertToReviews" + param, true);
     req1.addEventListener('load', function() {
       if (req1.status >= 200 && req1.status < 400) {
-        var response = JSON.parse(req.responseText);
+        var response = JSON.parse(req1.responseText);
         if (response[0] == "false") {
           alert("Cannot review same person twice");
           return;
