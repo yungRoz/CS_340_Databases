@@ -192,19 +192,6 @@ app.get('/insertToReviews', function(req, res, next) {
       }
     });
 
-  // update  has_higher_status // alter constraints
-  pool.query("ALTER TABLE `has_higher_status` DROP FOREIGN KEY `has_higher_status_ibfk_1`", function(err, result) {
-    if (err) {
-      next(err);
-      return;
-    }
-  });
-  pool.query("ALTER TABLE `has_higher_status` DROP FOREIGN KEY `has_higher_status_ibfk_2`", function(err, result) {
-    if (err) {
-      next(err);
-      return;
-    }
-  });
   // perform delete
   pool.query("DELETE FROM `has_higher_status` WHERE hi_per_id=?", [req.query.bt_id], function(err, result) {
     if (err) {
@@ -218,19 +205,7 @@ app.get('/insertToReviews', function(req, res, next) {
       return;
     }
   });
-  // reinstate constraints
-  pool.query("ALTER TABLE `has_higher_status` ADD CONSTRAINT `has_higher_status_ibfk_1` FOREIGN KEY(`hi_per_id`) REFERENCES `person`(`id`)", function(err, result) {
-    if (err) {
-      next(err);
-      return;
-    }
-  });
-  pool.query("ALTER TABLE `has_higher_status` ADD CONSTRAINT `has_higher_status_ibfk_2` FOREIGN KEY(`lo_per_id`) REFERENCES `person`(`id`)", function(err, result) {
-    if (err) {
-      next(err);
-      return;
-    }
-  });
+
   // update has_higher_status
   pool.query("INSERT INTO `has_higher_status` (`hi_per_id`, `lo_per_id`) SELECT person.id, ? FROM `person` " +
     "WHERE person.avg_rating > (SELECT person.avg_rating FROM `person` " +
@@ -470,20 +445,6 @@ app.get('/deleteFromReviews', function(req, res, next) {
         return;
       }
     });
-
-  // update  has_higher_status // alter constraints
-  pool.query("ALTER TABLE `has_higher_status` DROP FOREIGN KEY `has_higher_status_ibfk_1`", function(err, result) {
-    if (err) {
-      next(err);
-      return;
-    }
-  });
-  pool.query("ALTER TABLE `has_higher_status` DROP FOREIGN KEY `has_higher_status_ibfk_2`", function(err, result) {
-    if (err) {
-      next(err);
-      return;
-    }
-  });
   // perform delete
   pool.query("DELETE FROM `has_higher_status` WHERE hi_per_id=?", [req.query.bt_id], function(err, result) {
     if (err) {
@@ -492,19 +453,6 @@ app.get('/deleteFromReviews', function(req, res, next) {
     }
   });
   pool.query("DELETE FROM `has_higher_status` WHERE lo_per_id=?", [req.query.bt_id], function(err, result) {
-    if (err) {
-      next(err);
-      return;
-    }
-  });
-  // reinstate constraints
-  pool.query("ALTER TABLE `has_higher_status` ADD CONSTRAINT `has_higher_status_ibfk_1` FOREIGN KEY(`hi_per_id`) REFERENCES `person`(`id`)", function(err, result) {
-    if (err) {
-      next(err);
-      return;
-    }
-  });
-  pool.query("ALTER TABLE `has_higher_status` ADD CONSTRAINT `has_higher_status_ibfk_2` FOREIGN KEY(`lo_per_id`) REFERENCES `person`(`id`)", function(err, result) {
     if (err) {
       next(err);
       return;
