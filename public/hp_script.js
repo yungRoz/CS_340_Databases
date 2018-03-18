@@ -106,7 +106,6 @@ function bindAddPersonButton() {
           return;
         }
 
-        var row = document.createElement("tr");
         var btId = response.belongs_to_id;
         var gbId = response.given_by_id;
         var rating = response.avg_rating;
@@ -124,8 +123,8 @@ function bindAddPersonButton() {
         var rowNum;
         //add cell to row
         for (var i = 1; i < n; i++) {
-          var row = table.rows[i];
-          var allCells = row.getElementsByTagName("td");
+          var urow = table.rows[i];
+          var allCells = urow.getElementsByTagName("td");
           var dCell = allCells[allCells.length - 1];
           //console.log(dCell.children[1].id)
           //console.log(perId);
@@ -144,8 +143,8 @@ function bindAddPersonButton() {
         var rowNum;
         //add cell to row
         for (var i = 1; i < n; i++) {
-          var row = table.rows[i];
-          var allCells = row.getElementsByTagName("td");
+          var urow = table.rows[i];
+          var allCells = urow.getElementsByTagName("td");
           var dCell = allCells[allCells.length - 1];
           //console.log(dCell.children[1].id)
           //console.log(perId);
@@ -164,8 +163,8 @@ function bindAddPersonButton() {
         var rowNum;
         //add cell to row
         for (var i = 1; i < n; i++) {
-          var row = table.rows[i];
-          var allCells = row.getElementsByTagName("td");
+          var urow = table.rows[i];
+          var allCells = urow.getElementsByTagName("td");
           var dCell = allCells[allCells.length - 1];
           //console.log(dCell.children[1].id)
           //console.log(perId);
@@ -178,7 +177,7 @@ function bindAddPersonButton() {
           }
         }
 
-
+        var row = document.createElement("tr");
         for (var variableName in response) {
           if (variableName == 'belongs_to_id');
           else if (variableName === 'given_by_id');
