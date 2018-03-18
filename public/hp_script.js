@@ -100,7 +100,7 @@ function bindAddPersonButton() {
       console.log(param);
       var req = new XMLHttpRequest();
       req.open("GET", "/insertToReviews" + param, true);
-      req.addEventListener('load', function(event)) {
+      req.addEventListener('load', function(event) {
         event.preventDefault;
         if (req.status >= 200 && req.status < 400) {
           var response = JSON.parse(req.responseText);
@@ -375,7 +375,7 @@ function deleteRevRow(btId, gbId) {
   //event.preventDefault();
   //console.log(tableId);
 
-  //delete from table 
+  //delete from table
   var table = document.getElementById("ReviewsG");
   var n = table.rows.length;
   var rowNum;
