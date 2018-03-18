@@ -432,17 +432,20 @@ app.get('/deleteFromReviews', function(req, res, next) {
       return;
     }
   });
+
+  pool.query("DELETE FROM `has_higher_status` WHERE lo_per_id=?", [req.query.bt_id], function(err, result) {
+    if (err) {
+      next(err);
+      return;
+    }
+  });
+});
+
+app.get('/updateAfterReview', function(req, res, next) {
   // update avg_rating
   pool.query("UPDATE `person` SET `avg_rating` = (SELECT AVG(reviews.star_rating) AS `avg_star_rating` " +
     "FROM `reviews` WHERE reviews.belongs_to_id = ? ) WHERE person.id = ? ;", [req.query.bt_id, req.query.bt_id],
     function(err, result) {
-      if (err) {
-        next(err);
-        return;
-      }
-    });
-
-    pool.query("DELETE FROM `has_higher_status` WHERE lo_per_id=?", [req.query.bt_id], function(err, result) {
       if (err) {
         next(err);
         return;

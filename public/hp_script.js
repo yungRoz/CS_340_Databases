@@ -229,6 +229,7 @@ function deleteCoRow(perId, coId, tableId) {
   });
   req.send(deleteParam);
 
+
   //event.preventDefault();
   //console.log(tableId);
   var table = document.getElementById(tableId);
@@ -258,11 +259,24 @@ function deleteRevRow(btId, gbId) {
   req.addEventListener("load", function(event) {
     event.preventDefault();
     if (req.status >= 200 && req.status < 400) {} else {
-      console.log('there was an error');
+      console.log('Review Deleted');
+    } else {
+      console.log('there was an error deleting a review'); 
     }
   });
   req.send(deleteParam);
 
+  var req2 = new XMLHttpRequest();
+  req2.open("GET", "/updateAfterReview?bt_id=" + btId + "&gb_id=" + gbId, true);
+  req2.addEventListener("load", function(event) {
+    event.preventDefault();
+    if (req2.status >= 200 && req2.status < 400) {
+      console.log('update_occured');
+    } else {
+      console.log('there was an error');
+    }
+  });
+  req2.send("/updateAfterReview?bt_id=" + btId + "&gb_id=" + gbId);
   //event.preventDefault();
   //console.log(tableId);
   var table = document.getElementById("ReviewsG");
