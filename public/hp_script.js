@@ -134,7 +134,7 @@ function bindAddPersonButton() {
         row.appendChild(deleteReviewCell);
         var table = document.getElementById("ReviewsG");
         table.appendChild(row);
-        location.reload(); 
+        location.reload();
       } else {
         console.log('ERROR' + req.statusText);
       }
@@ -177,6 +177,13 @@ function newDeleteRelationshipCell(id,cid, table_id) {
 
   return deleteRelationshipCell;
 }
+
+
+function lb(id){
+  var ur = "http://flip3.engr.oregonstate.edu:62521ranking?id=" + id;
+  var myWindow = window.open("http://flip3.engr.oregonstate.edu:62521ranking?id=", "MsgWindow", "width=200,height=100");
+}
+
 
 function newDeleteReviewCell(btId, gbId) {
   var deleteReviewCell = document.createElement("td");

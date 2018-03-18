@@ -691,7 +691,6 @@ app.get('/homepage', function(req, res, next) {
 
 app.get('/sendupdate', function(req, res, next) {
   var context = {};
-
   pool.query("SELECT * FROM `person` WHERE  id=?", [req.query.id], function(err, result) {
     if (err) {
       next(err);
@@ -729,6 +728,60 @@ app.get('/sendupdate', function(req, res, next) {
         });
       });
     }
+  });
+});
+
+app.get('/ranking', function(req, res, next) {
+  var context = {};
+  pool.query("SELECT * FROM `person` WHERE id=?", [req.query.id]function(err, rows, fields) {
+    if (err) {
+      next(err);
+      return;
+    }
+    var params = [];
+    for (var i in rows) {
+      var exercise = {
+        'name': rows[i].name,
+        'rating': rows[i].avg_rating,
+      };
+      params.push(exercise);
+    }
+    // update has_higher_status
+    pool.query("SELECT person.id, person.name, person.avg_rating FROM `person` " +
+      "WHERE person.avg_rating > (SELECT person.avg_rating FROM `person` " +
+      "WHERE person.id = ? ) ORDER BY person.avg_rating DESC", [req.query.id],
+      function(err, result) {
+        if (err) {
+          next(err);
+          return;
+        }
+        for (var i in rows) {
+          var info = {
+            'hiName': rows[i].name,
+            'hiRating': rows.avg_rating
+          };
+          params.push(info);
+        }
+      });
+
+    pool.query("SELECT person.id, person.name, person.avg_rating FROM `person` " +
+      "WHERE person.avg_rating > (SELECT person.avg_rating FROM `person` " +
+      "WHERE person.id = ? ) ORDER BY person.avg_rating DESC", [req.query.id],
+      function(err, result) {
+        if (err) {
+          next(err);
+          return;
+        }
+        for (var i in rows) {
+          var info = {
+            'loName': rows[i].name,
+            'loRating': rows.avg_rating
+          };
+          params.push(info);
+        }
+      });
+    context.results = params;
+    res.render('show_ranking', context);
   });
 });
 
