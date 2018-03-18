@@ -11,7 +11,7 @@ function bindAddPersonButton() {
       alert("Name Cannot Be Empty");
       return;
     }
-    var addCompanyId= document.getElementById('addCompany').value;
+    var addCompanyId = document.getElementById('addCompany').value;
 
     var param = "?per_id=" + addPersonId + "&co_id=" + addCompanyId; // + "&weight=" + weight + "&date=" + date + "&lbs=" + unit;
     console.log(param);
@@ -20,7 +20,7 @@ function bindAddPersonButton() {
     req.addEventListener('load', function() {
       if (req.status >= 200 && req.status < 400) {
         var response = JSON.parse(req.responseText);
-        if (response[0] == "false"){
+        if (response[0] == "false") {
           alert("Duplicate value not added");
           return;
         }
@@ -31,8 +31,8 @@ function bindAddPersonButton() {
 
         for (var variableName in response) {
           if (variableName == 'id');
-          else if(variableName == 'cid');
-          else if(variableName == 'co_name');
+          else if (variableName == 'cid');
+          else if (variableName == 'co_name');
           else {
             var cell = document.createElement("td");
             cell.id = variableName;
@@ -74,21 +74,16 @@ function bindAddPersonButton() {
     var fiveStar = document.getElementById('star-5');
     var numStars;
     if (oneStar.checked) {
-      numStars=1;
-    }
-    else if(twoStar.checked){
-      numStars=2;
-    }
-    else if (threeStar.checked) {
-      numStars=3;
-    }
-    else if(fourStar.checked) {
-      numStars=4;
-    }
-    else if(fiveStar.checked) {
-      numStars=5;
-    }
-    else{
+      numStars = 1;
+    } else if (twoStar.checked) {
+      numStars = 2;
+    } else if (threeStar.checked) {
+      numStars = 3;
+    } else if (fourStar.checked) {
+      numStars = 4;
+    } else if (fiveStar.checked) {
+      numStars = 5;
+    } else {
       alert("Reviews must contain star rating of at least 1");
       return;
     }
@@ -99,30 +94,30 @@ function bindAddPersonButton() {
     }
 
 
-    var param = "?bt_id=" + btId  + "&gb_id=" + gbId + "&rating=" + numStars +"&term=" + classifier; // + "&weight=" + weight + "&date=" + date + "&lbs=" + unit;
+    var param = "?bt_id=" + btId + "&gb_id=" + gbId + "&rating=" + numStars + "&term=" + classifier; // + "&weight=" + weight + "&date=" + date + "&lbs=" + unit;
     console.log(param);
     var req = new XMLHttpRequest();
     req.open("GET", "/insertToReviews" + param, true);
     req.addEventListener('load', function() {
       if (req.status >= 200 && req.status < 400) {
         var response = JSON.parse(req.responseText);
-        if (response[0] == "false"){
+        if (response[0] == "false") {
           alert("Cannot review same person twice");
           return;
         }
         var row = document.createElement("tr");
         var btId = response.belongs_to_id;
         var gbId = response.given_by_id;
-        var findString = btId+","+gbId;
-        var selectobject=document.getElementById("reviewPerson")
-        for (var i=0; i<selectobject.length; i++){
-          if (selectobject.options[i].value == findString )
+        var findString = btId + "," + gbId;
+        var selectobject = document.getElementById("reviewPerson")
+        for (var i = 0; i < selectobject.length; i++) {
+          if (selectobject.options[i].value == findString) {
             selectobject.remove(i);
           }
-
+        }
         for (var variableName in response) {
           if (variableName == 'belongs_to_id');
-          else if(variableName === 'given_by_id');
+          else if (variableName === 'given_by_id');
           else {
             var cell = document.createElement("td");
             cell.id = variableName;
@@ -137,9 +132,10 @@ function bindAddPersonButton() {
       } else {
         console.log('ERROR' + req.statusText);
       }
+
+      req.send("/insertToReviews" + param);
+      event.preventDefault();
     });
-    req.send("/insertToReviews" + param);
-    event.preventDefault();
   });
 }
 
@@ -160,13 +156,13 @@ function newUpdateCell(id) {
   return updateCell;
 }
 
-function newDeleteRelationshipCell(id,cid, table_id) {
+function newDeleteRelationshipCell(id, cid, table_id) {
   var deleteRelationshipCell = document.createElement("td");
   var deleteButton = document.createElement('input');
   deleteButton.setAttribute('type', 'button');
   deleteButton.setAttribute('name', 'delete');
   deleteButton.setAttribute('value', 'Delete');
-  deleteButton.setAttribute('onClick', 'deleteCoRow(' + id + ', ' + cid + ', "'  + table_id + '")');
+  deleteButton.setAttribute('onClick', 'deleteCoRow(' + id + ', ' + cid + ', "' + table_id + '")');
 
   var deleteHidden = document.createElement('input');
   deleteHidden.setAttribute('type', 'hidden');
@@ -178,7 +174,7 @@ function newDeleteRelationshipCell(id,cid, table_id) {
 }
 
 
-function lb(id){
+function lb(id) {
   var ur = "http://flip3.engr.oregonstate.edu:62521/ranking?id=" + id;
   var myWindow = window.open(ur, "MsgWindow", "width=200,height=100");
 }
@@ -190,7 +186,7 @@ function newDeleteReviewCell(btId, gbId) {
   deleteButton.setAttribute('type', 'button');
   deleteButton.setAttribute('name', 'delete');
   deleteButton.setAttribute('value', 'Delete');
-  deleteButton.setAttribute('onClick', 'deleteRevRow(' + btId +", " + gbId+ ')');
+  deleteButton.setAttribute('onClick', 'deleteRevRow(' + btId + ", " + gbId + ')');
 
   var deleteHidden = document.createElement('input');
   deleteHidden.setAttribute('type', 'hidden');
@@ -201,7 +197,7 @@ function newDeleteReviewCell(btId, gbId) {
   return deleteReviewCell;
 }
 
-function newViewSiteAsCell(id){
+function newViewSiteAsCell(id) {
   var vsaCell = document.createElement("td");
 
   var vsaUrl = document.createElement('a');
@@ -228,8 +224,7 @@ function deleteCoRow(perId, coId, tableId) {
   console.log(deleteParam);
   req.addEventListener("load", function(event) {
     event.preventDefault();
-    if (req.status >= 200 && req.status < 400) {
-    } else {
+    if (req.status >= 200 && req.status < 400) {} else {
       console.log('there was an error');
     }
   });
@@ -247,7 +242,7 @@ function deleteCoRow(perId, coId, tableId) {
     var dCell = allCells[allCells.length - 1];
     //console.log(dCell.children[1].id)
     //console.log(perId);
-    if (dCell.children[1].id ==  perId) {
+    if (dCell.children[1].id == perId) {
       rowNum = i;
       //console.log(rowNum);
     }
@@ -261,11 +256,9 @@ function deleteRevRow(btId, gbId) {
 
   var deleteParam = "/deleteFromReviews?bt_id=" + btId + "&gb_id=" + gbId;
   req.open("GET", deleteParam, true);
-  console.log(deleteParam);
   req.addEventListener("load", function(event) {
     event.preventDefault();
-    if (req.status >= 200 && req.status < 400) {
-    } else {
+    if (req.status >= 200 && req.status < 400) {} else {
       console.log('there was an error');
     }
   });
@@ -283,8 +276,7 @@ function deleteRevRow(btId, gbId) {
     var dCell = allCells[allCells.length - 1];
     //console.log(dCell.children[1].id)
     //console.log(perId);
-    console.log(dCell.children[1].id);
-    if (dCell.children[1].id ==  btId + "_"+gbId) {
+    if (dCell.children[1].id == btId + "_" + gbId) {
       rowNum = i;
       //console.log(rowNum);
     }
