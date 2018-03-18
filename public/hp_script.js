@@ -228,15 +228,13 @@ function deleteCoRow(perId, coId, tableId) {
   req.open("GET", deleteParam, true);
   console.log(deleteParam);
   req.addEventListener("load", function(event) {
-    even.preventDefault();
+    event.preventDefault();
     if (req.status >= 200 && req.status < 400) {
     } else {
       console.log('there was an error');
     }
   });
   req.send(deleteParam);
-
-  location.reload();
 
   //event.preventDefault();
   //console.log(tableId);
