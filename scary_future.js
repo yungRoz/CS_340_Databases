@@ -425,6 +425,13 @@ app.get('/deleteFromReviews', function(req, res, next) {
     }
   });
 
+  // perform delete
+  pool.query("DELETE FROM `has_higher_status` WHERE hi_per_id=?", [req.query.bt_id], function(err, result) {
+    if (err) {
+      next(err);
+      return;
+    }
+  });
   // update avg_rating
   pool.query("UPDATE `person` SET `avg_rating` = (SELECT AVG(reviews.star_rating) AS `avg_star_rating` " +
     "FROM `reviews` WHERE reviews.belongs_to_id = ? ) WHERE person.id = ? ;", [req.query.bt_id, req.query.bt_id],
@@ -435,6 +442,12 @@ app.get('/deleteFromReviews', function(req, res, next) {
       }
     });
 
+    pool.query("DELETE FROM `has_higher_status` WHERE lo_per_id=?", [req.query.bt_id], function(err, result) {
+      if (err) {
+        next(err);
+        return;
+      }
+    });
   // update top classifier
   pool.query("UPDATE `person` SET `top_classifier` = (SELECT n1term.classifier_term FROM(SELECT `classifier_term`, COUNT(`classifier_term`) AS `classifier_occurrence` " +
     "FROM `reviews` WHERE reviews.belongs_to_id = ? GROUP BY `classifier_term` " +
@@ -444,21 +457,8 @@ app.get('/deleteFromReviews', function(req, res, next) {
         next(err);
         return;
       }
-      // perform delete
-      pool.query("DELETE FROM `has_higher_status` WHERE hi_per_id=?", [req.query.bt_id], function(err, result) {
-        if (err) {
-          next(err);
-          return;
-        }
-      });
     });
 
-  pool.query("DELETE FROM `has_higher_status` WHERE lo_per_id=?", [req.query.bt_id], function(err, result) {
-    if (err) {
-      next(err);
-      return;
-    }
-  });
   // update has_higher_status
   pool.query("INSERT INTO `has_higher_status` (`hi_per_id`, `lo_per_id`) SELECT person.id, ? FROM `person` " +
     "WHERE person.avg_rating > (SELECT person.avg_rating FROM `person` " +
