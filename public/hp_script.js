@@ -181,7 +181,7 @@ function newDeleteRelationshipCell(id,cid, table_id) {
 
 function lb(id){
   var ur = "http://flip3.engr.oregonstate.edu:62521ranking?id=" + id;
-  var myWindow = window.open("http://flip3.engr.oregonstate.edu:62521ranking?id=", "MsgWindow", "width=200,height=100");
+  var myWindow = window.open(ur, "MsgWindow", "width=200,height=100");
 }
 
 
