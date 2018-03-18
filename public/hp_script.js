@@ -258,10 +258,11 @@ function deleteRevRow(btId, gbId) {
   req.open("GET", deleteParam, true);
   req.addEventListener("load", function(event) {
     event.preventDefault();
-    if (req.status >= 200 && req.status < 400) {} else {
+    if (req.status >= 200 && req.status < 400) {
       console.log('Review Deleted');
-    } else {
-      console.log('there was an error deleting a review'); 
+    }
+    else {
+      console.log('Error deleting review');
     }
   });
   req.send(deleteParam);
