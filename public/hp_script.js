@@ -99,10 +99,9 @@ function bindAddPersonButton() {
     var param = "?bt_id=" + btId + "&gb_id=" + gbId + "&rating=" + numStars + "&term=" + classifier; // + "&weight=" + weight + "&date=" + date + "&lbs=" + unit;
     console.log(param);
     var req = new XMLHttpRequest();
-    req.open("GET", "/insertToReviews" + param, true);
-    req.addEventListener('load', function() {
-    
-      if (req.status >= 200 && req.status < 400) {
+    req1.open("GET", "/insertToReviews" + param, true);
+    req1.addEventListener('load', function() {
+      if (req1.status >= 200 && req1.status < 400) {
         var response = JSON.parse(req.responseText);
         if (response[0] == "false") {
           alert("Cannot review same person twice");
@@ -201,38 +200,37 @@ function bindAddPersonButton() {
         console.log('ERROR' + req.statusText);
       }
     });
-    req.send("/insertToReviews" + param);
+    req1.send("/insertToReviews" + param);
     event.preventDefault;
 
     //open a new request to delete from has higher status
-    var req = new XMLHttpRequest();
+    var req2 = new XMLHttpRequest();
     var deleteParam = "/deleteFromHHS?bt_id=" + btId + "&gb_id=" + gbId;
-    req.open("GET", deleteParam, true);
-    req.addEventListener("load", function(event) {
-      event.preventDefault();
-      if (req.status >= 200 && req.status < 400) {
+    req2.open("GET", deleteParam, true);
+    req2.addEventListener("load", function() {
+      if (req2.status >= 200 && req2.status < 400) {
         console.log('Higher status tables deleted');
       } else {
         console.log('Error deleting from HHS');
       }
     });
-    req.send(deleteParam);
+    req2.send(deleteParam);
+    event.preventDefault();
 
 
     //update has higher status tables
-    var req = new XMLHttpRequest();
+    var req3 = new XMLHttpRequest();
     var updateParam = "/updateHHS?bt_id=" + btId + "&gb_id=" + gbId;
-    req.open("GET", deleteParam, true);
-    req.addEventListener("load", function(event) {
-      event.preventDefault();
-      if (req.status >= 200 && req.status < 400) {
+    req3.open("GET", deleteParam, true);
+    req3.addEventListener("load", function() {
+      if (req3.status >= 200 && req3.status < 400) {
         console.log('Update performed for HHS');
       } else {
         console.log('Error updating HHS');
       }
     });
-    req.send(updateParam);
-
+    req3.send(updateParam);
+    event.preventDefault();
 
   });
 }

@@ -34,8 +34,6 @@ function bindAddPersonButton() {
             row.appendChild(cell);
           }
         }
-        var updateCell = newUpdateCell(id);
-        row.appendChild(updateCell);
         var deleteCell = newDeleteCell(id);
         row.appendChild(deleteCell);
         var vsaCell = newViewSiteAsCell(id, response['name']);
