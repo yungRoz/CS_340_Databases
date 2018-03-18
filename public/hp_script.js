@@ -134,7 +134,6 @@ function bindAddPersonButton() {
         row.appendChild(deleteReviewCell);
         var table = document.getElementById("ReviewsG");
         table.appendChild(row);
-        location.reload();
       } else {
         console.log('ERROR' + req.statusText);
       }
