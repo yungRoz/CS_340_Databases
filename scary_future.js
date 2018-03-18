@@ -750,7 +750,7 @@ app.get('/ranking', function(req, res, next) {
     pool.query("SELECT person.id, person.name, person.avg_rating FROM `person` " +
       "WHERE person.avg_rating > (SELECT person.avg_rating FROM `person` " +
       "WHERE person.id = ? ) ORDER BY person.avg_rating DESC", [req.query.id],
-      function(err, result) {
+      function(err, rows, fields) {
         if (err) {
           next(err);
           return;
@@ -758,16 +758,16 @@ app.get('/ranking', function(req, res, next) {
         for (var i in rows) {
           var info = {
             'hiName': rows[i].name,
-            'hiRating': rows.avg_rating
+            'hiRating': rows[i].avg_rating
           };
           params.push(info);
         }
       });
 
     pool.query("SELECT person.id, person.name, person.avg_rating FROM `person` " +
-      "WHERE person.avg_rating > (SELECT person.avg_rating FROM `person` " +
+      "WHERE person.avg_rating < (SELECT person.avg_rating FROM `person` " +
       "WHERE person.id = ? ) ORDER BY person.avg_rating DESC", [req.query.id],
-      function(err, result) {
+      function(err, rows, fields) {
         if (err) {
           next(err);
           return;
@@ -775,7 +775,7 @@ app.get('/ranking', function(req, res, next) {
         for (var i in rows) {
           var info = {
             'loName': rows[i].name,
-            'loRating': rows.avg_rating
+            'loRating': rows[i].avg_rating
           };
           params.push(info);
         }
