@@ -105,9 +105,12 @@ function bindAddPersonButton() {
           alert("Cannot review same person twice");
           return;
         }
+
         var row = document.createElement("tr");
         var btId = response.belongs_to_id;
         var gbId = response.given_by_id;
+        var rating = response.avg_rating;
+        //remove option
         var findString = btId + "," + gbId;
         var selectobject = document.getElementById("reviewPerson")
         for (var i = 0; i < selectobject.length; i++) {
@@ -115,6 +118,67 @@ function bindAddPersonButton() {
             selectobject.remove(i);
           }
         }
+
+        var table = document.getElementById("Family");
+        var n = table.rows.length;
+        var rowNum;
+        //add cell to row
+        for (var i = 1; i < n; i++) {
+          var row = table.rows[i];
+          var allCells = row.getElementsByTagName("td");
+          var dCell = allCells[allCells.length - 1];
+          //console.log(dCell.children[1].id)
+          //console.log(perId);
+          if (dCell.children[1].id == btId) {
+            rowNum = i;
+            //console.log(rowNum);
+            //update rating
+            var x = document.getElementById("Family").rows[rowNum].cells;
+            x[1].innerHTML = rating;
+          }
+        }
+
+
+        var table = document.getElementById("Friends");
+        var n = table.rows.length;
+        var rowNum;
+        //add cell to row
+        for (var i = 1; i < n; i++) {
+          var row = table.rows[i];
+          var allCells = row.getElementsByTagName("td");
+          var dCell = allCells[allCells.length - 1];
+          //console.log(dCell.children[1].id)
+          //console.log(perId);
+          if (dCell.children[1].id == btId) {
+            rowNum = i;
+            //console.log(rowNum);
+            //update rating
+            var x = document.getElementById("Friends").rows[rowNum].cells;
+            x[1].innerHTML = rating;
+          }
+        }
+
+
+        var table = document.getElementById("Work");
+        var n = table.rows.length;
+        var rowNum;
+        //add cell to row
+        for (var i = 1; i < n; i++) {
+          var row = table.rows[i];
+          var allCells = row.getElementsByTagName("td");
+          var dCell = allCells[allCells.length - 1];
+          //console.log(dCell.children[1].id)
+          //console.log(perId);
+          if (dCell.children[1].id == btId) {
+            rowNum = i;
+            //console.log(rowNum);
+            //update rating
+            var x = document.getElementById("Work").rows[rowNum].cells;
+            x[1].innerHTML = rating;
+          }
+        }
+
+
         for (var variableName in response) {
           if (variableName == 'belongs_to_id');
           else if (variableName === 'given_by_id');
@@ -175,6 +239,7 @@ function newDeleteRelationshipCell(id, cid, table_id) {
 
 function lb(id) {
   var ur = "http://flip3.engr.oregonstate.edu:62521/ranking?id=" + id;
+  location.reload();
   var myWindow = window.open(ur, "MsgWindow", "width=200,height=100");
 }
 
