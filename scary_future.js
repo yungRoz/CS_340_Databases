@@ -236,6 +236,7 @@ app.get('/insertToReviews', function(req, res, next) {
         next(err);
         return;
       }
+      res.send(JSON.stringify(result[0]));
     });
 
 
