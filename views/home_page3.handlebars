@@ -33,8 +33,20 @@
           <h3>Rating: {{this.uAvg_Rating}}</h3>
           <br>
           <h3>Classifier: {{this.uTop_Classifier}}</h3>
+          <br>
           <input type="button" name="ranking" value="See How You Compare With Others" onclick="lb({{this.uId}})">
-        {{/if}}
+          <br>
+          <br>
+          {{/if}}
+      {{/each}}
+    {{/if}}
+    {{#if results}}
+      {{#each results}}
+        {{#if this.uLesson}}
+          <h2>Here's something to rembember: </h2>
+          <br>
+          <p>{{this.uLesson}}</p>
+          {{/if}}
       {{/each}}
     {{/if}}
 
@@ -108,7 +120,7 @@
         <option value="Brave">Brave</option>
         <option value="True to self">True to self</option>
         <option value="Fun">Fun</option>
-        <option value="Nuce">Nice</option>
+        <option value="Nice">Nice</option>
     </select>
         <input type="submit" id="addToReviews" value="Send it" />
       </form>
