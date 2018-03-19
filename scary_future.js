@@ -465,7 +465,7 @@ app.get('/homepage', function(req, res, next) {
         'uTop_Classifier': rows[i].top_classifier
       };
       params.push(info);
-      pool.query("SELECT * FROM `modules` WHERE `classifer`=?", [rows[i].top_classifier], function(err, rows, fields) {
+      pool.query("SELECT * FROM `module` WHERE `classifer`=?", [rows[i].top_classifier], function(err, rows, fields) {
         if (err) {
           next(err);
           return;
