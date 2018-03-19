@@ -445,27 +445,7 @@ app.get('/updateAfterReview', function(req, res, next) {
     });
 });
 
-app.get('/update', function(req, res, next) {
-  var context = {};
-  pool.query("SELECT * FROM `person` WHERE id=?", [req.query.id], function(err, rows, fields) {
-    if (err) {
-      next(err);
-      return;
-    }
-    var params = [];
 
-    for (var i in rows) {
-      var info = {
-        'name': rows[i].name,
-        'email': rows[i].email,
-        'id': rows[i].id,
-      };
-      params.push(info);
-    }
-    context.results = params[0];
-    res.render('update_page', context);
-  });
-});
 
 app.get('/homepage', function(req, res, next) {
   var context = {};
@@ -485,7 +465,21 @@ app.get('/homepage', function(req, res, next) {
         'uTop_Classifier': rows[i].top_classifier
       };
       params.push(info);
+      pool.query("SELECT * FROM `modules` WHERE `classifer`=?", [rows[i].top_classifier], function(err, rows, fields) {
+        if (err) {
+          next(err);
+          return;
+        }
+        for (var i in rows) {
+          var info = {
+            'uLesson': rows[i].lesson
+          };
+          params.push(info);
+        }
+
+      });
     }
+
   });
 
   //get everyone elses info [just name and id] for add to company
@@ -526,6 +520,7 @@ app.get('/homepage', function(req, res, next) {
         params.push(info);
       }
     });
+
 
   //get company ids of user
   var companyIdString = "SELECT DISTINCT c.name AS `name`, c.id AS `id` " +
